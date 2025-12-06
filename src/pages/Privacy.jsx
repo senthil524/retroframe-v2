@@ -4,10 +4,16 @@ import { createPageUrl } from '@/utils';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
+import SEO from '@/components/seo/SEO';
 
 export default function Privacy() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#FFF8F5] to-white">
+      <SEO
+        title="Privacy Policy"
+        description="RetroFrame's privacy policy explains how we collect, use, and protect your personal information when you use our polaroid printing service."
+        url="/Privacy"
+      />
       <div className="max-w-4xl mx-auto px-4 py-12">
         <Link to={createPageUrl('Home')}>
           <Button variant="ghost" size="sm" className="mb-6">

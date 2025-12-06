@@ -7,6 +7,7 @@ import { Package, Truck, CheckCircle, Clock, Search } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { format } from 'date-fns';
 import { toast } from 'sonner';
+import SEO from '@/components/seo/SEO';
 
 const statusSteps = {
   pending: { step: 1, icon: Clock, label: 'Order Placed', color: 'text-yellow-600' },
@@ -65,6 +66,11 @@ export default function OrderTracking() {
 
   return (
     <div className="min-h-screen bg-brand-warm py-8 md:py-12">
+      <SEO
+        title="Track Your Order"
+        description="Track your RetroFrame polaroid prints order. Enter your order number and phone number to see real-time delivery status."
+        url="/OrderTracking"
+      />
       <div className="max-w-4xl mx-auto px-4">
         {/* Header */}
         <motion.div

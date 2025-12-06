@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { Button } from '@/components/ui/button';
@@ -21,58 +21,28 @@ import HeroPhotoStack from '@/components/home/HeroPhotoStack';
 import CustomerReviews from '@/components/home/CustomerReviews';
 import UserPhotosGallery from '@/components/home/UserPhotosGallery';
 import FAQSection from '@/components/home/FAQSection';
+import SEO, { structuredData } from '@/components/seo/SEO';
+
+// Combined structured data for homepage
+const homeStructuredData = [
+  structuredData.organization,
+  structuredData.product,
+  structuredData.website,
+  structuredData.localBusiness,
+  structuredData.faq
+];
 
 export default function Home() {
-  // SEO: Set document metadata
-  useEffect(() => {
-    document.title = 'RetroFrame - Premium Polaroid Prints Online India | Retro Photo Printing';
-
-    // Meta description
-    let metaDesc = document.querySelector('meta[name="description"]');
-    if (!metaDesc) {
-      metaDesc = document.createElement('meta');
-      metaDesc.name = 'description';
-      document.head.appendChild(metaDesc);
-    }
-    metaDesc.content = 'Order custom polaroid prints online in India. Premium retro photo printing service with vintage effects, 8 border colors & custom captions. ₹270 for 18 prints. Free shipping across India.';
-
-    // Meta keywords
-    let metaKeywords = document.querySelector('meta[name="keywords"]');
-    if (!metaKeywords) {
-      metaKeywords = document.createElement('meta');
-      metaKeywords.name = 'keywords';
-      document.head.appendChild(metaKeywords);
-    }
-    metaKeywords.content = 'polaroid prints online, retro prints india, photo printing service, vintage photo prints, custom polaroid, instant photo prints, polaroid style prints, retro photo printing, memory prints india, photo wall prints';
-
-    // Open Graph tags
-    let ogTitle = document.querySelector('meta[property="og:title"]');
-    if (!ogTitle) {
-      ogTitle = document.createElement('meta');
-      ogTitle.setAttribute('property', 'og:title');
-      document.head.appendChild(ogTitle);
-    }
-    ogTitle.content = 'RetroFrame - Premium Polaroid Prints Online India';
-
-    let ogDesc = document.querySelector('meta[property="og:description"]');
-    if (!ogDesc) {
-      ogDesc = document.createElement('meta');
-      ogDesc.setAttribute('property', 'og:description');
-      document.head.appendChild(ogDesc);
-    }
-    ogDesc.content = 'Transform your digital photos into beautiful retro polaroid prints. Premium quality, vintage style photo printing delivered across India.';
-
-    let ogType = document.querySelector('meta[property="og:type"]');
-    if (!ogType) {
-      ogType = document.createElement('meta');
-      ogType.setAttribute('property', 'og:type');
-      document.head.appendChild(ogType);
-    }
-    ogType.content = 'website';
-  }, []);
 
   return (
     <div className="min-h-screen bg-brand-warm" itemScope itemType="https://schema.org/Product">
+      <SEO
+        title="Premium Polaroid Prints Online India"
+        description="Order custom polaroid prints online in India. Premium retro photo printing service with vintage effects, 8 border colors & custom captions. 18 prints starting at Rs.270. Free shipping across India."
+        keywords="polaroid prints online, retro prints india, photo printing service, vintage photo prints, custom polaroid, instant photo prints, polaroid style prints, retro photo printing, memory prints india, photo wall prints"
+        url="/"
+        structuredData={homeStructuredData}
+      />
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-md border-b border-brand sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">

@@ -9,6 +9,7 @@ import PhotoCard from '../components/studio/PhotoCard';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Palette, ImageIcon, Maximize2, Loader2, ArrowLeft, Eye } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import SEO, { structuredData } from '@/components/seo/SEO';
 
 // Pricing: ₹270 for first 18 prints, ₹15 for each additional
 const BASE_PRICE = 270; // Discounted from ₹399
@@ -177,6 +178,13 @@ export default function Studio() {
 
   return (
     <div className="min-h-screen bg-brand-warm pb-28">
+      <SEO
+        title="Create Your Polaroid Prints"
+        description="Upload your photos and create custom polaroid prints. Choose from 8 border colors, 5 vintage effects, and add custom captions. Starting at Rs.270 for 18 prints."
+        keywords="create polaroid prints, custom photo prints, upload photos, retro print creator, polaroid maker online"
+        url="/Studio"
+        structuredData={structuredData.product}
+      />
       {isOrderView ? (
         <header className="bg-white border-b border-brand sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 py-4">

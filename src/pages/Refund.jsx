@@ -4,10 +4,16 @@ import { createPageUrl } from '@/utils';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
+import SEO from '@/components/seo/SEO';
 
 export default function Refund() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#FFF8F5] to-white">
+      <SEO
+        title="Refund & Cancellation Policy"
+        description="Learn about RetroFrame's refund and cancellation policy for polaroid print orders. Understand our return process and eligibility criteria."
+        url="/Refund"
+      />
       <div className="max-w-4xl mx-auto px-4 py-12">
         <Link to={createPageUrl('Home')}>
           <Button variant="ghost" size="sm" className="mb-6">

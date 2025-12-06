@@ -4,10 +4,16 @@ import { createPageUrl } from '@/utils';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
+import SEO from '@/components/seo/SEO';
 
 export default function Terms() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#FFF8F5] to-white">
+      <SEO
+        title="Terms & Conditions"
+        description="Read RetroFrame's terms and conditions for using our polaroid printing service. Learn about our policies, user responsibilities, and service terms."
+        url="/Terms"
+      />
       <div className="max-w-4xl mx-auto px-4 py-12">
         <Link to={createPageUrl('Home')}>
           <Button variant="ghost" size="sm" className="mb-6">

@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Mail, Phone, MapPin, ArrowLeft, Send } from 'lucide-react';
 import { motion } from 'framer-motion';
+import SEO from '@/components/seo/SEO';
 
 export default function ContactUs() {
   const [formData, setFormData] = useState({
@@ -23,6 +24,11 @@ export default function ContactUs() {
 
   return (
     <div className="min-h-screen bg-brand-warm">
+      <SEO
+        title="Contact Us"
+        description="Get in touch with RetroFrame. Have questions about your polaroid prints order? We're here to help. Contact us via email or phone."
+        url="/ContactUs"
+      />
       <div className="max-w-4xl mx-auto px-4 py-12">
         <Link to={createPageUrl('Home')}>
           <Button variant="ghost" size="sm" className="mb-6">
