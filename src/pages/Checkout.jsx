@@ -40,7 +40,7 @@ export default function Checkout() {
   const { photos, cartId, clearPhotos, getUploadStats, allPhotosUploaded } = usePhotos();
   const [submitting, setSubmitting] = useState(false);
   const [canProceed, setCanProceed] = useState(false);
-  
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -84,7 +84,7 @@ export default function Checkout() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!formData.name || !formData.email || !formData.phone || !formData.delivery_name || !formData.address1 || !formData.city || !formData.state || !formData.pincode || !formData.delivery_phone) {
       toast.error('Please fill in all fields');
       return;
@@ -101,13 +101,13 @@ export default function Checkout() {
     }
 
     setSubmitting(true);
-    
+
     try {
       toast.loading('Creating order...', { id: 'checkout' });
 
       // Generate unique transaction ID (UUID-based, no special characters for PayU)
       const txnId = `RF${Date.now()}${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
-      
+
       // Generate order number (numeric only, no # symbol for DB consistency)
       // Format: 10001, 10002, etc. - displayed with # prefix in UI only
       const orderNumber = Date.now().toString().slice(-8);
@@ -116,7 +116,7 @@ export default function Checkout() {
 
       // Update existing photo records with order_id (photos already saved during upload)
       const existingPhotos = await base44.entities.Photo.filter({ cart_id: cartId });
-      const updatePromises = existingPhotos.map(photo => 
+      const updatePromises = existingPhotos.map(photo =>
         base44.entities.Photo.update(photo.id, { order_id: orderNumber })
       );
 
@@ -200,129 +200,182 @@ export default function Checkout() {
       };
 
       try {
-      // Generate hash and ensure SDK is loaded in parallel
-      const [hashResponse, bolt] = await Promise.all([
-        base44.functions.invoke('payuGenerateHash', { paymentData }),
-        loadPayUSDK()
-      ]);
-      
-      const { hash, key } = hashResponse.data;
-      const data = { ...paymentData, hash, key };
+        // Generate hash and ensure SDK is loaded in parallel
+        const [hashResponse, bolt] = await Promise.all([
+          base44.functions.invoke('payuGenerateHash', { paymentData }),
+          loadPayUSDK()
+        ]);
 
-      toast.dismiss('checkout');
+        const { hash, key } = hashResponse.data;
+        const data = { ...paymentData, hash, key };
 
-      // Launch PayU Bolt (Popup)
-      bolt.launch(data, {
-        responseHandler: async (response) => {
-          console.log('PayU Response:', response);
+        toast.dismiss('checkout');
 
-          // Verify Response Hash
-          const responseParams = {
-            status: response.response.status,
-            udf1: response.response.udf1 || orderNumber,
-            udf2: response.response.udf2,
-            udf3: response.response.udf3,
-            udf4: response.response.udf4,
-            udf5: response.response.udf5,
-            email: response.response.email,
-            firstname: response.response.firstname,
-            productinfo: response.response.productinfo,
-            amount: response.response.amount,
-            txnid: response.response.txnid,
-            key: response.response.key,
-            hash: response.response.hash
-          };
+        // Launch PayU Bolt (Popup)
+        bolt.launch(data, {
+          responseHandler: async (response) => {
+            console.log('PayU Response:', response);
 
-          // Verify hash via backend function
-          const verifyResponse = await base44.functions.invoke('payuVerifyHash', { params: responseParams });
-          const isHashValid = verifyResponse.data.isValid;
+            // PayU Bolt returns response in BOLT.response format
+            // txnStatus can be: SUCCESS, FAILED, CANCEL (uppercase per PayU docs)
+            // status field contains: success, failure, pending (lowercase)
+            const r = response.response || {};
+            const txnStatus = r.txnStatus || r.status; // txnStatus is uppercase, status is lowercase
+            const statusLower = (txnStatus || '').toLowerCase();
 
-          if (!isHashValid) {
-            toast.error('Security Error: Payment verification failed');
-            navigate(createPageUrl('Confirmation') + `?order_number=${orderNumber}&payment=failed`);
-            return;
+            // Handle cancelled/failed payments without hash verification
+            // Check for CANCEL, userCancelled, or missing critical fields
+            if (!r.hash || !r.txnid || statusLower === 'cancel' || statusLower === 'usercancelled') {
+              console.log('Payment cancelled or incomplete');
+              toast.error('Payment was cancelled');
+              setSubmitting(false);
+
+              // Update order status to cancelled
+              try {
+                const orders = await base44.entities.Order.filter({ order_number: orderNumber });
+                if (orders.length > 0) {
+                  await base44.entities.Order.update(orders[0].id, {
+                    payment_status: 'cancelled',
+                    order_status: 'payment_failed'
+                  });
+                }
+                const payments = await base44.entities.Payment.filter({ txnid: txnId });
+                if (payments.length > 0) {
+                  await base44.entities.Payment.update(payments[0].id, {
+                    payment_status: 'cancelled',
+                    txn_status: txnStatus || 'cancelled'
+                  });
+                }
+              } catch (e) {
+                console.error('Failed to update cancelled status:', e);
+              }
+
+              navigate(createPageUrl('Confirmation') + `?order_number=${orderNumber}&payment=cancelled`);
+              return;
+            }
+
+            // Verify Response Hash for completed transactions
+            // PayU response includes: status (lowercase: success/failure/pending)
+            const responseParams = {
+              status: r.status, // Use lowercase status for hash verification
+              udf1: r.udf1 || orderNumber,
+              udf2: r.udf2 || '',
+              udf3: r.udf3 || '',
+              udf4: r.udf4 || '',
+              udf5: r.udf5 || '',
+              email: r.email || '',
+              firstname: r.firstname || '',
+              productinfo: r.productinfo || '',
+              amount: r.amount,
+              txnid: r.txnid,
+              key: r.key,
+              hash: r.hash
+            };
+
+            let isHashValid = false;
+            try {
+              const verifyResponse = await base44.functions.invoke('payuVerifyHash', { params: responseParams });
+              isHashValid = verifyResponse?.data?.isValid === true;
+            } catch (verifyError) {
+              console.error('Hash verification error:', verifyError);
+              // For failed payments, don't block on hash verification
+              if (statusLower !== 'success') {
+                isHashValid = false;
+              }
+            }
+
+            // PayU status field: success, failure, pending (lowercase)
+            const isSuccess = statusLower === 'success' && isHashValid;
+
+            if (statusLower === 'success' && !isHashValid) {
+              toast.error('Security Error: Payment verification failed');
+              setSubmitting(false);
+              navigate(createPageUrl('Confirmation') + `?order_number=${orderNumber}&payment=failed`);
+              return;
+            }
+
+            try {
+              // Update Payment Record with all PayU response details - find by txnid (unique)
+              const payments = await base44.entities.Payment.filter({ txnid: txnId });
+              if (payments.length > 0) {
+                await base44.entities.Payment.update(payments[0].id, {
+                  mihpayid: r.mihpayid || '',
+                  txnid: r.txnid || txnId,
+                  txn_status: r.status || txnStatus || '',
+                  unmapped_status: r.unmappedstatus || '',
+                  payment_status: isSuccess ? 'success' : (statusLower === 'failure' || statusLower === 'failed' ? 'failed' : 'cancelled'),
+                  payment_mode: r.mode || '',
+                  card_category: r.cardCategory || '',
+                  bank_ref_num: r.bank_ref_num || '',
+                  bankcode: r.bankcode || '',
+                  pg_type: r.PG_TYPE || '',
+                  error_code: r.error || '',
+                  error_message: r.error_Message || '',
+                  card_num: r.cardnum || '',
+                  name_on_card: r.name_on_card || '',
+                  net_amount_debit: parseFloat(r.net_amount_debit) || total,
+                  discount: parseFloat(r.discount) || 0,
+                  payu_response_hash: r.hash || '',
+                  hash_verified: isHashValid,
+                  payment_date: new Date().toISOString()
+                });
+              }
+
+              // Update Order Status with payment method
+              const orders = await base44.entities.Order.filter({ order_number: orderNumber });
+              if (orders.length > 0) {
+                await base44.entities.Order.update(orders[0].id, {
+                  payment_status: isSuccess ? 'success' : 'failed',
+                  order_status: isSuccess ? 'processing' : 'payment_failed',
+                  payment_method: r.mode || '',
+                  payment_id: payments[0]?.id || ''
+                });
+              }
+
+              // Update cart status
+              const carts = await base44.entities.Cart.filter({ cart_id: cartId });
+              if (carts.length > 0) {
+                await base44.entities.Cart.update(carts[0].id, {
+                  status: isSuccess ? 'completed' : 'checkout'
+                });
+              }
+
+              // Clear local cart on successful payment
+              if (isSuccess) {
+                clearPhotos();
+                toast.success('Payment successful!');
+              } else {
+                toast.error('Payment failed');
+              }
+
+              setSubmitting(false);
+              // Navigate to Confirmation
+              navigate(createPageUrl('Confirmation') + `?order_number=${orderNumber}&payment=${isSuccess ? 'success' : 'failed'}`);
+
+            } catch (dbError) {
+              console.error('Failed to update records:', dbError);
+              // Clear cart even if DB update fails on success
+              if (isSuccess) {
+                clearPhotos();
+              }
+              setSubmitting(false);
+              // Even if DB update fails, redirect based on PayU status if possible, but show error
+              navigate(createPageUrl('Confirmation') + `?order_number=${orderNumber}&payment=${isSuccess ? 'success' : 'failed'}`);
+            }
+          },
+          catchException: (response) => {
+            console.error('PayU Exception:', response);
+            toast.error('Payment was cancelled or failed');
+            setSubmitting(false);
+            // Navigate back or show retry option
+            navigate(createPageUrl('Confirmation') + `?order_number=${orderNumber}&payment=cancelled`);
           }
-
-          const txnStatus = response.response.status;
-          const isSuccess = txnStatus === 'success';
-
-          try {
-            const r = response.response;
-
-            // Update Payment Record with all PayU response details - find by txnid (unique)
-            const payments = await base44.entities.Payment.filter({ txnid: txnId });
-            if (payments.length > 0) {
-              await base44.entities.Payment.update(payments[0].id, {
-                mihpayid: r.mihpayid || '',
-                txnid: r.txnid || txnId,
-                txn_status: txnStatus || '',
-                unmapped_status: r.unmappedstatus || '',
-                payment_status: isSuccess ? 'success' : (txnStatus === 'failure' ? 'failed' : 'cancelled'),
-                payment_mode: r.mode || '',
-                card_category: r.cardCategory || '',
-                bank_ref_num: r.bank_ref_num || '',
-                bankcode: r.bankcode || '',
-                pg_type: r.PG_TYPE || '',
-                error_code: r.error || '',
-                error_message: r.error_Message || '',
-                card_num: r.cardnum || '',
-                name_on_card: r.name_on_card || '',
-                net_amount_debit: parseFloat(r.net_amount_debit) || total,
-                discount: parseFloat(r.discount) || 0,
-                payu_response_hash: r.hash || '',
-                hash_verified: isHashValid,
-                payment_date: new Date().toISOString()
-              });
-            }
-
-            // Update Order Status with payment method
-            const orders = await base44.entities.Order.filter({ order_number: orderNumber });
-            if (orders.length > 0) {
-              await base44.entities.Order.update(orders[0].id, {
-                payment_status: isSuccess ? 'success' : 'failed',
-                order_status: isSuccess ? 'processing' : 'payment_failed',
-                payment_method: r.mode || '',
-                payment_id: payments[0]?.id || ''
-              });
-            }
-
-            // Update cart status
-            const carts = await base44.entities.Cart.filter({ cart_id: cartId });
-            if (carts.length > 0) {
-              await base44.entities.Cart.update(carts[0].id, {
-                status: isSuccess ? 'completed' : 'checkout'
-              });
-            }
-
-            // Clear local cart on successful payment
-            if (isSuccess) {
-              clearPhotos();
-            }
-
-            // Navigate to Confirmation
-            navigate(createPageUrl('Confirmation') + `?order_number=${orderNumber}&payment=${isSuccess ? 'success' : 'failed'}`);
-
-          } catch (dbError) {
-            console.error('Failed to update records:', dbError);
-            // Clear cart even if DB update fails on success
-            if (isSuccess) {
-              clearPhotos();
-            }
-            // Even if DB update fails, redirect based on PayU status if possible, but show error
-            navigate(createPageUrl('Confirmation') + `?order_number=${orderNumber}&payment=${isSuccess ? 'success' : 'failed'}`);
-          }
-        },
-        catchException: (response) => {
-          console.error('PayU Exception:', response);
-          toast.error('Payment system error');
-          setSubmitting(false);
-        }
-      });
+        });
 
       } catch (error) {
-      console.error('Payment initiation error:', error);
-      toast.error('Failed to initiate payment');
-      setSubmitting(false);
+        console.error('Payment initiation error:', error);
+        toast.error('Failed to initiate payment');
+        setSubmitting(false);
       }
     } catch (error) {
       console.error('Order creation failed:', error);
@@ -378,11 +431,11 @@ export default function Checkout() {
             <div className="flex-1">
               <p className="font-semibold text-yellow-800 mb-1">Photos are uploading...</p>
               <p className="text-sm text-yellow-700">
-                {uploadStats.pending} of {uploadStats.total} photos still uploading. 
+                {uploadStats.pending} of {uploadStats.total} photos still uploading.
                 Please wait before placing your order.
               </p>
               <div className="w-full h-2 bg-yellow-200 rounded-full overflow-hidden mt-2">
-                <div 
+                <div
                   className="h-full bg-yellow-600 transition-all duration-300"
                   style={{ width: `${(uploadStats.uploaded / uploadStats.total) * 100}%` }}
                 />
@@ -403,7 +456,7 @@ export default function Checkout() {
             <div className="flex-1">
               <p className="font-semibold text-red-800 mb-1">Some photos failed to upload</p>
               <p className="text-sm text-red-700">
-                {uploadStats.failed} photo{uploadStats.failed > 1 ? 's' : ''} failed to upload. 
+                {uploadStats.failed} photo{uploadStats.failed > 1 ? 's' : ''} failed to upload.
                 Please go back and retry or remove them.
               </p>
             </div>
@@ -425,7 +478,7 @@ export default function Checkout() {
               </div>
               <h2 className="text-xl font-semibold text-brand-dark">Contact Information</h2>
             </div>
-            
+
             <div className="space-y-4">
               <div>
                 <Label htmlFor="name">Full Name *</Label>
@@ -487,7 +540,7 @@ export default function Checkout() {
               </div>
               <h2 className="text-xl font-semibold text-brand-dark">Delivery Address</h2>
             </div>
-            
+
             <div className="space-y-4">
               <div>
                 <Label htmlFor="delivery_name">Full Name *</Label>
@@ -597,7 +650,7 @@ export default function Checkout() {
               </div>
               <h2 className="text-xl font-semibold text-brand-dark">Order Summary</h2>
             </div>
-            
+
             <div className="space-y-4">
               <div className="flex justify-between items-center text-gray-600">
                 <div>
