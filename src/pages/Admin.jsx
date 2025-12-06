@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
+import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import {
   Select,
@@ -26,6 +28,7 @@ import { toast } from 'sonner';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
+import SEO from '@/components/seo/SEO';
 
 const statusColors = {
   pending_payment: 'bg-yellow-100 text-yellow-700',
@@ -83,6 +86,8 @@ const PAGE_HEIGHT = 11; // inches
 const PAGE_MARGIN = 0.5; // inches - margin around polaroid on page
 
 function AdminContent() {
+  const navigate = useNavigate();
+  const { signOut, user } = useAuth();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [generatingPDF, setGeneratingPDF] = useState(null);
@@ -91,8 +96,9 @@ function AdminContent() {
     loadOrders();
   }, []);
 
-  const handleLogout = () => {
-    base44.auth.logout('/');
+  const handleLogout = async () => {
+    await signOut();
+    navigate('/AdminLogin');
   };
 
   const loadOrders = async () => {
@@ -411,6 +417,12 @@ function AdminContent() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#FFF8F5] to-white">
+      <SEO
+        title="Admin Dashboard"
+        description="RetroFrame admin order management"
+        url="/Admin"
+        noindex={true}
+      />
       <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-6">
           <div className="flex items-center justify-between">

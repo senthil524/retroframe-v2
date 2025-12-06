@@ -521,7 +521,7 @@ function OrderDetailsContent() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Updated</span>
-                  <span>{format(new Date(order.updated_date), 'MMM d, h:mm a')}</span>
+                  <span>{format(new Date(order.updated_date || order.created_date), 'MMM d, h:mm a')}</span>
                 </div>
                 {order.shipped_date && (
                   <div className="flex justify-between">

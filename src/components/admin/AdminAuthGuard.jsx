@@ -1,47 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
-import { Loader2, ShieldX } from 'lucide-react';
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
+import { Loader2, ShieldX, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 
 export default function AdminAuthGuard({ children }) {
-  const [loading, setLoading] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [error, setError] = useState(null);
+  let authData;
+  let authError = null;
 
-  useEffect(() => {
-    checkAdminAccess();
-  }, []);
+  try {
+    authData = useAuth();
+  } catch (error) {
+    console.error('AdminAuthGuard: useAuth error:', error);
+    authError = error;
+  }
 
-  const checkAdminAccess = async () => {
-    try {
-      const isAuthenticated = await base44.auth.isAuthenticated();
-      
-      if (!isAuthenticated) {
-        // Redirect to login
-        base44.auth.redirectToLogin(window.location.href);
-        return;
-      }
+  // If there's an auth error, show error state
+  if (authError) {
+    return (
+      <div className="min-h-screen bg-brand-warm flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center">
+          <AlertTriangle className="w-16 h-16 text-yellow-500 mx-auto mb-4" />
+          <h1 className="text-xl font-bold text-brand-dark mb-2">Authentication Error</h1>
+          <p className="text-gray-600 mb-4 text-sm">{authError.message}</p>
+          <Button onClick={() => window.location.href = '/'} className="rounded-full">
+            Go Home
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
-      const user = await base44.auth.me();
-      
-      if (user.role === 'admin') {
-        setIsAdmin(true);
-      } else {
-        setError('You do not have admin access');
-      }
-    } catch (err) {
-      console.error('Auth check failed:', err);
-      setError('Authentication failed');
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { user, loading, isAuthenticated, isAdmin, signOut } = authData;
 
-  const handleLogout = () => {
-    base44.auth.logout('/');
-  };
-
+  // Show loading state while checking auth
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-brand-warm">
@@ -50,7 +43,13 @@ export default function AdminAuthGuard({ children }) {
     );
   }
 
-  if (error || !isAdmin) {
+  // Redirect to login if not authenticated
+  if (!isAuthenticated) {
+    return <Navigate to="/AdminLogin" replace />;
+  }
+
+  // Show access denied if not admin
+  if (!isAdmin()) {
     return (
       <div className="min-h-screen bg-brand-warm flex items-center justify-center p-4">
         <motion.div
@@ -62,8 +61,11 @@ export default function AdminAuthGuard({ children }) {
             <ShieldX className="w-10 h-10 text-red-500" />
           </div>
           <h1 className="text-2xl font-bold text-brand-dark mb-2">Access Denied</h1>
-          <p className="text-gray-600 mb-6">
-            {error || 'You need admin privileges to access this page.'}
+          <p className="text-gray-600 mb-2">
+            You don't have admin privileges to access this page.
+          </p>
+          <p className="text-sm text-gray-500 mb-6">
+            Logged in as: {user?.email}
           </p>
           <div className="flex gap-3 justify-center">
             <Button
@@ -74,10 +76,13 @@ export default function AdminAuthGuard({ children }) {
               Go Home
             </Button>
             <Button
-              onClick={handleLogout}
+              onClick={async () => {
+                await signOut();
+                window.location.href = '/AdminLogin';
+              }}
               className="rounded-full bg-brand-coral hover:bg-brand-coral-dark text-white"
             >
-              Logout
+              Sign Out
             </Button>
           </div>
         </motion.div>
@@ -85,5 +90,6 @@ export default function AdminAuthGuard({ children }) {
     );
   }
 
+  // User is authenticated and is admin - render children
   return children;
 }

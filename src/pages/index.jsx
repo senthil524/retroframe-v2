@@ -38,10 +38,12 @@ import Robots from "./Robots";
 
 import Sitemap from "./Sitemap";
 
+import AdminLogin from "./AdminLogin";
+
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 
 const PAGES = {
-    
+
     Home: Home,
     
     Studio: Studio,
@@ -79,7 +81,9 @@ const PAGES = {
     Robots: Robots,
     
     Sitemap: Sitemap,
-    
+
+    AdminLogin: AdminLogin,
+
 }
 
 function _getCurrentPage(url) {
@@ -144,7 +148,9 @@ function PagesContent() {
                 <Route path="/Robots" element={<Robots />} />
                 
                 <Route path="/Sitemap" element={<Sitemap />} />
-                
+
+                <Route path="/AdminLogin" element={<AdminLogin />} />
+
             </Routes>
         </Layout>
     );
