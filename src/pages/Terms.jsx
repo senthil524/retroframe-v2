@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import SEO from '@/components/seo/SEO';
 
@@ -14,14 +14,28 @@ export default function Terms() {
         description="Read RetroFrame's terms and conditions for using our polaroid printing service. Learn about our policies, user responsibilities, and service terms."
         url="/terms"
       />
-      <div className="max-w-4xl mx-auto px-4 py-12">
-        <Link to={createPageUrl('Home')}>
-          <Button variant="ghost" size="sm" className="mb-6">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Home
-          </Button>
-        </Link>
 
+      {/* Site Header */}
+      <header className="bg-white/80 backdrop-blur-md border-b border-brand sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">
+          <div className="flex items-center justify-between">
+            <Link to="/" className="text-xl md:text-2xl lg:text-3xl" style={{ fontFamily: 'var(--font-serif)', color: 'var(--color-dark)' }}>
+              RetroFrame
+            </Link>
+            <Link to={createPageUrl('Studio')}>
+              <Button
+                size="sm"
+                className="text-xs md:text-sm text-white rounded-full px-4 md:px-6"
+                style={{ backgroundColor: 'var(--color-coral)' }}>
+                <Sparkles className="w-3.5 h-3.5 mr-1.5" />
+                Create Prints
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      <div className="max-w-4xl mx-auto px-4 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
