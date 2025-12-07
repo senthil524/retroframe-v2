@@ -34,6 +34,7 @@ const OrderDetails = React.lazy(() => import('./OrderDetails'));
 const AdminLogin = React.lazy(() => import('./AdminLogin'));
 const Blog = React.lazy(() => import('./Blog'));
 const BlogPost = React.lazy(() => import('./BlogPost'));
+const NotFound = React.lazy(() => import('./NotFound'));
 
 const PAGES = {
   Home,
@@ -125,6 +126,9 @@ function PagesContent() {
           <Route path="/OrderDetails" element={<Navigate to="/order-details" replace />} />
           <Route path="/AdminLogin" element={<Navigate to="/admin-login" replace />} />
           <Route path="/Blog" element={<Navigate to="/blog" replace />} />
+
+          {/* 404 - Catch all unmatched routes */}
+          <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
       </Layout>
