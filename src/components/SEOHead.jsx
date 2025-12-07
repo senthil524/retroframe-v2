@@ -157,124 +157,124 @@ export const SEO_CONFIG = {
   Studio: {
     title: "Create Prints | RetroFrame Photo Studio",
     description: "Upload & customize retro prints with borders, effects and captions. Easy polaroid-style photo editor.",
-    canonicalPath: "/Studio",
+    canonicalPath: "/studio",
     indexing: "index",
     keywords: "photo editor, create prints, customize photos, polaroid maker, retro photo editor"
   },
   ContactUs: {
     title: "Contact Us | RetroFrame Support",
     description: "Get help with your RetroFrame orders. Contact our support team via email or phone.",
-    canonicalPath: "/ContactUs",
+    canonicalPath: "/contact",
     indexing: "index",
     keywords: "contact retroframe, customer support, photo print help"
   },
   Privacy: {
     title: "Privacy Policy | RetroFrame",
     description: "How RetroFrame collects, uses and protects your personal information and uploaded photos.",
-    canonicalPath: "/Privacy",
+    canonicalPath: "/privacy",
     indexing: "index",
     keywords: "privacy policy, data protection, photo privacy"
   },
   Terms: {
     title: "Terms & Conditions | RetroFrame",
     description: "RetroFrame service terms, ordering policies and user agreements for photo printing.",
-    canonicalPath: "/Terms",
+    canonicalPath: "/terms",
     indexing: "index",
     keywords: "terms of service, conditions, user agreement"
   },
   Refund: {
     title: "Refund & Cancellation | RetroFrame",
     description: "RetroFrame refund policy. Learn about returns, refund eligibility and cancellation process.",
-    canonicalPath: "/Refund",
+    canonicalPath: "/refund",
     indexing: "index",
     keywords: "refund policy, cancellation, returns, money back"
   },
-  
+
   // USER PAGES - noindex (private user content)
   Cart: {
     title: "Your Cart | RetroFrame",
     description: "Review your selected photos before checkout.",
-    canonicalPath: "/Cart",
+    canonicalPath: "/cart",
     indexing: "noindex"
   },
   Checkout: {
     title: "Checkout | RetroFrame",
     description: "Complete your order.",
-    canonicalPath: "/Checkout",
+    canonicalPath: "/checkout",
     indexing: "noindex"
   },
   PhotoEditor: {
     title: "Edit Photo | RetroFrame",
     description: "Customize your photo.",
-    canonicalPath: "/PhotoEditor",
+    canonicalPath: "/photo-editor",
     indexing: "noindex"
   },
   Confirmation: {
     title: "Order Confirmation | RetroFrame",
     description: "Your order details.",
-    canonicalPath: "/Confirmation",
+    canonicalPath: "/confirmation",
     indexing: "noindex"
   },
   OrderTracking: {
     title: "Track Order | RetroFrame",
     description: "Track your order status.",
-    canonicalPath: "/OrderTracking",
+    canonicalPath: "/order-tracking",
     indexing: "noindex"
   },
   PaymentCallback: {
     title: "Processing Payment | RetroFrame",
     description: "Processing your payment.",
-    canonicalPath: "/PaymentCallback",
+    canonicalPath: "/payment-callback",
     indexing: "noindex"
   },
-  
+
   // ADMIN PAGES - fully blocked
   Admin: {
     title: "Admin | RetroFrame",
     description: "",
-    canonicalPath: "/Admin",
+    canonicalPath: "/admin",
     indexing: "noindex-block"
   },
   OrderDetails: {
     title: "Order Details | RetroFrame",
     description: "",
-    canonicalPath: "/OrderDetails",
+    canonicalPath: "/order-details",
     indexing: "noindex-block"
   },
   PrintA4: {
     title: "Print | RetroFrame",
     description: "",
-    canonicalPath: "/PrintA4",
+    canonicalPath: "/print-a4",
     indexing: "noindex-block"
   },
   PrintFile: {
     title: "Print | RetroFrame",
     description: "",
-    canonicalPath: "/PrintFile",
+    canonicalPath: "/print-file",
     indexing: "noindex-block"
   },
   TemplateManager: {
     title: "Templates | RetroFrame",
     description: "",
-    canonicalPath: "/TemplateManager",
+    canonicalPath: "/template-manager",
     indexing: "noindex-block"
   },
   Robots: {
     title: "robots.txt",
     description: "",
-    canonicalPath: "/Robots",
+    canonicalPath: "/robots.txt",
     indexing: "noindex-block"
   },
   Sitemap: {
     title: "sitemap.xml",
     description: "",
-    canonicalPath: "/Sitemap",
+    canonicalPath: "/sitemap.xml",
     indexing: "noindex-block"
   },
   AdminLogin: {
     title: "Admin Login | RetroFrame",
     description: "",
-    canonicalPath: "/AdminLogin",
+    canonicalPath: "/admin-login",
     indexing: "noindex-block"
   },
   Blog: {

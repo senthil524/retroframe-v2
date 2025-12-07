@@ -69,7 +69,7 @@ export default function OrderTracking() {
       <SEO
         title="Track Your Order"
         description="Track your RetroFrame polaroid prints order. Enter your order number and phone number to see real-time delivery status."
-        url="/OrderTracking"
+        url="/order-tracking"
       />
       <div className="max-w-4xl mx-auto px-4">
         {/* Header */}

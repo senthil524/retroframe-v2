@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { supabase } from '@/lib/supabase-client';
+import { getBlogPostBySlug, getRelatedPosts } from '@/lib/blog-cache';
 import SEO, { structuredData } from '@/components/seo/SEO';
 import SEOBreadcrumb, { getBlogPostBreadcrumb } from '@/components/SEOBreadcrumb';
 import { motion } from 'framer-motion';
@@ -64,35 +64,24 @@ export default function BlogPost() {
   }, [slug]);
 
   const loadPost = async () => {
-    try {
-      // Load the current post
-      const { data: postData, error: postError } = await supabase
-        .from('blog_posts')
-        .select('*')
-        .eq('slug', slug)
-        .eq('published', true)
-        .single();
+    // Load the current post (cached)
+    const { data: postData, error: postError } = await getBlogPostBySlug(slug);
 
-      if (postError) throw postError;
-      setPost(postData);
-
-      // Load related posts (same category, different post)
-      if (postData?.category) {
-        const { data: relatedData } = await supabase
-          .from('blog_posts')
-          .select('id, slug, title, excerpt, featured_image, published_at, reading_time')
-          .eq('published', true)
-          .eq('category', postData.category)
-          .neq('id', postData.id)
-          .order('published_at', { ascending: false })
-          .limit(3);
-
-        setRelatedPosts(relatedData || []);
-      }
-    } catch (error) {
-      console.error('Error loading blog post:', error);
+    if (postError || !postData) {
+      console.error('Error loading blog post:', postError);
       navigate('/blog');
+      setLoading(false);
+      return;
     }
+
+    setPost(postData);
+
+    // Load related posts (cached)
+    if (postData?.category) {
+      const { data: relatedData } = await getRelatedPosts(postData.category, postData.id, 3);
+      setRelatedPosts(relatedData || []);
+    }
+
     setLoading(false);
   };
 
@@ -476,7 +465,7 @@ export default function BlogPost() {
             Back to Blog
           </Link>
           <Link
-            to="/Studio"
+            to="/studio"
             className="flex items-center gap-2 bg-brand-coral hover:bg-brand-coral-dark text-white px-6 py-2 rounded-full transition-colors"
           >
             Create Prints

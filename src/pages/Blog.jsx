@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { supabase } from '@/lib/supabase-client';
+import { getAllBlogPosts } from '@/lib/blog-cache';
 import SEO, { structuredData } from '@/components/seo/SEO';
 import SEOBreadcrumb, { breadcrumbConfigs } from '@/components/SEOBreadcrumb';
 import { motion } from 'framer-motion';
@@ -19,17 +19,9 @@ export default function Blog() {
   }, []);
 
   const loadPosts = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .select('*')
-        .eq('published', true)
-        .order('published_at', { ascending: false });
-
-      if (error) throw error;
-      setPosts(data || []);
-    } catch (error) {
-      console.error('Error loading blog posts:', error);
+    const { data, error } = await getAllBlogPosts();
+    if (!error) {
+      setPosts(data);
     }
     setLoading(false);
   };
@@ -230,7 +222,7 @@ export default function Blog() {
             Turn your favorite memories into beautiful polaroid prints
           </p>
           <Link
-            to="/Studio"
+            to="/studio"
             className="inline-flex items-center gap-2 bg-brand-coral hover:bg-brand-coral-dark text-white px-8 py-3 rounded-full font-medium transition-colors"
           >
             Start Creating

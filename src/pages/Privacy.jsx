@@ -12,7 +12,7 @@ export default function Privacy() {
       <SEO
         title="Privacy Policy"
         description="RetroFrame's privacy policy explains how we collect, use, and protect your personal information when you use our polaroid printing service."
-        url="/Privacy"
+        url="/privacy"
       />
       <div className="max-w-4xl mx-auto px-4 py-12">
         <Link to={createPageUrl('Home')}>

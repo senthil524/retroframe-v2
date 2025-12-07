@@ -45,7 +45,7 @@ export default function AdminAuthGuard({ children }) {
 
   // Redirect to login if not authenticated
   if (!isAuthenticated) {
-    return <Navigate to="/AdminLogin" replace />;
+    return <Navigate to="/admin-login" replace />;
   }
 
   // Show access denied if not admin
@@ -78,7 +78,7 @@ export default function AdminAuthGuard({ children }) {
             <Button
               onClick={async () => {
                 await signOut();
-                window.location.href = '/AdminLogin';
+                window.location.href = '/admin-login';
               }}
               className="rounded-full bg-brand-coral hover:bg-brand-coral-dark text-white"
             >

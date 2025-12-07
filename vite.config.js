@@ -8,39 +8,38 @@ export default defineConfig({
   base: '/',
   plugins: [
     react(),
-    Sitemap({
+Sitemap({
       hostname: 'https://retroframe.co',
+      // Static public routes (lowercase with hyphens)
       dynamicRoutes: [
         '/',
-        '/Studio',
+        '/studio',
         '/blog',
-        '/blog/ultimate-guide-polaroid-prints-india',
-        '/blog/creative-ways-display-polaroid-photos',
-        '/blog/choosing-perfect-photos-polaroid-prints',
-        '/OrderTracking',
-        '/ContactUs',
-        '/Terms',
-        '/Privacy',
-        '/Refund'
+        '/order-tracking',
+        '/contact',
+        '/terms',
+        '/privacy',
+        '/refund'
       ],
+      // Exclude user/admin pages from sitemap
       exclude: [
-        '/Admin',
-        '/AdminLogin',
-        '/PrintFile',
-        '/PrintA4',
-        '/TemplateManager',
-        '/PaymentCallback',
-        '/OrderDetails',
-        '/Cart',
-        '/Checkout',
-        '/Confirmation',
-        '/PhotoEditor',
-        '/Robots',
-        '/Sitemap'
+        '/admin',
+        '/admin-login',
+        '/print-file',
+        '/print-a4',
+        '/template-manager',
+        '/payment-callback',
+        '/order-details',
+        '/cart',
+        '/checkout',
+        '/confirmation',
+        '/photo-editor',
+        '/robots.txt',
+        '/sitemap.xml'
       ],
       robots: [
         { userAgent: '*', allow: '/' },
-        { userAgent: '*', disallow: ['/Admin', '/PrintFile', '/PrintA4', '/TemplateManager', '/PaymentCallback', '/OrderDetails', '/Cart', '/Checkout', '/Confirmation'] },
+        { userAgent: '*', disallow: ['/admin', '/print-file', '/print-a4', '/template-manager', '/payment-callback', '/order-details', '/cart', '/checkout', '/confirmation', '/photo-editor'] },
         { userAgent: 'Googlebot', allow: '/' },
         { userAgent: 'Bingbot', allow: '/' }
       ]

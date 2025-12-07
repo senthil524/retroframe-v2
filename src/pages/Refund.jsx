@@ -12,7 +12,7 @@ export default function Refund() {
       <SEO
         title="Refund & Cancellation Policy"
         description="Learn about RetroFrame's refund and cancellation policy for polaroid print orders. Understand our return process and eligibility criteria."
-        url="/Refund"
+        url="/refund"
       />
       <div className="max-w-4xl mx-auto px-4 py-12">
         <Link to={createPageUrl('Home')}>

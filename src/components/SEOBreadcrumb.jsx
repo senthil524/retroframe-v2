@@ -85,22 +85,22 @@ export default function SEOBreadcrumb({ items, className = '' }) {
 export const breadcrumbConfigs = {
   studio: [
     { name: 'Home', url: '/' },
-    { name: 'Create Prints', url: '/Studio' }
+    { name: 'Create Prints', url: '/studio' }
   ],
   cart: [
     { name: 'Home', url: '/' },
-    { name: 'Create Prints', url: '/Studio' },
-    { name: 'Cart', url: '/Cart' }
+    { name: 'Create Prints', url: '/studio' },
+    { name: 'Cart', url: '/cart' }
   ],
   checkout: [
     { name: 'Home', url: '/' },
-    { name: 'Create Prints', url: '/Studio' },
-    { name: 'Cart', url: '/Cart' },
-    { name: 'Checkout', url: '/Checkout' }
+    { name: 'Create Prints', url: '/studio' },
+    { name: 'Cart', url: '/cart' },
+    { name: 'Checkout', url: '/checkout' }
   ],
   orderTracking: [
     { name: 'Home', url: '/' },
-    { name: 'Track Order', url: '/OrderTracking' }
+    { name: 'Track Order', url: '/order-tracking' }
   ],
   blog: [
     { name: 'Home', url: '/' },
@@ -108,19 +108,19 @@ export const breadcrumbConfigs = {
   ],
   contact: [
     { name: 'Home', url: '/' },
-    { name: 'Contact Us', url: '/ContactUs' }
+    { name: 'Contact Us', url: '/contact' }
   ],
   terms: [
     { name: 'Home', url: '/' },
-    { name: 'Terms of Service', url: '/Terms' }
+    { name: 'Terms of Service', url: '/terms' }
   ],
   privacy: [
     { name: 'Home', url: '/' },
-    { name: 'Privacy Policy', url: '/Privacy' }
+    { name: 'Privacy Policy', url: '/privacy' }
   ],
   refund: [
     { name: 'Home', url: '/' },
-    { name: 'Refund Policy', url: '/Refund' }
+    { name: 'Refund Policy', url: '/refund' }
   ]
 };
 

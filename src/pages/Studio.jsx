@@ -183,7 +183,7 @@ export default function Studio() {
         title="Create Your Polaroid Prints"
         description="Upload your photos and create custom polaroid prints. Choose from 8 border colors, 5 vintage effects, and add custom captions. Starting at Rs.270 for 18 prints."
         keywords="create polaroid prints, custom photo prints, upload photos, retro print creator, polaroid maker online"
-        url="/Studio"
+        url="/studio"
         structuredData={structuredData.product}
       />
 

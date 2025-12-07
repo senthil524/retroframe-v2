@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import Layout from "./Layout.jsx";
 import ScrollToTop from '@/components/ScrollToTop';
 
@@ -87,26 +87,26 @@ function PagesContent() {
         <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/Home" element={<Home />} />
-          <Route path="/Studio" element={<Studio />} />
-          <Route path="/PhotoEditor" element={<PhotoEditor />} />
-          <Route path="/Cart" element={<Cart />} />
-          <Route path="/Checkout" element={<Checkout />} />
-          <Route path="/Confirmation" element={<Confirmation />} />
-          <Route path="/Admin" element={<Admin />} />
-          <Route path="/OrderTracking" element={<OrderTracking />} />
-          <Route path="/PrintFile" element={<PrintFile />} />
-          <Route path="/ContactUs" element={<ContactUs />} />
-          <Route path="/Terms" element={<Terms />} />
-          <Route path="/Privacy" element={<Privacy />} />
-          <Route path="/Refund" element={<Refund />} />
-          <Route path="/PaymentCallback" element={<PaymentCallback />} />
-          <Route path="/PrintA4" element={<PrintA4 />} />
-          <Route path="/TemplateManager" element={<TemplateManager />} />
-          <Route path="/OrderDetails" element={<OrderDetails />} />
-          <Route path="/Robots" element={<Robots />} />
-          <Route path="/Sitemap" element={<Sitemap />} />
-          <Route path="/AdminLogin" element={<AdminLogin />} />
+          <Route path="/home" element={<Navigate to="/" replace />} />
+          <Route path="/studio" element={<Studio />} />
+          <Route path="/photo-editor" element={<PhotoEditor />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/confirmation" element={<Confirmation />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/order-tracking" element={<OrderTracking />} />
+          <Route path="/print-file" element={<PrintFile />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/refund" element={<Refund />} />
+          <Route path="/payment-callback" element={<PaymentCallback />} />
+          <Route path="/print-a4" element={<PrintA4 />} />
+          <Route path="/template-manager" element={<TemplateManager />} />
+          <Route path="/order-details" element={<OrderDetails />} />
+          <Route path="/robots.txt" element={<Robots />} />
+          <Route path="/sitemap.xml" element={<Sitemap />} />
+          <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           </Routes>

@@ -41,7 +41,7 @@ export default function Home() {
         title="Premium Polaroid Prints Online India"
         description="Order custom polaroid prints online in India. Premium retro photo printing service with vintage effects, 8 border colors & custom captions. 18 prints starting at Rs.270. Free shipping across India."
         keywords="polaroid prints online, retro prints india, photo printing service, vintage photo prints, custom polaroid, instant photo prints, polaroid style prints, retro photo printing, memory prints india, photo wall prints"
-        url="/"
+        url=""
         structuredData={homeStructuredData}
       />
       {/* Header */}

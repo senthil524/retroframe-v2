@@ -105,7 +105,7 @@ export const structuredData = {
     "contactPoint": {
       "@type": "ContactPoint",
       "contactType": "customer service",
-      "url": "https://retroframe.co/ContactUs"
+      "url": "https://retroframe.co/contact"
     }
   },
 
@@ -123,7 +123,7 @@ export const structuredData = {
     },
     "offers": {
       "@type": "Offer",
-      "url": "https://retroframe.co/Studio",
+      "url": "https://retroframe.co/studio",
       "priceCurrency": "INR",
       "price": "270",
       "priceValidUntil": "2026-12-31",
@@ -299,7 +299,7 @@ export const structuredData = {
     "url": "https://retroframe.co",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://retroframe.co/OrderTracking?order_number={search_term_string}",
+      "target": "https://retroframe.co/order-tracking?order_number={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   },

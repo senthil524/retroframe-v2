@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { supabase } from '@/lib/supabase-client';
+import { getLatestBlogPosts } from '@/lib/blog-cache';
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, Clock } from 'lucide-react';
 import { format } from 'date-fns';
@@ -14,18 +14,9 @@ export default function LatestBlogPosts() {
   }, []);
 
   const loadPosts = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .select('id, slug, title, excerpt, category, featured_image, published_at, reading_time')
-        .eq('published', true)
-        .order('published_at', { ascending: false })
-        .limit(3);
-
-      if (error) throw error;
-      setPosts(data || []);
-    } catch (error) {
-      console.error('Error loading blog posts:', error);
+    const { data, error } = await getLatestBlogPosts(3);
+    if (!error) {
+      setPosts(data);
     }
     setLoading(false);
   };

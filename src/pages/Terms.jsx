@@ -12,7 +12,7 @@ export default function Terms() {
       <SEO
         title="Terms & Conditions"
         description="Read RetroFrame's terms and conditions for using our polaroid printing service. Learn about our policies, user responsibilities, and service terms."
-        url="/Terms"
+        url="/terms"
       />
       <div className="max-w-4xl mx-auto px-4 py-12">
         <Link to={createPageUrl('Home')}>
