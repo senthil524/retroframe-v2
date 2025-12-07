@@ -133,9 +133,9 @@ export default function Layout({ children, currentPageName }) {
                       </Link>
                     </li>
                     <li>
-                      <span className="text-gray-400">
-                        ₹10 per print
-                      </span>
+                      <Link to="/Blog" className="text-gray-400 hover:text-white transition-colors">
+                        Blog
+                      </Link>
                     </li>
                   </ul>
                 </div>
