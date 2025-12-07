@@ -8,7 +8,7 @@ import SEO from '@/components/seo/SEO';
 
 export default function Terms() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#FFF8F5] to-white">
+    <div className="min-h-screen bg-brand-warm">
       <SEO
         title="Terms & Conditions"
         description="Read RetroFrame's terms and conditions for using our polaroid printing service. Learn about our policies, user responsibilities, and service terms."
@@ -27,23 +27,38 @@ export default function Terms() {
           animate={{ opacity: 1, y: 0 }}
           className="bg-white rounded-2xl shadow-lg p-8 md:p-12"
         >
-          <h1 className="text-4xl font-bold text-[#2B2B2B] mb-6">Terms & Conditions</h1>
-          <p className="text-gray-500 mb-8">Last updated: {new Date().toLocaleDateString('en-IN', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+          <h1
+            className="text-4xl font-normal text-brand-dark mb-6"
+            style={{ fontFamily: 'var(--font-serif)' }}
+          >
+            Terms & Conditions
+          </h1>
+          <p className="text-brand-secondary mb-8">Last updated: {new Date().toLocaleDateString('en-IN', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
 
           <div className="prose prose-slate max-w-none space-y-6">
             <section>
-              <h2 className="text-2xl font-bold text-[#2B2B2B] mt-8 mb-4">1. Acceptance of Terms</h2>
-              <p className="text-gray-600">
+              <h2
+                className="text-2xl font-normal text-brand-dark mt-8 mb-4"
+                style={{ fontFamily: 'var(--font-serif)' }}
+              >
+                1. Acceptance of Terms
+              </h2>
+              <p className="text-brand-secondary">
                 By accessing and using Retroframe's services, you accept and agree to be bound by the terms and provision of this agreement.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-[#2B2B2B] mt-8 mb-4">2. Service Description</h2>
-              <p className="text-gray-600">
+              <h2
+                className="text-2xl font-normal text-brand-dark mt-8 mb-4"
+                style={{ fontFamily: 'var(--font-serif)' }}
+              >
+                2. Service Description
+              </h2>
+              <p className="text-brand-secondary">
                 Retroframe provides a platform for creating and ordering custom retro-style photo prints. We offer:
               </p>
-              <ul className="list-disc pl-6 text-gray-600 space-y-2">
+              <ul className="list-disc pl-6 text-brand-secondary space-y-2">
                 <li>Online photo editing and customization tools</li>
                 <li>High-quality printing services</li>
                 <li>Delivery services across India</li>
@@ -51,8 +66,13 @@ export default function Terms() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-[#2B2B2B] mt-8 mb-4">3. Pricing & Payment</h2>
-              <ul className="list-disc pl-6 text-gray-600 space-y-2">
+              <h2
+                className="text-2xl font-normal text-brand-dark mt-8 mb-4"
+                style={{ fontFamily: 'var(--font-serif)' }}
+              >
+                3. Pricing & Payment
+              </h2>
+              <ul className="list-disc pl-6 text-brand-secondary space-y-2">
                 <li>Each retro print costs ₹10</li>
                 <li>Minimum order of 10 prints required</li>
                 <li>Free shipping on orders above ₹250</li>
@@ -62,16 +82,26 @@ export default function Terms() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-[#2B2B2B] mt-8 mb-4">4. User Content</h2>
-              <p className="text-gray-600">
+              <h2
+                className="text-2xl font-normal text-brand-dark mt-8 mb-4"
+                style={{ fontFamily: 'var(--font-serif)' }}
+              >
+                4. User Content
+              </h2>
+              <p className="text-brand-secondary">
                 You retain all rights to the photos you upload. By using our service, you grant Retroframe a license to process and print your photos solely for fulfilling your order.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-[#2B2B2B] mt-8 mb-4">5. Prohibited Uses</h2>
-              <p className="text-gray-600">You may not use our service to:</p>
-              <ul className="list-disc pl-6 text-gray-600 space-y-2">
+              <h2
+                className="text-2xl font-normal text-brand-dark mt-8 mb-4"
+                style={{ fontFamily: 'var(--font-serif)' }}
+              >
+                5. Prohibited Uses
+              </h2>
+              <p className="text-brand-secondary">You may not use our service to:</p>
+              <ul className="list-disc pl-6 text-brand-secondary space-y-2">
                 <li>Upload copyrighted material without authorization</li>
                 <li>Print offensive, illegal, or inappropriate content</li>
                 <li>Violate any applicable laws or regulations</li>
@@ -79,29 +109,49 @@ export default function Terms() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-[#2B2B2B] mt-8 mb-4">6. Delivery</h2>
-              <p className="text-gray-600">
+              <h2
+                className="text-2xl font-normal text-brand-dark mt-8 mb-4"
+                style={{ fontFamily: 'var(--font-serif)' }}
+              >
+                6. Delivery
+              </h2>
+              <p className="text-brand-secondary">
                 Orders are typically delivered within 5-7 business days. Delivery times may vary based on location and other factors beyond our control.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-[#2B2B2B] mt-8 mb-4">7. Limitation of Liability</h2>
-              <p className="text-gray-600">
+              <h2
+                className="text-2xl font-normal text-brand-dark mt-8 mb-4"
+                style={{ fontFamily: 'var(--font-serif)' }}
+              >
+                7. Limitation of Liability
+              </h2>
+              <p className="text-brand-secondary">
                 Retroframe shall not be liable for any indirect, incidental, special, or consequential damages arising out of or in connection with our services.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-[#2B2B2B] mt-8 mb-4">8. Changes to Terms</h2>
-              <p className="text-gray-600">
+              <h2
+                className="text-2xl font-normal text-brand-dark mt-8 mb-4"
+                style={{ fontFamily: 'var(--font-serif)' }}
+              >
+                8. Changes to Terms
+              </h2>
+              <p className="text-brand-secondary">
                 We reserve the right to modify these terms at any time. Continued use of the service after changes constitutes acceptance of the new terms.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-[#2B2B2B] mt-8 mb-4">9. Contact</h2>
-              <p className="text-gray-600">
+              <h2
+                className="text-2xl font-normal text-brand-dark mt-8 mb-4"
+                style={{ fontFamily: 'var(--font-serif)' }}
+              >
+                9. Contact
+              </h2>
+              <p className="text-brand-secondary">
                 For questions about these terms, please contact us at support@retroframe.com
               </p>
             </section>
