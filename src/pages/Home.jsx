@@ -21,6 +21,7 @@ import HeroPhotoStack from '@/components/home/HeroPhotoStack';
 import CustomerReviews from '@/components/home/CustomerReviews';
 import UserPhotosGallery from '@/components/home/UserPhotosGallery';
 import FAQSection from '@/components/home/FAQSection';
+import LatestBlogPosts from '@/components/home/LatestBlogPosts';
 import SEO, { structuredData } from '@/components/seo/SEO';
 
 // Combined structured data for homepage
@@ -263,6 +264,9 @@ export default function Home() {
 
       {/* FAQ Section */}
       <FAQSection />
+
+      {/* Latest Blog Posts */}
+      <LatestBlogPosts />
 
       {/* Final CTA */}
       <section className="py-12 md:py-16 lg:py-20 px-4 bg-white">

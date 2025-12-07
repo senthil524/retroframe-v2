@@ -81,6 +81,10 @@ export default function HeroPhotoStack() {
                   alt={`Retro polaroid print - ${photo.caption}`}
                   className="w-full h-full object-cover"
                   loading="eager"
+                  fetchpriority={index === 0 ? "high" : "auto"}
+                  decoding={index < 3 ? "sync" : "async"}
+                  width={400}
+                  height={400}
                 />
               </div>
               

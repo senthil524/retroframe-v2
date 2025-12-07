@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Palette, ImageIcon, Maximize2, Loader2, ArrowLeft, Eye } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import SEO, { structuredData } from '@/components/seo/SEO';
+import SEOBreadcrumb, { breadcrumbConfigs } from '@/components/SEOBreadcrumb';
 
 // Pricing: ₹270 for first 18 prints, ₹15 for each additional
 const BASE_PRICE = 270; // Discounted from ₹399
@@ -185,6 +186,14 @@ export default function Studio() {
         url="/Studio"
         structuredData={structuredData.product}
       />
+
+      {/* Breadcrumbs for SEO */}
+      {!isOrderView && (
+        <div className="max-w-7xl mx-auto px-4 pt-4">
+          <SEOBreadcrumb items={breadcrumbConfigs.studio} />
+        </div>
+      )}
+
       {isOrderView ? (
         <header className="bg-white border-b border-brand sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 py-4">

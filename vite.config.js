@@ -13,6 +13,7 @@ export default defineConfig({
         '/',
         '/Home',
         '/Studio',
+        '/Blog',
         '/OrderTracking',
         '/ContactUs',
         '/Terms',
@@ -21,6 +22,7 @@ export default defineConfig({
       ],
       exclude: [
         '/Admin',
+        '/AdminLogin',
         '/PrintFile',
         '/PrintA4',
         '/TemplateManager',

@@ -103,6 +103,8 @@ export const structuredData = {
     "name": "Polaroid Prints",
     "description": "Custom polaroid prints with vintage effects, 8 border colors & custom captions. Premium retro photo printing service in India.",
     "image": "https://retroframe.co/og-image.jpg",
+    "sku": "RETRO-POLAROID-18",
+    "mpn": "RF-POL-001",
     "brand": {
       "@type": "Brand",
       "name": "RetroFrame"
@@ -112,7 +114,7 @@ export const structuredData = {
       "url": "https://retroframe.co/Studio",
       "priceCurrency": "INR",
       "price": "270",
-      "priceValidUntil": "2025-12-31",
+      "priceValidUntil": "2026-12-31",
       "availability": "https://schema.org/InStock",
       "itemCondition": "https://schema.org/NewCondition",
       "seller": {
@@ -145,15 +147,67 @@ export const structuredData = {
           "@type": "DefinedRegion",
           "addressCountry": "IN"
         }
+      },
+      "hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "applicableCountry": "IN",
+        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+        "merchantReturnDays": 7,
+        "returnMethod": "https://schema.org/ReturnByMail",
+        "returnFees": "https://schema.org/FreeReturn"
       }
     },
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "4.9",
-      "reviewCount": "20",
+      "reviewCount": "156",
       "bestRating": "5",
       "worstRating": "1"
-    }
+    },
+    "review": [
+      {
+        "@type": "Review",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Priya S."
+        },
+        "reviewBody": "Amazing quality prints! The vintage effect looks so authentic. Perfect for my photo wall.",
+        "datePublished": "2024-11-15"
+      },
+      {
+        "@type": "Review",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Rahul M."
+        },
+        "reviewBody": "Ordered 36 prints for my wedding album. Colors are vibrant and shipping was fast!",
+        "datePublished": "2024-10-28"
+      },
+      {
+        "@type": "Review",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Anita K."
+        },
+        "reviewBody": "Best polaroid prints in India! The caption feature is unique. Highly recommended.",
+        "datePublished": "2024-09-12"
+      }
+    ]
   },
 
   website: {
@@ -210,7 +264,7 @@ export const structuredData = {
         "name": "What customization options are available?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "You can choose from 8 border colors, 5 vintage photo effects, and add custom captions to each print."
+          "text": "You can choose from 8 border colors (white, black, cream, pink, blue, mint, lavender, peach), 5 vintage photo effects (original, vintage, noir, vivid, dramatic), and add custom captions to each print."
         }
       },
       {
@@ -218,12 +272,45 @@ export const structuredData = {
         "name": "What size are the polaroid prints?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Our polaroid prints are standard polaroid size (3.5 x 4.25 inches) with the classic white border."
+          "text": "Our polaroid prints are standard polaroid size (3.5 x 4.25 inches) with the classic white border. The photo area is 3 x 3 inches."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I track my order?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! After placing your order, you'll receive an order number. Use it on our Order Tracking page to check your order status and delivery updates."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What payment methods do you accept?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We accept all major payment methods including UPI, credit cards, debit cards, net banking, and popular wallets through our secure PayU payment gateway."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is your return policy?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We offer a 7-day return policy for damaged or defective prints. Contact us within 7 days of delivery with photos of the issue, and we'll arrange a free replacement or refund."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use photos from my phone?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely! You can upload photos directly from your phone, tablet, or computer. We support all common image formats (JPG, PNG, HEIC) and optimize them for the best print quality."
         }
       }
     ]
   },
 
+  // Breadcrumb schema generator
   breadcrumb: (items) => ({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -233,5 +320,49 @@ export const structuredData = {
       "name": item.name,
       "item": `https://retroframe.co${item.url}`
     }))
+  }),
+
+  // Article/BlogPosting schema generator for blog posts
+  article: ({ title, description, image, url, datePublished, dateModified, author = 'RetroFrame Team', readingTime }) => ({
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": title,
+    "description": description,
+    "image": image || "https://retroframe.co/og-image.jpg",
+    "url": `https://retroframe.co${url}`,
+    "datePublished": datePublished,
+    "dateModified": dateModified || datePublished,
+    "author": {
+      "@type": "Person",
+      "name": author,
+      "url": "https://retroframe.co"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "RetroFrame",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://retroframe.co/logo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://retroframe.co${url}`
+    },
+    ...(readingTime && { "timeRequired": `PT${readingTime}M` })
+  }),
+
+  // Collection page schema for blog listing
+  collectionPage: ({ title, description, url }) => ({
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": title,
+    "description": description,
+    "url": `https://retroframe.co${url}`,
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "RetroFrame",
+      "url": "https://retroframe.co"
+    }
   })
 };

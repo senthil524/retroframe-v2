@@ -1,0 +1,23 @@
+{
+  "name": "RetroFrame - Premium Polaroid Prints",
+  "short_name": "RetroFrame",
+  "description": "Order custom polaroid prints online in India. Premium retro photo printing with vintage effects.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFF8F5",
+  "theme_color": "#FF6B6B",
+  "orientation": "portrait-primary",
+  "categories": ["shopping", "photo", "lifestyle"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "lang": "en-IN",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false
+}
