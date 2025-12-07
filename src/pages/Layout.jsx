@@ -21,13 +21,6 @@ export default function Layout({ children, currentPageName }) {
   }, [currentPageName]);
 
   React.useEffect(() => {
-    // Set favicon
-    const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-    link.type = 'image/png';
-    link.rel = 'shortcut icon';
-    link.href = 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6910e083dc994964b8c23d88/1cd238881_RetroFrame-removebg-preview.png';
-    document.head.appendChild(link);
-
     // Add viewport meta tag for PayU
     let viewport = document.querySelector("meta[name='viewport']");
     if (!viewport) {
@@ -114,9 +107,10 @@ export default function Layout({ children, currentPageName }) {
               <div className="grid md:grid-cols-4 gap-8 mb-8">
                 {/* Brand */}
                 <div>
-                  <div className="text-2xl mb-4" style={{ fontFamily: 'var(--font-serif)' }}>
-                    <span className="text-white">RetroFrame</span>
-                  </div>
+                  <Link to="/" className="flex items-center gap-1 mb-4 hover:opacity-80 transition-opacity">
+                    <img src="/icon-white.png" alt="RetroFrame" className="w-9 h-9" />
+                    <span className="text-2xl text-white" style={{ fontFamily: 'var(--font-serif)' }}>RetroFrame</span>
+                  </Link>
                   <p className="text-gray-400 text-sm">
                     Transform your digital memories into beautiful retro-style prints.
                   </p>

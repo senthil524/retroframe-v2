@@ -8,6 +8,7 @@ import { Calendar, Clock, ArrowLeft, ArrowRight, Tag, Share2, Twitter, Facebook,
 import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
 import { createPageUrl } from '@/utils';
+import Logo from '@/components/ui/Logo';
 
 export default function BlogPost() {
   const { slug } = useParams();
@@ -195,9 +196,7 @@ export default function BlogPost() {
       <header className="bg-white/80 backdrop-blur-md border-b border-brand sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">
           <div className="flex items-center justify-between">
-            <Link to="/" className="text-xl md:text-2xl lg:text-3xl" style={{ fontFamily: 'var(--font-serif)', color: 'var(--color-dark)' }}>
-              RetroFrame
-            </Link>
+            <Logo />
             <Link to={createPageUrl('Studio')}>
               <Button
                 size="sm"

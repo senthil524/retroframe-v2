@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { HelmetProvider } from 'react-helmet-async'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { initWebVitals } from '@/lib/web-vitals'
+import { Analytics } from '@vercel/analytics/react'
 
 function App() {
   // Initialize Web Vitals monitoring on mount
@@ -17,6 +18,7 @@ function App() {
       <AuthProvider>
         <Pages />
         <Toaster />
+        <Analytics />
       </AuthProvider>
     </HelmetProvider>
   )

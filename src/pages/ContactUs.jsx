@@ -5,9 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Mail, Phone, MapPin, ArrowLeft, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import SEO from '@/components/seo/SEO';
+import Logo from '@/components/ui/Logo';
 
 export default function ContactUs() {
   const [formData, setFormData] = useState({
@@ -29,14 +30,26 @@ export default function ContactUs() {
         description="Get in touch with RetroFrame. Have questions about your polaroid prints order? We're here to help. Contact us via email or phone."
         url="/contact"
       />
-      <div className="max-w-4xl mx-auto px-4 py-12">
-        <Link to={createPageUrl('Home')}>
-          <Button variant="ghost" size="sm" className="mb-6">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Home
-          </Button>
-        </Link>
 
+      {/* Site Header */}
+      <header className="bg-white/80 backdrop-blur-md border-b border-brand sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">
+          <div className="flex items-center justify-between">
+            <Logo />
+            <Link to={createPageUrl('Studio')}>
+              <Button
+                size="sm"
+                className="text-xs md:text-sm text-white rounded-full px-4 md:px-6"
+                style={{ backgroundColor: 'var(--color-coral)' }}>
+                <Sparkles className="w-3.5 h-3.5 mr-1.5" />
+                Create Prints
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      <div className="max-w-4xl mx-auto px-4 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

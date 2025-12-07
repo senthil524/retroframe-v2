@@ -7,7 +7,7 @@ const defaultSEO = {
   defaultDescription: 'Order custom polaroid prints online in India. Premium retro photo printing service with vintage effects, 8 border colors & custom captions. 18 prints starting at Rs.270. Free shipping across India.',
   defaultImage: 'https://retroframe.co/og-image.jpg',
   twitterHandle: '@retroframe',
-  themeColor: '#FF6B6B'
+  themeColor: '#E67E6A'
 };
 
 export default function SEO({
@@ -22,11 +22,19 @@ export default function SEO({
 }) {
   // Get canonical URL - use provided url or fallback to current path
   const getCanonicalUrl = () => {
-    if (url) {
+    // Check if url is explicitly provided (including "/" for homepage)
+    if (url !== undefined && url !== null) {
+      // For homepage "/" return base URL, otherwise append the path
+      if (url === '/') {
+        return defaultSEO.siteUrl;
+      }
       return `${defaultSEO.siteUrl}${url}`;
     }
     // Fallback to current pathname for dynamic canonical
     if (typeof window !== 'undefined') {
+      if (window.location.pathname === '/') {
+        return defaultSEO.siteUrl;
+      }
       return `${defaultSEO.siteUrl}${window.location.pathname}`;
     }
     return defaultSEO.siteUrl;

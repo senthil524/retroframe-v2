@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Package, Truck, CheckCircle, Clock, Search } from 'lucide-react';
+import { Package, Truck, CheckCircle, Clock, Search, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { format } from 'date-fns';
 import { toast } from 'sonner';
 import SEO from '@/components/seo/SEO';
+import { createPageUrl } from '@/utils';
+import Logo from '@/components/ui/Logo';
 
 const statusSteps = {
   pending: { step: 1, icon: Clock, label: 'Order Placed', color: 'text-yellow-600' },
@@ -65,14 +68,33 @@ export default function OrderTracking() {
   const currentStep = order ? (statusSteps[order.order_status]?.step || 1) : 0;
 
   return (
-    <div className="min-h-screen bg-brand-warm py-8 md:py-12">
+    <div className="min-h-screen bg-brand-warm">
       <SEO
         title="Track Your Order"
         description="Track your RetroFrame polaroid prints order. Enter your order number and phone number to see real-time delivery status."
         url="/order-tracking"
       />
-      <div className="max-w-4xl mx-auto px-4">
-        {/* Header */}
+
+      {/* Site Header */}
+      <header className="bg-white/80 backdrop-blur-md border-b border-brand sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">
+          <div className="flex items-center justify-between">
+            <Logo />
+            <Link to={createPageUrl('Studio')}>
+              <Button
+                size="sm"
+                className="text-xs md:text-sm text-white rounded-full px-4 md:px-6"
+                style={{ backgroundColor: 'var(--color-coral)' }}>
+                <Sparkles className="w-3.5 h-3.5 mr-1.5" />
+                Create Prints
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      <div className="max-w-4xl mx-auto px-4 py-8 md:py-12">
+        {/* Page Title */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}

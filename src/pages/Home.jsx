@@ -23,6 +23,7 @@ import UserPhotosGallery from '@/components/home/UserPhotosGallery';
 import FAQSection from '@/components/home/FAQSection';
 import LatestBlogPosts from '@/components/home/LatestBlogPosts';
 import SEO, { structuredData } from '@/components/seo/SEO';
+import Logo from '@/components/ui/Logo';
 
 // Combined structured data for homepage
 const homeStructuredData = [
@@ -41,16 +42,14 @@ export default function Home() {
         title="Premium Polaroid Prints Online India"
         description="Order custom polaroid prints online in India. Premium retro photo printing service with vintage effects, 8 border colors & custom captions. 18 prints starting at Rs.270. Free shipping across India."
         keywords="polaroid prints online, retro prints india, photo printing service, vintage photo prints, custom polaroid, instant photo prints, polaroid style prints, retro photo printing, memory prints india, photo wall prints"
-        url=""
+        url="/"
         structuredData={homeStructuredData}
       />
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-md border-b border-brand sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">
           <div className="flex items-center justify-between">
-            <div className="text-xl md:text-2xl lg:text-3xl" style={{ fontFamily: 'var(--font-serif)', color: 'var(--color-dark)' }}>
-              RetroFrame
-            </div>
+            <Logo />
             <Link to={createPageUrl('Studio')}>
               <Button
                 size="sm"
