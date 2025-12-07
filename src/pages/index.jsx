@@ -107,8 +107,8 @@ function PagesContent() {
           <Route path="/Robots" element={<Robots />} />
           <Route path="/Sitemap" element={<Sitemap />} />
           <Route path="/AdminLogin" element={<AdminLogin />} />
-          <Route path="/Blog" element={<Blog />} />
-          <Route path="/Blog/:slug" element={<BlogPost />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           </Routes>
         </Suspense>
       </Layout>

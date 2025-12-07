@@ -104,7 +104,7 @@ export const breadcrumbConfigs = {
   ],
   blog: [
     { name: 'Home', url: '/' },
-    { name: 'Blog', url: '/Blog' }
+    { name: 'Blog', url: '/blog' }
   ],
   contact: [
     { name: 'Home', url: '/' },
@@ -130,7 +130,7 @@ export const breadcrumbConfigs = {
 export function getBlogPostBreadcrumb(postTitle) {
   return [
     { name: 'Home', url: '/' },
-    { name: 'Blog', url: '/Blog' },
+    { name: 'Blog', url: '/blog' },
     { name: postTitle, url: '#' }
   ];
 }

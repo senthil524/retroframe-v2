@@ -137,7 +137,7 @@ export default function Layout({ children, currentPageName }) {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/Blog" className="text-gray-400 hover:text-white transition-colors">
+                      <Link to="/blog" className="text-gray-400 hover:text-white transition-colors">
                         Blog
                       </Link>
                     </li>

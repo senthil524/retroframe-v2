@@ -91,7 +91,7 @@ export default function BlogPost() {
       }
     } catch (error) {
       console.error('Error loading blog post:', error);
-      navigate('/Blog');
+      navigate('/blog');
     }
     setLoading(false);
   };
@@ -170,7 +170,7 @@ export default function BlogPost() {
       <div className="min-h-screen flex items-center justify-center bg-brand-warm">
         <div className="text-center">
           <p className="text-gray-500 mb-4">Post not found</p>
-          <Link to="/Blog" className="text-brand-coral hover:underline">
+          <Link to="/blog" className="text-brand-coral hover:underline">
             Back to Blog
           </Link>
         </div>
@@ -183,7 +183,7 @@ export default function BlogPost() {
     title: post.title,
     description: post.excerpt,
     image: post.featured_image,
-    url: `/Blog/${post.slug}`,
+    url: `/blog/${post.slug}`,
     datePublished: post.published_at,
     dateModified: post.updated_at,
     author: post.author,
@@ -195,7 +195,7 @@ export default function BlogPost() {
       <SEO
         title={post.title}
         description={post.excerpt}
-        url={`/Blog/${post.slug}`}
+        url={`/blog/${post.slug}`}
         image={post.featured_image}
         type="article"
         keywords={post.tags?.join(', ')}
@@ -438,7 +438,7 @@ export default function BlogPost() {
             {relatedPosts.map((relatedPost) => (
               <Link
                 key={relatedPost.id}
-                to={`/Blog/${relatedPost.slug}`}
+                to={`/blog/${relatedPost.slug}`}
                 className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow group"
               >
                 <div className="aspect-video bg-gradient-to-br from-brand-warm to-brand-coral/20">
@@ -469,7 +469,7 @@ export default function BlogPost() {
       <section className="max-w-4xl mx-auto px-4 py-8 border-t border-gray-200 bg-white">
         <div className="flex justify-between items-center">
           <Link
-            to="/Blog"
+            to="/blog"
             className="flex items-center gap-2 text-gray-600 hover:text-brand-coral transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />

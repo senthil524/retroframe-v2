@@ -280,7 +280,7 @@ export const SEO_CONFIG = {
   Blog: {
     title: "Blog - Photo Printing Tips & Inspiration | RetroFrame",
     description: "Explore tips, ideas and inspiration for your polaroid prints. Photo display ideas, choosing photos, and more.",
-    canonicalPath: "/Blog",
+    canonicalPath: "/blog",
     indexing: "index",
     keywords: "polaroid blog, photo printing tips, polaroid display ideas, photo wall inspiration, retro photography"
   },
@@ -288,7 +288,7 @@ export const SEO_CONFIG = {
     // This is a placeholder - BlogPost sets its own SEO dynamically
     title: "Blog | RetroFrame",
     description: "Photo printing tips and inspiration.",
-    canonicalPath: "/Blog",
+    canonicalPath: "/blog",
     indexing: "index"
   }
 };

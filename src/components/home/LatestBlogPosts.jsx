@@ -68,7 +68,7 @@ export default function LatestBlogPosts() {
               transition={{ delay: index * 0.1 }}
               className="group"
             >
-              <Link to={`/Blog/${post.slug}`} className="block">
+              <Link to={`/blog/${post.slug}`} className="block">
                 {/* Image */}
                 <div className="aspect-[16/10] rounded-xl overflow-hidden mb-4 bg-gradient-to-br from-brand-warm to-brand-coral/20">
                   {post.featured_image ? (
@@ -128,7 +128,7 @@ export default function LatestBlogPosts() {
           className="text-center mt-10"
         >
           <Link
-            to="/Blog"
+            to="/blog"
             className="group inline-flex items-center gap-2 text-brand-coral hover:text-brand-coral-dark font-medium transition-colors"
           >
             View All Articles

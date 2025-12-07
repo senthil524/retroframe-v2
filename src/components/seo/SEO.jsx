@@ -20,11 +20,23 @@ export default function SEO({
   structuredData,
   keywords
 }) {
+  // Get canonical URL - use provided url or fallback to current path
+  const getCanonicalUrl = () => {
+    if (url) {
+      return `${defaultSEO.siteUrl}${url}`;
+    }
+    // Fallback to current pathname for dynamic canonical
+    if (typeof window !== 'undefined') {
+      return `${defaultSEO.siteUrl}${window.location.pathname}`;
+    }
+    return defaultSEO.siteUrl;
+  };
+
   const seo = {
     title: title ? `${title} | ${defaultSEO.siteName}` : defaultSEO.defaultTitle,
     description: description || defaultSEO.defaultDescription,
     image: image || defaultSEO.defaultImage,
-    url: url ? `${defaultSEO.siteUrl}${url}` : defaultSEO.siteUrl,
+    url: getCanonicalUrl(),
   };
 
   return (

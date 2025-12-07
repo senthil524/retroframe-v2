@@ -48,7 +48,7 @@ export default function Blog() {
     structuredData.collectionPage({
       title: 'Blog - Photo Printing Tips & Inspiration',
       description: 'Explore our blog for photo printing tips, polaroid display ideas, and creative inspiration for your memories.',
-      url: '/Blog'
+      url: '/blog'
     })
   ];
 
@@ -57,7 +57,7 @@ export default function Blog() {
       <SEO
         title="Blog - Photo Printing Tips & Inspiration"
         description="Explore our blog for photo printing tips, polaroid display ideas, and creative inspiration. Learn how to make the most of your polaroid prints."
-        url="/Blog"
+        url="/blog"
         keywords="polaroid blog, photo printing tips, polaroid display ideas, photo wall inspiration, retro photography"
         structuredData={pageStructuredData}
       />
@@ -161,7 +161,7 @@ export default function Blog() {
                 transition={{ delay: index * 0.1 }}
                 className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow group"
               >
-                <Link to={`/Blog/${post.slug}`}>
+                <Link to={`/blog/${post.slug}`}>
                   {/* Featured Image */}
                   <div className="aspect-video bg-gradient-to-br from-brand-warm to-brand-coral/20 relative overflow-hidden">
                     {post.featured_image ? (
