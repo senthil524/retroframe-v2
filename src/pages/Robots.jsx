@@ -4,30 +4,31 @@ export default function Robots() {
   useEffect(() => {
     const robotsTxt = `# RetroFrame Robots.txt
 User-agent: *
-Allow: /$
-Allow: /Home
-Allow: /Studio
-Allow: /ContactUs
-Allow: /Privacy
-Allow: /Terms
-Allow: /Refund
+Allow: /
+Allow: /studio
+Allow: /blog
+Allow: /contact
+Allow: /privacy
+Allow: /terms
+Allow: /refund
+Allow: /order-tracking
 
 # Block all internal/user pages
-Disallow: /Cart
-Disallow: /Checkout
-Disallow: /PhotoEditor
-Disallow: /Confirmation
-Disallow: /OrderTracking
-Disallow: /PaymentCallback
-Disallow: /Admin
-Disallow: /OrderDetails
-Disallow: /PrintA4
-Disallow: /PrintFile
-Disallow: /TemplateManager
-Disallow: /Robots
-Disallow: /Sitemap
+Disallow: /cart
+Disallow: /checkout
+Disallow: /photo-editor
+Disallow: /confirmation
+Disallow: /payment-callback
+Disallow: /admin
+Disallow: /admin-login
+Disallow: /order-details
+Disallow: /print-a4
+Disallow: /print-file
+Disallow: /template-manager
 
-Sitemap: https://retroframe.co/Sitemap
+# Sitemaps
+Sitemap: https://retroframe.co/sitemap.xml
+Sitemap: https://retroframe.co/blog-sitemap.xml
 
 Crawl-delay: 1`;
 
@@ -35,7 +36,7 @@ Crawl-delay: 1`;
     document.body.style.margin = '0';
     document.body.style.padding = '20px';
     document.body.style.background = '#fff';
-    
+
     // Set content type hint in title
     document.title = 'robots.txt';
   }, []);

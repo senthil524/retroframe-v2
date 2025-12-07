@@ -33,6 +33,7 @@ const TemplateManager = React.lazy(() => import('./TemplateManager'));
 const OrderDetails = React.lazy(() => import('./OrderDetails'));
 const Robots = React.lazy(() => import('./Robots'));
 const Sitemap = React.lazy(() => import('./Sitemap'));
+const BlogSitemap = React.lazy(() => import('./BlogSitemap'));
 const AdminLogin = React.lazy(() => import('./AdminLogin'));
 const Blog = React.lazy(() => import('./Blog'));
 const BlogPost = React.lazy(() => import('./BlogPost'));
@@ -57,6 +58,7 @@ const PAGES = {
   OrderDetails,
   Robots,
   Sitemap,
+  BlogSitemap,
   AdminLogin,
   Blog,
   BlogPost,
@@ -106,6 +108,7 @@ function PagesContent() {
           <Route path="/order-details" element={<OrderDetails />} />
           <Route path="/robots.txt" element={<Robots />} />
           <Route path="/sitemap.xml" element={<Sitemap />} />
+          <Route path="/blog-sitemap.xml" element={<BlogSitemap />} />
           <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
