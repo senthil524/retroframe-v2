@@ -43,3 +43,4 @@ VITE_SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
 1. Restart your development server after adding/changing environment variables
 2. Make sure `.env` is in your `.gitignore` file (don't commit secrets!)
 
+

@@ -129,7 +129,7 @@ export default function LatestBlogPosts() {
         >
           <Link
             to="/Blog"
-            className="inline-flex items-center gap-2 text-brand-coral hover:text-brand-coral-dark font-medium transition-colors"
+            className="group inline-flex items-center gap-2 text-brand-coral hover:text-brand-coral-dark font-medium transition-colors"
           >
             View All Articles
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

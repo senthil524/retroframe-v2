@@ -160,7 +160,7 @@ export const structuredData = {
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "4.9",
-      "reviewCount": "156",
+      "reviewCount": "20",
       "bestRating": "5",
       "worstRating": "1"
     },
@@ -174,10 +174,10 @@ export const structuredData = {
         },
         "author": {
           "@type": "Person",
-          "name": "Priya S."
+          "name": "Kaleesh"
         },
-        "reviewBody": "Amazing quality prints! The vintage effect looks so authentic. Perfect for my photo wall.",
-        "datePublished": "2024-11-15"
+        "reviewBody": "Absolutely blown away by the quality! These retro polaroid prints look so authentic and premium. The matte finish feels luxurious and the colors came out perfectly.",
+        "datePublished": "2024-11-23"
       },
       {
         "@type": "Review",
@@ -188,10 +188,10 @@ export const structuredData = {
         },
         "author": {
           "@type": "Person",
-          "name": "Rahul M."
+          "name": "Karthika"
         },
-        "reviewBody": "Ordered 36 prints for my wedding album. Colors are vibrant and shipping was fast!",
-        "datePublished": "2024-10-28"
+        "reviewBody": "Ordered 25 prints for my birthday party photo wall and they were the highlight! Everyone kept asking where I got them. Super fast delivery too.",
+        "datePublished": "2024-11-07"
       },
       {
         "@type": "Review",
@@ -202,10 +202,80 @@ export const structuredData = {
         },
         "author": {
           "@type": "Person",
-          "name": "Anita K."
+          "name": "Agila"
         },
-        "reviewBody": "Best polaroid prints in India! The caption feature is unique. Highly recommended.",
-        "datePublished": "2024-09-12"
+        "reviewBody": "The vintage effect transformed my photos into gorgeous art pieces. My memory wall looks straight out of Pinterest! Exceptional quality.",
+        "datePublished": "2024-11-14"
+      },
+      {
+        "@type": "Review",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Lavanya"
+        },
+        "reviewBody": "Gifted these to my parents for their anniversary with custom captions. They were so touched! The personal touch made it incredibly special.",
+        "datePublished": "2024-11-30"
+      },
+      {
+        "@type": "Review",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Ganesh"
+        },
+        "reviewBody": "As a photographer, I am very particular about print quality. RetroFrame exceeded my expectations! The 300 GSM paper is top-notch.",
+        "datePublished": "2024-12-02"
+      },
+      {
+        "@type": "Review",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Vani"
+        },
+        "reviewBody": "Created a beautiful travel memories collection with different border colors. The mint and lavender borders are so pretty! Love the customization.",
+        "datePublished": "2024-12-03"
+      },
+      {
+        "@type": "Review",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Muthu"
+        },
+        "reviewBody": "Best polaroid printing service in India! Ordered for my sister wedding and the prints arrived within 4 days. The noir effect looked stunning.",
+        "datePublished": "2024-12-04"
+      },
+      {
+        "@type": "Review",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Swathi"
+        },
+        "reviewBody": "Such a wonderful experience! The prints arrived beautifully packaged and the quality is amazing. Perfect for my room decor. Will definitely order again!",
+        "datePublished": "2024-11-30"
       }
     ]
   },

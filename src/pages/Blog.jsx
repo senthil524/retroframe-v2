@@ -4,8 +4,10 @@ import { supabase } from '@/lib/supabase-client';
 import SEO, { structuredData } from '@/components/seo/SEO';
 import SEOBreadcrumb, { breadcrumbConfigs } from '@/components/SEOBreadcrumb';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, ArrowRight, Tag } from 'lucide-react';
+import { Calendar, Clock, ArrowRight, Tag, Sparkles } from 'lucide-react';
 import { format } from 'date-fns';
+import { Button } from '@/components/ui/button';
+import { createPageUrl } from '@/utils';
 
 export default function Blog() {
   const [posts, setPosts] = useState([]);
@@ -60,6 +62,26 @@ export default function Blog() {
         structuredData={pageStructuredData}
       />
 
+      {/* Site Header */}
+      <header className="bg-white/80 backdrop-blur-md border-b border-brand sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">
+          <div className="flex items-center justify-between">
+            <Link to="/" className="text-xl md:text-2xl lg:text-3xl" style={{ fontFamily: 'var(--font-serif)', color: 'var(--color-dark)' }}>
+              RetroFrame
+            </Link>
+            <Link to={createPageUrl('Studio')}>
+              <Button
+                size="sm"
+                className="text-xs md:text-sm text-white rounded-full px-4 md:px-6"
+                style={{ backgroundColor: 'var(--color-coral)' }}>
+                <Sparkles className="w-3.5 h-3.5 mr-1.5" />
+                Create Prints
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </header>
+
       {/* Hero Section */}
       <section className="bg-white border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-4 py-8 md:py-12">
@@ -85,9 +107,9 @@ export default function Blog() {
 
       {/* Category Filter */}
       {categories.length > 1 && (
-        <section className="bg-white border-b border-gray-100 sticky top-0 z-40">
+        <section className="bg-white/95 backdrop-blur-sm border-b border-gray-100 sticky top-[57px] md:top-[65px] z-40">
           <div className="max-w-6xl mx-auto px-4 py-4">
-            <div className="flex gap-2 overflow-x-auto pb-2">
+            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
               {categories.map((category) => (
                 <button
                   key={category}
@@ -103,6 +125,10 @@ export default function Blog() {
               ))}
             </div>
           </div>
+          <style>{`
+            .scrollbar-hide::-webkit-scrollbar { display: none; }
+            .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+          `}</style>
         </section>
       )}
 
@@ -114,7 +140,16 @@ export default function Blog() {
           </div>
         ) : filteredPosts.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-gray-500">No blog posts found.</p>
+            <div className="text-6xl mb-4">📝</div>
+            <p className="text-gray-500 mb-2">No blog posts found</p>
+            {selectedCategory !== 'all' && (
+              <button
+                onClick={() => setSelectedCategory('all')}
+                className="text-brand-coral hover:underline text-sm"
+              >
+                View all posts
+              </button>
+            )}
           </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

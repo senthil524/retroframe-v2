@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import Layout from "./Layout.jsx";
+import ScrollToTop from '@/components/ScrollToTop';
 
 // Loading fallback component
 const PageLoader = () => (
@@ -80,8 +81,10 @@ function PagesContent() {
   const currentPage = _getCurrentPage(location.pathname);
 
   return (
-    <Layout currentPageName={currentPage}>
-      <Suspense fallback={<PageLoader />}>
+    <>
+      <ScrollToTop />
+      <Layout currentPageName={currentPage}>
+        <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Home" element={<Home />} />
@@ -106,9 +109,10 @@ function PagesContent() {
           <Route path="/AdminLogin" element={<AdminLogin />} />
           <Route path="/Blog" element={<Blog />} />
           <Route path="/Blog/:slug" element={<BlogPost />} />
-        </Routes>
-      </Suspense>
-    </Layout>
+          </Routes>
+        </Suspense>
+      </Layout>
+    </>
   );
 }
 
