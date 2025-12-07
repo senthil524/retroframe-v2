@@ -270,5 +270,25 @@ export const SEO_CONFIG = {
     description: "",
     canonicalPath: "/Sitemap",
     indexing: "noindex-block"
+  },
+  AdminLogin: {
+    title: "Admin Login | RetroFrame",
+    description: "",
+    canonicalPath: "/AdminLogin",
+    indexing: "noindex-block"
+  },
+  Blog: {
+    title: "Blog - Photo Printing Tips & Inspiration | RetroFrame",
+    description: "Explore tips, ideas and inspiration for your polaroid prints. Photo display ideas, choosing photos, and more.",
+    canonicalPath: "/Blog",
+    indexing: "index",
+    keywords: "polaroid blog, photo printing tips, polaroid display ideas, photo wall inspiration, retro photography"
+  },
+  BlogPost: {
+    // This is a placeholder - BlogPost sets its own SEO dynamically
+    title: "Blog | RetroFrame",
+    description: "Photo printing tips and inspiration.",
+    canonicalPath: "/Blog",
+    indexing: "index"
   }
 };

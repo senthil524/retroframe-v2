@@ -7,7 +7,11 @@ import SEOHead, { SEO_CONFIG } from '@/components/SEOHead.jsx';
 
 export default function Layout({ children, currentPageName }) {
   const showFooter = !['Studio', 'PhotoEditor', 'Cart', 'Checkout'].includes(currentPageName);
-  
+
+  // Pages that handle their own SEO (don't use SEOHead to avoid conflicts)
+  const pagesWithOwnSEO = ['Blog', 'BlogPost', 'Home', 'Studio', 'ContactUs', 'Terms', 'Privacy', 'Refund', 'OrderTracking'];
+  const useDefaultSEO = !pagesWithOwnSEO.includes(currentPageName);
+
   // Get SEO config for current page
   const seoConfig = SEO_CONFIG[currentPageName] || SEO_CONFIG.Home;
 
@@ -72,7 +76,7 @@ export default function Layout({ children, currentPageName }) {
 
   return (
     <PhotoProvider>
-      <SEOHead {...seoConfig} />
+      {useDefaultSEO && <SEOHead {...seoConfig} />}
       <style>
         {`
           @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
