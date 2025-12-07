@@ -88,8 +88,8 @@ function PagesContent() {
       <Layout currentPageName={currentPage}>
         <Suspense fallback={<PageLoader />}>
         <Routes>
+          {/* Main routes (lowercase) */}
           <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Navigate to="/" replace />} />
           <Route path="/studio" element={<Studio />} />
           <Route path="/photo-editor" element={<PhotoEditor />} />
           <Route path="/cart" element={<Cart />} />
@@ -112,6 +112,28 @@ function PagesContent() {
           <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
+
+          {/* Legacy URL redirects (old uppercase to new lowercase) */}
+          <Route path="/Home" element={<Navigate to="/" replace />} />
+          <Route path="/home" element={<Navigate to="/" replace />} />
+          <Route path="/Studio" element={<Navigate to="/studio" replace />} />
+          <Route path="/PhotoEditor" element={<Navigate to="/photo-editor" replace />} />
+          <Route path="/Cart" element={<Navigate to="/cart" replace />} />
+          <Route path="/Checkout" element={<Navigate to="/checkout" replace />} />
+          <Route path="/Confirmation" element={<Navigate to="/confirmation" replace />} />
+          <Route path="/Admin" element={<Navigate to="/admin" replace />} />
+          <Route path="/OrderTracking" element={<Navigate to="/order-tracking" replace />} />
+          <Route path="/PrintFile" element={<Navigate to="/print-file" replace />} />
+          <Route path="/ContactUs" element={<Navigate to="/contact" replace />} />
+          <Route path="/Terms" element={<Navigate to="/terms" replace />} />
+          <Route path="/Privacy" element={<Navigate to="/privacy" replace />} />
+          <Route path="/Refund" element={<Navigate to="/refund" replace />} />
+          <Route path="/PaymentCallback" element={<Navigate to="/payment-callback" replace />} />
+          <Route path="/PrintA4" element={<Navigate to="/print-a4" replace />} />
+          <Route path="/TemplateManager" element={<Navigate to="/template-manager" replace />} />
+          <Route path="/OrderDetails" element={<Navigate to="/order-details" replace />} />
+          <Route path="/AdminLogin" element={<Navigate to="/admin-login" replace />} />
+          <Route path="/Blog" element={<Navigate to="/blog" replace />} />
           </Routes>
         </Suspense>
       </Layout>
