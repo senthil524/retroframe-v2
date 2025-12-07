@@ -1,16 +1,45 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
+import Sitemap from 'vite-plugin-sitemap'
 
 // https://vite.dev/config/
-// Note: Sitemap and robots.txt are generated dynamically via React components
-// /sitemap.xml - static pages
-// /blog-sitemap.xml - blog posts from database
-// /robots.txt - robots file with both sitemaps
 export default defineConfig({
   base: '/',
   plugins: [
-    react()
+    react(),
+    Sitemap({
+      hostname: 'https://retroframe.co',
+      dynamicRoutes: [
+        '/',
+        '/studio',
+        '/blog',
+        '/order-tracking',
+        '/contact',
+        '/terms',
+        '/privacy',
+        '/refund'
+      ],
+      exclude: [
+        '/admin',
+        '/admin-login',
+        '/print-file',
+        '/print-a4',
+        '/template-manager',
+        '/payment-callback',
+        '/order-details',
+        '/cart',
+        '/checkout',
+        '/confirmation',
+        '/photo-editor'
+      ],
+      robots: [
+        { userAgent: '*', allow: '/' },
+        { userAgent: '*', disallow: ['/admin', '/admin-login', '/print-file', '/print-a4', '/template-manager', '/payment-callback', '/order-details', '/cart', '/checkout', '/confirmation', '/photo-editor'] },
+        { userAgent: 'Googlebot', allow: '/' },
+        { userAgent: 'Bingbot', allow: '/' }
+      ]
+    })
   ],
   server: {
     allowedHosts: true
@@ -28,4 +57,4 @@ export default defineConfig({
       },
     },
   },
-}) 
+})
