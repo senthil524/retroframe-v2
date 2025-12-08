@@ -2,15 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-// Vercel CDN image optimization helper
-const getOptimizedImageUrl = (src, width = 800) => {
-  // In production on Vercel, use /_vercel/image for optimization
-  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
-    return `/_vercel/image?url=${encodeURIComponent(src)}&w=${width}&q=80`;
-  }
-  return src;
-};
-
 // Reordered: 8th→1st, 7th→2nd, 3rd→3rd, 4th→4th, rest as is
 const heroImages = [
   {
@@ -79,8 +70,16 @@ export default function HeroCarousel() {
   useEffect(() => {
     const nextIndex = (currentIndex + 1) % heroImages.length;
     const img = new Image();
-    img.src = getOptimizedImageUrl(heroImages[nextIndex].src);
+    img.src = heroImages[nextIndex].src;
   }, [currentIndex]);
+
+  // Preload first few images on mount
+  useEffect(() => {
+    heroImages.slice(0, 3).forEach((image) => {
+      const img = new Image();
+      img.src = image.src;
+    });
+  }, []);
 
   // Pause on hover
   const handleMouseEnter = () => setIsAutoPlaying(false);
@@ -92,24 +91,20 @@ export default function HeroCarousel() {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Preload first 2 images for LCP */}
-      <link rel="preload" as="image" href={getOptimizedImageUrl(heroImages[0].src)} />
-      <link rel="preload" as="image" href={getOptimizedImageUrl(heroImages[1].src)} />
-
       {/* Main carousel container */}
       <div className="relative aspect-square rounded-2xl overflow-hidden shadow-2xl bg-gray-100">
         <AnimatePresence mode="wait">
           <motion.img
             key={currentIndex}
-            src={getOptimizedImageUrl(heroImages[currentIndex].src)}
+            src={heroImages[currentIndex].src}
             alt={heroImages[currentIndex].alt}
             className="w-full h-full object-cover"
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.5 }}
-            loading="eager"
-            fetchpriority="high"
+            loading={currentIndex === 0 ? "eager" : "lazy"}
+            fetchpriority={currentIndex === 0 ? "high" : "auto"}
             width={800}
             height={800}
             decoding="async"
