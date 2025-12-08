@@ -133,3 +133,5 @@ base44.integrations.Core.UploadFile({ file })
 - SDK Repository: https://github.com/Ai-Automators/base44-to-supabase-sdk
 
 
+
+

@@ -17,7 +17,7 @@ import {
   Sliders } from
 'lucide-react';
 
-import HeroPhotoStack from '@/components/home/HeroPhotoStack';
+import HeroCarousel from '@/components/home/HeroCarousel';
 import CustomerReviews from '@/components/home/CustomerReviews';
 import UserPhotosGallery from '@/components/home/UserPhotosGallery';
 import FAQSection from '@/components/home/FAQSection';
@@ -168,7 +168,7 @@ export default function Home() {
               transition={{ duration: 0.3, delay: 0.1 }}
               className="flex items-center justify-center order-1 lg:order-2 mb-8 lg:mb-0">
 
-              <HeroPhotoStack />
+              <HeroCarousel />
             </motion.div>
           </div>
         </div>

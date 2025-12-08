@@ -44,3 +44,5 @@ VITE_SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
 2. Make sure `.env` is in your `.gitignore` file (don't commit secrets!)
 
 
+
+
