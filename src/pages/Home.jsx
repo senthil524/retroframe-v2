@@ -31,6 +31,7 @@ const homeStructuredData = [
   structuredData.product,
   structuredData.website,
   structuredData.localBusiness,
+  structuredData.imageGallery,
   structuredData.faq
 ];
 
@@ -39,9 +40,10 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-brand-warm" itemScope itemType="https://schema.org/Product">
       <SEO
-        title="Premium Polaroid Prints Online India"
-        description="Order custom polaroid prints online in India. Premium retro photo printing service with vintage effects, 8 border colors & custom captions. 18 prints starting at Rs.270. Free shipping across India."
-        keywords="polaroid prints online, retro prints india, photo printing service, vintage photo prints, custom polaroid, instant photo prints, polaroid style prints, retro photo printing, memory prints india, photo wall prints"
+        title="Retro Polaroid Prints Online India | Custom Vintage Photo Prints - RetroFrame"
+        description="Order custom retro polaroid prints online in India. Premium vintage photo printing with 8 border colors, 5 effects & captions. 18 prints ₹270, free shipping. 4.9★ rated."
+        keywords="retro polaroid prints online, custom vintage photo prints, retro prints india, polaroid style prints, instant photo prints online, custom retro print, vintage photo printing service, polaroid prints delivery india"
+        image="https://retroframe.co/hero-images/hero-8.jpg"
         url="/"
         structuredData={homeStructuredData}
       />
@@ -87,15 +89,12 @@ export default function Home() {
               {/* Title - SEO optimized with schema */}
               <div>
                 <h1 className="text-3xl md:text-5xl lg:text-6xl font-normal mb-4 md:mb-6 leading-tight text-brand-dark"
-
                 style={{ fontFamily: 'var(--font-serif)', letterSpacing: '-0.02em' }}
-                itemProp="name">Polaroid Prints Online Delivered to Your Door
-
-
-
+                itemProp="name">
+                  Retro Polaroid Prints Online in India
                 </h1>
                 <p className="text-base md:text-xl lg:text-2xl text-brand-secondary leading-relaxed" itemProp="description">
-                  Transform your digital photos into beautiful retro polaroid prints. Premium quality vintage photo printing service in India. Order custom retro prints online with fast delivery.
+                  Transform your photos into custom vintage polaroid prints. Premium retro photo printing with 8 border colors, 5 effects & personalized captions. Delivered in 3-6 days.
                 </p>
               </div>
 
@@ -210,9 +209,9 @@ export default function Home() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-8 md:mb-12">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal text-brand-dark mb-3 md:mb-4" style={{ fontFamily: 'var(--font-serif)' }}>
-              How to Order Retro Prints Online
+              How to Order Custom Polaroid Prints
             </h2>
-            <p className="text-base md:text-xl text-brand-secondary">Simple 3-step process to get your polaroid prints</p>
+            <p className="text-base md:text-xl text-brand-secondary">Create your retro prints in 3 simple steps</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -276,10 +275,10 @@ export default function Home() {
 
             <Package className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 mx-auto mb-4 md:mb-6 opacity-90" />
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-normal mb-4 md:mb-6" style={{ fontFamily: 'var(--font-serif)' }}>
-              Ready to Print Your Memories?
+              Create Your Custom Retro Prints Today
             </h2>
             <p className="text-base md:text-xl mb-6 md:mb-8 opacity-90 max-w-2xl mx-auto">
-              Order your custom polaroid prints online today. Premium retro photo printing delivered across India.
+              Order vintage polaroid prints online. Premium quality, free shipping across India. Perfect for gifts, wall decor & memories.
             </p>
             <Link to={createPageUrl('Studio')}>
               <Button

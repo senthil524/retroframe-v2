@@ -1,0 +1,33 @@
+# RetroFrame Robots.txt
+User-agent: *
+Allow: /
+
+# Disallow admin and internal pages
+Disallow: /admin
+Disallow: /admin-login
+Disallow: /print-file
+Disallow: /print-a4
+Disallow: /template-manager
+Disallow: /payment-callback
+Disallow: /order-details
+Disallow: /cart
+Disallow: /checkout
+Disallow: /confirmation
+Disallow: /photo-editor
+
+# Googlebot specific rules
+User-agent: Googlebot
+Allow: /
+
+# Googlebot-Image - allow all images
+User-agent: Googlebot-Image
+Allow: /hero-images/
+Allow: /
+
+# Bingbot
+User-agent: Bingbot
+Allow: /
+
+# Sitemaps
+Sitemap: https://retroframe.co/sitemap.xml
+Sitemap: https://retroframe.co/image-sitemap.xml

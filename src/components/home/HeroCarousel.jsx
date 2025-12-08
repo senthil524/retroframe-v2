@@ -7,42 +7,42 @@ const heroImages = [
   {
     id: 1,
     src: '/hero-images/hero-8.jpg',
-    alt: 'Baby milestone polaroid prints held by Indian mother'
+    alt: 'Custom baby milestone retro polaroid prints India - RetroFrame'
   },
   {
     id: 2,
     src: '/hero-images/hero-7.jpg',
-    alt: 'Indian friends trip polaroid prints flat lay aesthetic'
+    alt: 'Friends trip vintage polaroid prints flat lay - order online India'
   },
   {
     id: 3,
     src: '/hero-images/hero-3.jpg',
-    alt: 'Polaroid wall decor with fairy lights and clips'
+    alt: 'Polaroid prints wall decor ideas with fairy lights - RetroFrame India'
   },
   {
     id: 4,
     src: '/hero-images/hero-4.jpg',
-    alt: 'Unboxing polaroid prints from brown delivery box'
+    alt: 'Unboxing custom polaroid prints - premium packaging RetroFrame'
   },
   {
     id: 5,
     src: '/hero-images/hero-1.jpg',
-    alt: 'Indian hands holding polaroid prints fanned out'
+    alt: 'Custom retro polaroid prints online India - vintage photo printing'
   },
   {
     id: 6,
     src: '/hero-images/hero-2.jpg',
-    alt: 'Polaroid prints as gift in kraft paper envelope'
+    alt: 'Polaroid prints gift idea India - personalized photo prints'
   },
   {
     id: 7,
     src: '/hero-images/hero-5.jpg',
-    alt: 'Workspace desk decorated with polaroid prints'
+    alt: 'Workspace desk polaroid prints decor - home office RetroFrame'
   },
   {
     id: 8,
     src: '/hero-images/hero-6.jpg',
-    alt: 'Indian couple holding polaroid prints of memories'
+    alt: 'Couple memories retro polaroid prints - anniversary gift India'
   }
 ];
 

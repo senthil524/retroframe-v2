@@ -5,7 +5,7 @@ const defaultSEO = {
   siteUrl: 'https://retroframe.co',
   defaultTitle: 'RetroFrame - Premium Polaroid Prints Online India',
   defaultDescription: 'Order custom polaroid prints online in India. Premium retro photo printing service with vintage effects, 8 border colors & custom captions. 18 prints starting at Rs.270. Free shipping across India.',
-  defaultImage: 'https://retroframe.co/og-image.jpg',
+  defaultImage: 'https://retroframe.co/hero-images/hero-8.jpg',
   twitterHandle: '@retroframe',
   themeColor: '#E67E6A'
 };
@@ -41,7 +41,10 @@ export default function SEO({
   };
 
   const seo = {
-    title: title ? `${title} | ${defaultSEO.siteName}` : defaultSEO.defaultTitle,
+    // Don't append siteName if title already contains it or includes 'RetroFrame'
+    title: title
+      ? (title.toLowerCase().includes('retroframe') ? title : `${title} | ${defaultSEO.siteName}`)
+      : defaultSEO.defaultTitle,
     description: description || defaultSEO.defaultDescription,
     image: image || defaultSEO.defaultImage,
     url: getCanonicalUrl(),
@@ -316,7 +319,12 @@ export const structuredData = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "RetroFrame",
-    "image": "https://retroframe.co/og-image.jpg",
+    "image": [
+      "https://retroframe.co/hero-images/hero-8.jpg",
+      "https://retroframe.co/hero-images/hero-7.jpg",
+      "https://retroframe.co/hero-images/hero-3.jpg",
+      "https://retroframe.co/hero-images/hero-4.jpg"
+    ],
     "url": "https://retroframe.co",
     "priceRange": "$$",
     "address": {
@@ -327,6 +335,73 @@ export const structuredData = {
       "@type": "Country",
       "name": "India"
     }
+  },
+
+  // Image gallery schema for Google Images indexing
+  imageGallery: {
+    "@context": "https://schema.org",
+    "@type": "ImageGallery",
+    "name": "Retro Polaroid Prints Gallery",
+    "description": "Premium polaroid prints examples - baby photos, friendship memories, wall decor, unboxing experience",
+    "url": "https://retroframe.co",
+    "image": [
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://retroframe.co/hero-images/hero-8.jpg",
+        "name": "Baby milestone polaroid prints",
+        "description": "Custom baby milestone polaroid prints held by Indian mother - perfect for preserving precious moments",
+        "caption": "Baby Milestone Polaroid Prints"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://retroframe.co/hero-images/hero-7.jpg",
+        "name": "Friends trip polaroid prints",
+        "description": "Indian friends trip polaroid prints flat lay aesthetic - capture travel memories",
+        "caption": "Travel & Friends Polaroid Prints"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://retroframe.co/hero-images/hero-3.jpg",
+        "name": "Polaroid wall decor",
+        "description": "Polaroid wall decor with fairy lights and clips - trendy room decoration ideas",
+        "caption": "Polaroid Wall Decor Ideas"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://retroframe.co/hero-images/hero-4.jpg",
+        "name": "Unboxing polaroid prints",
+        "description": "Unboxing polaroid prints from brown delivery box - premium packaging experience",
+        "caption": "Polaroid Prints Unboxing"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://retroframe.co/hero-images/hero-1.jpg",
+        "name": "Hands holding polaroid prints",
+        "description": "Indian hands holding polaroid prints fanned out - custom vintage photo prints",
+        "caption": "Custom Polaroid Prints"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://retroframe.co/hero-images/hero-2.jpg",
+        "name": "Polaroid prints gift",
+        "description": "Polaroid prints as gift in kraft paper envelope - perfect personalized gift idea",
+        "caption": "Polaroid Prints Gift"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://retroframe.co/hero-images/hero-5.jpg",
+        "name": "Workspace desk polaroid decor",
+        "description": "Workspace desk decorated with polaroid prints - home office decoration",
+        "caption": "Desk Polaroid Decor"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://retroframe.co/hero-images/hero-6.jpg",
+        "name": "Couple polaroid memories",
+        "description": "Indian couple holding polaroid prints of memories - anniversary gift ideas",
+        "caption": "Couple Memories Polaroid"
+      }
+    ]
   },
 
   faq: {
