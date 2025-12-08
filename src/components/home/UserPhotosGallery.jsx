@@ -36,6 +36,9 @@ const userPhotos = [
 
 
 export default function UserPhotosGallery() {
+  // Hidden for now - uncomment to show customer gallery
+  return null;
+
   return (
     <section className="py-12 md:py-16 lg:py-20 px-4 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
