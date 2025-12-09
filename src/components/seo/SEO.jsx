@@ -123,46 +123,116 @@ export const structuredData = {
   product: {
     "@context": "https://schema.org",
     "@type": "Product",
-    "name": "Polaroid Prints",
-    "description": "Custom polaroid prints with vintage effects, 8 border colors & custom captions. Premium retro photo printing service in India.",
-    "image": "https://retroframe.co/og-image.jpg",
+    "name": "Retro Polaroid Prints",
+    "alternateName": [
+      "Polaroid Photo Prints",
+      "Custom Polaroid Prints",
+      "Vintage Photo Prints",
+      "Retro Photo Prints",
+      "Instant Photo Prints",
+      "Polaroid Style Prints",
+      "Mini Photo Prints",
+      "Square Photo Prints"
+    ],
+    "description": "Custom polaroid prints with vintage effects, 8 border colors & custom captions. Premium retro photo printing service in India. 18 prints starting at ₹270 with free shipping.",
+    "image": [
+      {
+        "@type": "ImageObject",
+        "url": "https://retroframe.co/hero-images/hero-8.jpg",
+        "name": "Baby Milestone Polaroid Prints",
+        "description": "Custom baby milestone polaroid prints - perfect for preserving precious moments"
+      },
+      {
+        "@type": "ImageObject",
+        "url": "https://retroframe.co/hero-images/hero-7.jpg",
+        "name": "Friends Trip Polaroid Prints",
+        "description": "Friends trip polaroid prints flat lay - capture travel memories in retro style"
+      },
+      {
+        "@type": "ImageObject",
+        "url": "https://retroframe.co/hero-images/hero-3.jpg",
+        "name": "Polaroid Wall Decor",
+        "description": "Polaroid wall decor with fairy lights and clips - trendy room decoration"
+      },
+      {
+        "@type": "ImageObject",
+        "url": "https://retroframe.co/hero-images/hero-4.jpg",
+        "name": "Polaroid Prints Unboxing",
+        "description": "Unboxing polaroid prints from delivery box - premium packaging experience"
+      },
+      {
+        "@type": "ImageObject",
+        "url": "https://retroframe.co/hero-images/hero-1.jpg",
+        "name": "Custom Polaroid Prints",
+        "description": "Hands holding polaroid prints fanned out - custom vintage photo prints"
+      },
+      {
+        "@type": "ImageObject",
+        "url": "https://retroframe.co/hero-images/hero-2.jpg",
+        "name": "Polaroid Prints Gift",
+        "description": "Polaroid prints as gift in kraft envelope - personalized gift idea"
+      },
+      {
+        "@type": "ImageObject",
+        "url": "https://retroframe.co/hero-images/hero-5.jpg",
+        "name": "Workspace Polaroid Decor",
+        "description": "Workspace desk decorated with polaroid prints - home office decoration"
+      },
+      {
+        "@type": "ImageObject",
+        "url": "https://retroframe.co/hero-images/hero-6.jpg",
+        "name": "Couple Polaroid Memories",
+        "description": "Couple holding polaroid prints of memories - anniversary gift ideas"
+      }
+    ],
     "sku": "RETRO-POLAROID-18",
     "mpn": "RF-POL-001",
+    "gtin13": "0000000000000",
+    "url": "https://retroframe.co/Studio",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://retroframe.co"
+    },
     "brand": {
       "@type": "Brand",
       "name": "RetroFrame"
     },
+    "category": "Photo Prints > Polaroid Prints",
+    "material": "270 GSM Premium Matte Photo Paper",
+    "size": "3.5 x 4 inches",
+    "color": "White, Black, Cream, Pink, Blue, Mint, Lavender, Peach",
     "offers": {
       "@type": "Offer",
-      "url": "https://retroframe.co/studio",
+      "url": "https://retroframe.co/Studio",
       "priceCurrency": "INR",
-      "price": "270",
+      "price": 270,
       "priceValidUntil": "2026-12-31",
       "availability": "https://schema.org/InStock",
       "itemCondition": "https://schema.org/NewCondition",
       "seller": {
         "@type": "Organization",
-        "name": "RetroFrame"
+        "name": "RetroFrame",
+        "url": "https://retroframe.co"
       },
       "shippingDetails": {
         "@type": "OfferShippingDetails",
         "shippingRate": {
           "@type": "MonetaryAmount",
-          "value": "0",
+          "value": 0,
           "currency": "INR"
         },
         "deliveryTime": {
           "@type": "ShippingDeliveryTime",
           "handlingTime": {
             "@type": "QuantitativeValue",
-            "minValue": "1",
-            "maxValue": "2",
+            "minValue": 1,
+            "maxValue": 2,
             "unitCode": "DAY"
           },
           "transitTime": {
             "@type": "QuantitativeValue",
-            "minValue": "3",
-            "maxValue": "6",
+            "minValue": 3,
+            "maxValue": 6,
             "unitCode": "DAY"
           }
         },
@@ -182,18 +252,18 @@ export const structuredData = {
     },
     "aggregateRating": {
       "@type": "AggregateRating",
-      "ratingValue": "4.9",
-      "reviewCount": "20",
-      "bestRating": "5",
-      "worstRating": "1"
+      "ratingValue": 4.9,
+      "reviewCount": 20,
+      "bestRating": 5,
+      "worstRating": 1
     },
     "review": [
       {
         "@type": "Review",
         "reviewRating": {
           "@type": "Rating",
-          "ratingValue": "5",
-          "bestRating": "5"
+          "ratingValue": 5,
+          "bestRating": 5
         },
         "author": {
           "@type": "Person",
@@ -206,8 +276,8 @@ export const structuredData = {
         "@type": "Review",
         "reviewRating": {
           "@type": "Rating",
-          "ratingValue": "5",
-          "bestRating": "5"
+          "ratingValue": 5,
+          "bestRating": 5
         },
         "author": {
           "@type": "Person",
@@ -220,8 +290,8 @@ export const structuredData = {
         "@type": "Review",
         "reviewRating": {
           "@type": "Rating",
-          "ratingValue": "5",
-          "bestRating": "5"
+          "ratingValue": 5,
+          "bestRating": 5
         },
         "author": {
           "@type": "Person",
@@ -234,8 +304,8 @@ export const structuredData = {
         "@type": "Review",
         "reviewRating": {
           "@type": "Rating",
-          "ratingValue": "5",
-          "bestRating": "5"
+          "ratingValue": 5,
+          "bestRating": 5
         },
         "author": {
           "@type": "Person",
@@ -248,8 +318,8 @@ export const structuredData = {
         "@type": "Review",
         "reviewRating": {
           "@type": "Rating",
-          "ratingValue": "5",
-          "bestRating": "5"
+          "ratingValue": 5,
+          "bestRating": 5
         },
         "author": {
           "@type": "Person",
@@ -262,8 +332,8 @@ export const structuredData = {
         "@type": "Review",
         "reviewRating": {
           "@type": "Rating",
-          "ratingValue": "5",
-          "bestRating": "5"
+          "ratingValue": 5,
+          "bestRating": 5
         },
         "author": {
           "@type": "Person",
@@ -276,8 +346,8 @@ export const structuredData = {
         "@type": "Review",
         "reviewRating": {
           "@type": "Rating",
-          "ratingValue": "5",
-          "bestRating": "5"
+          "ratingValue": 5,
+          "bestRating": 5
         },
         "author": {
           "@type": "Person",
@@ -290,8 +360,8 @@ export const structuredData = {
         "@type": "Review",
         "reviewRating": {
           "@type": "Rating",
-          "ratingValue": "5",
-          "bestRating": "5"
+          "ratingValue": 5,
+          "bestRating": 5
         },
         "author": {
           "@type": "Person",

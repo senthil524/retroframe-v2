@@ -38,7 +38,7 @@ const homeStructuredData = [
 export default function Home() {
 
   return (
-    <div className="min-h-screen bg-brand-warm" itemScope itemType="https://schema.org/Product">
+    <div className="min-h-screen bg-brand-warm">
       <SEO
         title="Retro Polaroid Prints Online India | Custom Vintage Photo Prints - RetroFrame"
         description="Order custom retro polaroid prints online in India. Premium vintage photo printing with 8 border colors, 5 effects & captions. 18 prints ₹270, free shipping. 4.9★ rated."
@@ -89,23 +89,19 @@ export default function Home() {
               {/* Title - SEO optimized with schema */}
               <div>
                 <h1 className="text-3xl md:text-5xl lg:text-6xl font-normal mb-4 md:mb-6 leading-tight text-brand-dark"
-                style={{ fontFamily: 'var(--font-serif)', letterSpacing: '-0.02em' }}
-                itemProp="name">
+                style={{ fontFamily: 'var(--font-serif)', letterSpacing: '-0.02em' }}>
                   Retro Polaroid Prints Online in India
                 </h1>
-                <p className="text-base md:text-xl lg:text-2xl text-brand-secondary leading-relaxed" itemProp="description">
+                <p className="text-base md:text-xl lg:text-2xl text-brand-secondary leading-relaxed">
                   Transform your photos into custom vintage polaroid prints. Premium retro photo printing with 8 border colors, 5 effects & personalized captions. Delivered in 3-6 days.
                 </p>
               </div>
 
-              {/* Pricing with schema */}
-              <div className="flex items-center gap-3 md:gap-4 flex-wrap" itemProp="offers" itemScope itemType="https://schema.org/Offer">
-                <meta itemProp="priceCurrency" content="INR" />
-                <meta itemProp="price" content="270" />
-                <meta itemProp="availability" content="https://schema.org/InStock" />
+              {/* Pricing */}
+              <div className="flex items-center gap-3 md:gap-4 flex-wrap">
                 <div className="flex items-baseline gap-2">
                   <span className="text-xl md:text-2xl text-gray-400 line-through">₹399</span>
-                  <span className="text-4xl md:text-5xl font-bold text-brand-dark" itemProp="price">₹270</span>
+                  <span className="text-4xl md:text-5xl font-bold text-brand-dark">₹270</span>
                   <span className="text-lg md:text-xl text-brand-secondary">for 18 prints</span>
                 </div>
                 <div className="hidden md:block w-px h-8 bg-brand-border" />
