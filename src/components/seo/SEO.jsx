@@ -144,10 +144,8 @@ export const structuredData = {
       }
     ],
     "sameAs": [
-      "https://www.instagram.com/retroframe.co",
-      "https://www.facebook.com/retroframe.co",
-      "https://twitter.com/retroframeco",
-      "https://www.pinterest.com/retroframeco"
+      "https://www.instagram.com/getretroframe",
+      "https://www.facebook.com/profile.php?id=61584005676606"
     ],
     "knowsAbout": [
       "Polaroid Prints",
