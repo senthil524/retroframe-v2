@@ -17,6 +17,7 @@ import { ArrowLeft, Package, Truck, MapPin, Loader2, AlertTriangle } from 'lucid
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import { loadPayUSDK } from '@/components/payuHelper';
+import { trackBeginCheckout, trackAddShippingInfo, trackAddPaymentInfo } from '@/lib/analytics';
 
 // Pricing: ₹270 for first 18 prints, ₹15 for each additional
 const BASE_PRICE = 270;
@@ -69,6 +70,13 @@ export default function Checkout() {
     }
   }, []);
 
+  // Track begin_checkout when page loads
+  useEffect(() => {
+    if (photos.length > 0) {
+      trackBeginCheckout(photos.length);
+    }
+  }, []);
+
   const handleInputChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
@@ -101,6 +109,9 @@ export default function Checkout() {
     }
 
     setSubmitting(true);
+
+    // Track shipping info added
+    trackAddShippingInfo(photos.length, 'Free Shipping');
 
     try {
       toast.loading('Creating order...', { id: 'checkout' });
@@ -172,6 +183,9 @@ export default function Checkout() {
       ]);
 
       toast.loading('Opening payment gateway...', { id: 'checkout' });
+
+      // Track payment info event before opening payment gateway
+      trackAddPaymentInfo(photos.length, 'PayU');
 
       // Prepare payment data for PayU
       const paymentData = {

@@ -11,6 +11,7 @@ import { Plus, Palette, ImageIcon, Maximize2, Loader2, ArrowLeft, Eye } from 'lu
 import { cn } from '@/lib/utils';
 import SEO, { structuredData } from '@/components/seo/SEO';
 import SEOBreadcrumb, { breadcrumbConfigs } from '@/components/SEOBreadcrumb';
+import { trackViewItem, trackAddToCart, trackRemoveFromCart, trackEngagement } from '@/lib/analytics';
 
 // Pricing: ₹270 for first 18 prints, ₹15 for each additional
 const BASE_PRICE = 270; // Discounted from ₹399
@@ -60,6 +61,13 @@ export default function Studio() {
 
   const uploadStats = getUploadStats();
   const isOrderView = viewMode === 'order';
+
+  // Track view_item when Studio page loads (only once)
+  useEffect(() => {
+    if (!isOrderView) {
+      trackViewItem();
+    }
+  }, [isOrderView]);
 
   // Show upload progress toast when uploads are in progress
   useEffect(() => {
@@ -133,11 +141,22 @@ export default function Studio() {
 
     addPhotos(newPhotos);
     toast.success(`Added ${files.length} photo${files.length > 1 ? 's' : ''} - uploading in background`);
+
+    // Track add_to_cart event
+    const newTotalPhotos = photos.length + files.length;
+    trackAddToCart(newTotalPhotos);
+
+    // Track first photo upload for engagement
+    if (photos.length === 0 && files.length > 0) {
+      trackEngagement.firstPhotoUpload();
+    }
   };
 
   const handleRemovePhoto = (photoId) => {
     removePhoto(photoId);
     toast.success('Photo removed');
+    // Track remove from cart
+    trackRemoveFromCart(photos.length - 1);
   };
 
   const handleBulkUpdate = (field, value) => {

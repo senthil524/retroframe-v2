@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
@@ -7,12 +7,14 @@ import { Button } from '@/components/ui/button';
 import { CheckCircle, XCircle, Package, Mail, AlertTriangle, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { format } from 'date-fns';
+import { trackPurchase, trackPaymentFailed } from '@/lib/analytics';
 
 export default function Confirmation() {
   const { clearPhotos } = usePhotos();
   const [order, setOrder] = useState(null);
   const [payment, setPayment] = useState(null);
   const [loading, setLoading] = useState(true);
+  const purchaseTracked = useRef(false); // Prevent duplicate tracking
 
   const urlParams = new URLSearchParams(window.location.search);
   const orderNumber = urlParams.get('order_number');
@@ -36,12 +38,29 @@ export default function Confirmation() {
       const foundOrder = orders[0];
       if (foundOrder) {
         setOrder(foundOrder);
-        
+
         // Clear photos only on successful payment
-        if (paymentStatus === 'success' || foundOrder.payment_status === 'success') {
+        const isSuccess = paymentStatus === 'success' || foundOrder.payment_status === 'success';
+        if (isSuccess) {
           clearPhotos();
+
+          // Track purchase event for Google Analytics & Google Ads (only once)
+          if (!purchaseTracked.current) {
+            purchaseTracked.current = true;
+            trackPurchase({
+              orderNumber: cleanOrderNumber,
+              photoCount: foundOrder.total_items || 0,
+              totalAmount: foundOrder.total_price || 0,
+              tax: 0,
+              shipping: foundOrder.shipping_cost || 0
+            });
+          }
+        } else if (!purchaseTracked.current) {
+          // Track failed payment
+          purchaseTracked.current = true;
+          trackPaymentFailed(cleanOrderNumber, paymentStatus || 'unknown');
         }
-        
+
         // Fetch payment by order_number
         const payments = await base44.entities.Payment.filter({ order_number: cleanOrderNumber });
         if (payments.length > 0) {
