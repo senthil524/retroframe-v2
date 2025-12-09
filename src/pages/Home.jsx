@@ -30,7 +30,7 @@ const homeStructuredData = [
   structuredData.organization,
   structuredData.product,
   structuredData.website,
-  structuredData.localBusiness,
+  structuredData.onlineStore,
   structuredData.imageGallery,
   structuredData.faq
 ];

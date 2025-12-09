@@ -105,18 +105,70 @@ export const structuredData = {
   organization: {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": "https://retroframe.co/#organization",
     "name": "RetroFrame",
+    "alternateName": ["Retro Frame", "RetroFrame India", "RetroFrame Prints"],
     "url": "https://retroframe.co",
-    "logo": "https://retroframe.co/logo.png",
-    "description": "Premium polaroid and retro photo printing service in India",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://retroframe.co/logo.png",
+      "width": 512,
+      "height": 512,
+      "caption": "RetroFrame - Premium Polaroid Prints"
+    },
+    "image": "https://retroframe.co/hero-images/hero-8.jpg",
+    "description": "Premium polaroid and retro photo printing service in India. Transform your digital photos into beautiful vintage-style polaroid prints with custom captions, 8 border colors, and 5 photo effects.",
+    "slogan": "Transform Your Memories Into Timeless Prints",
+    "foundingDate": "2024",
+    "areaServed": {
+      "@type": "Country",
+      "name": "India"
+    },
     "address": {
       "@type": "PostalAddress",
-      "addressCountry": "IN"
+      "addressCountry": "IN",
+      "addressRegion": "Tamil Nadu"
     },
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "contactType": "customer service",
-      "url": "https://retroframe.co/contact"
+    "contactPoint": [
+      {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "email": "hello@retroframe.co",
+        "url": "https://retroframe.co/contact",
+        "availableLanguage": ["English", "Tamil", "Hindi"]
+      },
+      {
+        "@type": "ContactPoint",
+        "contactType": "sales",
+        "url": "https://retroframe.co/Studio"
+      }
+    ],
+    "sameAs": [
+      "https://www.instagram.com/retroframe.co",
+      "https://www.facebook.com/retroframe.co",
+      "https://twitter.com/retroframeco",
+      "https://www.pinterest.com/retroframeco"
+    ],
+    "knowsAbout": [
+      "Polaroid Prints",
+      "Retro Photo Printing",
+      "Custom Photo Prints",
+      "Vintage Photography",
+      "Photo Gifts"
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Polaroid Print Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Custom Polaroid Prints",
+            "description": "18 polaroid prints with custom effects and borders"
+          }
+        }
+      ]
     }
   },
 
@@ -376,34 +428,84 @@ export const structuredData = {
   website: {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": "https://retroframe.co/#website",
     "name": "RetroFrame",
+    "alternateName": "RetroFrame - Premium Polaroid Prints India",
     "url": "https://retroframe.co",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://retroframe.co/order-tracking?order_number={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
+    "description": "Order custom retro polaroid prints online in India. Premium vintage photo printing with 8 border colors, 5 effects & captions.",
+    "publisher": {
+      "@id": "https://retroframe.co/#organization"
+    },
+    "inLanguage": "en-IN",
+    "potentialAction": [
+      {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://retroframe.co/order-tracking?order_number={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    ]
   },
 
-  localBusiness: {
+  onlineStore: {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": "OnlineStore",
+    "@id": "https://retroframe.co/#store",
     "name": "RetroFrame",
+    "alternateName": "RetroFrame Online Store",
+    "url": "https://retroframe.co",
+    "description": "India's premium online store for custom retro polaroid prints. Order personalized vintage-style photo prints with doorstep delivery.",
     "image": [
       "https://retroframe.co/hero-images/hero-8.jpg",
       "https://retroframe.co/hero-images/hero-7.jpg",
       "https://retroframe.co/hero-images/hero-3.jpg",
       "https://retroframe.co/hero-images/hero-4.jpg"
     ],
-    "url": "https://retroframe.co",
-    "priceRange": "$$",
-    "address": {
-      "@type": "PostalAddress",
-      "addressCountry": "IN"
-    },
+    "logo": "https://retroframe.co/logo.png",
+    "priceRange": "₹₹",
+    "currenciesAccepted": "INR",
+    "paymentAccepted": "UPI, Credit Card, Debit Card, Net Banking",
     "areaServed": {
       "@type": "Country",
+      "name": "India",
+      "identifier": "IN"
+    },
+    "serviceArea": {
+      "@type": "Country",
       "name": "India"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Polaroid Prints",
+      "itemListElement": [
+        {
+          "@type": "OfferCatalog",
+          "name": "Custom Polaroid Prints",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Product",
+                "name": "18 Polaroid Prints Pack",
+                "description": "Base pack of 18 custom polaroid prints"
+              },
+              "price": 270,
+              "priceCurrency": "INR"
+            }
+          ]
+        }
+      ]
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": 4.9,
+      "reviewCount": 20,
+      "bestRating": 5
+    },
+    "parentOrganization": {
+      "@id": "https://retroframe.co/#organization"
     }
   },
 
