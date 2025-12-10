@@ -481,18 +481,7 @@ export const structuredData = {
         {
           "@type": "OfferCatalog",
           "name": "Custom Polaroid Prints",
-          "itemListElement": [
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Product",
-                "name": "18 Polaroid Prints Pack",
-                "description": "Base pack of 18 custom polaroid prints"
-              },
-              "price": 270,
-              "priceCurrency": "INR"
-            }
-          ]
+          "itemListElement": []
         }
       ]
     },
