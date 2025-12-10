@@ -27,7 +27,6 @@ import Logo from '@/components/ui/Logo';
 
 // Combined structured data for homepage
 const homeStructuredData = [
-  structuredData.organization,
   structuredData.product,
   structuredData.website,
   structuredData.onlineStore,

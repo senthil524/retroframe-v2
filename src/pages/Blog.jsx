@@ -37,7 +37,6 @@ export default function Blog() {
 
   // Combined structured data
   const pageStructuredData = [
-    structuredData.organization,
     structuredData.collectionPage({
       title: 'Blog - Photo Printing Tips & Inspiration',
       description: 'Explore our blog for photo printing tips, polaroid display ideas, and creative inspiration for your memories.',
