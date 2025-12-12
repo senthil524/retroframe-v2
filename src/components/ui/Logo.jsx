@@ -5,9 +5,11 @@ export default function Logo({ className = '', linkTo = '/' }) {
   return (
     <Link to={linkTo} className={`flex items-center gap-1 ${className}`}>
       <img
-        src="/icon-colored.png"
+        src="/icon-colored.webp"
         alt="RetroFrame"
         className="w-8 h-8 md:w-10 md:h-10"
+        width="40"
+        height="40"
       />
       <span
         className="text-xl md:text-2xl"

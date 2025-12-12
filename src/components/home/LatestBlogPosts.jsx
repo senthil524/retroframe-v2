@@ -69,6 +69,9 @@ export default function LatestBlogPosts() {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       loading="lazy"
                       decoding="async"
+                      width="400"
+                      height="250"
+                      fetchPriority="low"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">

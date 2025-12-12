@@ -30,39 +30,49 @@ export default function Layout({ children, currentPageName }) {
     }
     viewport.content = 'width=device-width, initial-scale=1';
 
-    // Add Google Analytics tag
-    if (!document.querySelector('script[src*="googletagmanager.com/gtag"]')) {
-      const gtagScript = document.createElement('script');
-      gtagScript.async = true;
-      gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17759957136';
-      document.head.appendChild(gtagScript);
+    // Defer loading of third-party scripts until page is idle
+    const loadAnalytics = () => {
+      // Add Google Analytics tag
+      if (!document.querySelector('script[src*="googletagmanager.com/gtag"]')) {
+        const gtagScript = document.createElement('script');
+        gtagScript.async = true;
+        gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17759957136';
+        document.head.appendChild(gtagScript);
 
-      const gtagConfig = document.createElement('script');
-      gtagConfig.textContent = `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'AW-17759957136');
-      `;
-      document.head.appendChild(gtagConfig);
-    }
+        const gtagConfig = document.createElement('script');
+        gtagConfig.textContent = `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'AW-17759957136');
+        `;
+        document.head.appendChild(gtagConfig);
+      }
 
-    // Add Meta Pixel
-    if (!window.fbq) {
-      const fbPixelScript = document.createElement('script');
-      fbPixelScript.textContent = `
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '740421112411535');
-        fbq('track', 'PageView');
-      `;
-      document.head.appendChild(fbPixelScript);
+      // Add Meta Pixel
+      if (!window.fbq) {
+        const fbPixelScript = document.createElement('script');
+        fbPixelScript.textContent = `
+          !function(f,b,e,v,n,t,s)
+          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+          n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t,s)}(window, document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+          fbq('init', '740421112411535');
+          fbq('track', 'PageView');
+        `;
+        document.head.appendChild(fbPixelScript);
+      }
+    };
+
+    // Delay loading analytics until after initial render (3 seconds)
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadAnalytics, { timeout: 3000 });
+    } else {
+      setTimeout(loadAnalytics, 3000);
     }
 
     }, []);
@@ -72,8 +82,6 @@ export default function Layout({ children, currentPageName }) {
       {useDefaultSEO && <SEOHead {...seoConfig} />}
       <style>
         {`
-          @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
-          
           :root {
             --color-coral: #E67E6A;
             --color-coral-dark: #D86B57;
@@ -82,15 +90,15 @@ export default function Layout({ children, currentPageName }) {
             --color-warm-light: #FAF7F5;
             --color-text-secondary: #5A5654;
             --color-border: #EAE7E4;
-            --font-serif: 'Libre Baskerville', serif;
+            --font-serif: 'Playfair Display', 'Libre Baskerville', Georgia, serif;
             --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
           }
-          
+
           body {
             font-family: var(--font-sans);
             background: var(--color-warm-bg);
           }
-          
+
           h1, h2, h3 {
             font-family: var(--font-serif);
           }
@@ -108,7 +116,7 @@ export default function Layout({ children, currentPageName }) {
                 {/* Brand */}
                 <div>
                   <Link to="/" className="flex items-center gap-1 mb-4 hover:opacity-80 transition-opacity">
-                    <img src="/icon-white.png" alt="RetroFrame" className="w-9 h-9" />
+                    <img src="/icon-white.webp" alt="RetroFrame" className="w-9 h-9" width="36" height="36" loading="lazy" />
                     <span className="text-2xl text-white" style={{ fontFamily: 'var(--font-serif)' }}>RetroFrame</span>
                   </Link>
                   <p className="text-gray-400 text-sm">
