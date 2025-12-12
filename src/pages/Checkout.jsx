@@ -35,12 +35,19 @@ const INDIAN_STATES = [
   'Delhi', 'Jammu and Kashmir', 'Ladakh', 'Puducherry', 'Chandigarh'
 ];
 
+// Test coupon for 90% discount
+const TEST_COUPON = 'TEST90';
+const TEST_DISCOUNT = 0.90; // 90% off
+
 export default function Checkout() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { photos, cartId, clearPhotos, getUploadStats, allPhotosUploaded } = usePhotos();
   const [submitting, setSubmitting] = useState(false);
   const [canProceed, setCanProceed] = useState(false);
+  const [couponCode, setCouponCode] = useState('');
+  const [couponApplied, setCouponApplied] = useState(false);
+  const [discount, setDiscount] = useState(0);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -88,7 +95,24 @@ export default function Checkout() {
   };
   const subtotal = calculateTotal(photos.length);
   const shipping = SHIPPING_COST; // Always free
-  const total = subtotal + shipping;
+  const discountAmount = couponApplied ? Math.round(subtotal * discount) : 0;
+  const total = subtotal + shipping - discountAmount;
+
+  const applyCoupon = () => {
+    if (couponCode.toUpperCase() === TEST_COUPON) {
+      setCouponApplied(true);
+      setDiscount(TEST_DISCOUNT);
+      toast.success('Coupon applied! 90% discount');
+    } else {
+      toast.error('Invalid coupon code');
+    }
+  };
+
+  const removeCoupon = () => {
+    setCouponApplied(false);
+    setDiscount(0);
+    setCouponCode('');
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -710,6 +734,54 @@ export default function Checkout() {
                 </div>
                 <span className="font-semibold text-green-600">FREE</span>
               </div>
+
+              {/* Coupon Code Section */}
+              <div className="pt-4 border-t border-gray-100">
+                <Label className="text-sm text-gray-600 mb-2 block">Coupon Code</Label>
+                {!couponApplied ? (
+                  <div className="flex gap-2">
+                    <Input
+                      value={couponCode}
+                      onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                      placeholder="Enter coupon code"
+                      className="flex-1"
+                    />
+                    <Button
+                      type="button"
+                      onClick={applyCoupon}
+                      variant="outline"
+                      className="px-4"
+                    >
+                      Apply
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-lg p-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-green-700 font-medium">{TEST_COUPON}</span>
+                      <span className="text-green-600 text-sm">(-90%)</span>
+                    </div>
+                    <Button
+                      type="button"
+                      onClick={removeCoupon}
+                      variant="ghost"
+                      size="sm"
+                      className="text-red-500 hover:text-red-700 h-auto p-1"
+                    >
+                      Remove
+                    </Button>
+                  </div>
+                )}
+              </div>
+
+              {/* Discount Row */}
+              {couponApplied && (
+                <div className="flex justify-between items-center text-green-600">
+                  <span className="text-sm">Discount (90%)</span>
+                  <span className="font-semibold">-₹{discountAmount}</span>
+                </div>
+              )}
+
               <div className="pt-4 border-t-2 border-gray-100">
                 <div className="flex justify-between items-baseline mb-2">
                   <span className="text-lg font-semibold text-brand-dark">Total Amount</span>
