@@ -93,23 +93,36 @@ export default function HeroCarousel() {
     >
       {/* Main carousel container */}
       <div className="relative aspect-square rounded-2xl overflow-hidden shadow-2xl bg-gray-100">
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={currentIndex}
-            src={heroImages[currentIndex].src}
-            alt={heroImages[currentIndex].alt}
+        {/* First image rendered without animation for fast LCP */}
+        {currentIndex === 0 ? (
+          <img
+            src={heroImages[0].src}
+            alt={heroImages[0].alt}
             className="w-full h-full object-cover"
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.5 }}
-            loading={currentIndex === 0 ? "eager" : "lazy"}
-            fetchpriority={currentIndex === 0 ? "high" : "auto"}
+            loading="eager"
+            fetchpriority="high"
             width={800}
             height={800}
             decoding="async"
           />
-        </AnimatePresence>
+        ) : (
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={currentIndex}
+              src={heroImages[currentIndex].src}
+              alt={heroImages[currentIndex].alt}
+              className="w-full h-full object-cover"
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.5 }}
+              loading="lazy"
+              width={800}
+              height={800}
+              decoding="async"
+            />
+          </AnimatePresence>
+        )}
 
         {/* Gradient overlay at bottom */}
         <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/30 to-transparent" />
