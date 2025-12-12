@@ -6,42 +6,42 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 const heroImages = [
   {
     id: 1,
-    src: '/hero-images/hero-8.jpg',
+    src: '/hero-images/hero-8.webp',
     alt: 'Custom baby milestone retro polaroid prints India - RetroFrame'
   },
   {
     id: 2,
-    src: '/hero-images/hero-7.jpg',
+    src: '/hero-images/hero-7.webp',
     alt: 'Friends trip vintage polaroid prints flat lay - order online India'
   },
   {
     id: 3,
-    src: '/hero-images/hero-3.jpg',
+    src: '/hero-images/hero-3.webp',
     alt: 'Polaroid prints wall decor ideas with fairy lights - RetroFrame India'
   },
   {
     id: 4,
-    src: '/hero-images/hero-4.jpg',
+    src: '/hero-images/hero-4.webp',
     alt: 'Unboxing custom polaroid prints - premium packaging RetroFrame'
   },
   {
     id: 5,
-    src: '/hero-images/hero-1.jpg',
+    src: '/hero-images/hero-1.webp',
     alt: 'Custom retro polaroid prints online India - vintage photo printing'
   },
   {
     id: 6,
-    src: '/hero-images/hero-2.jpg',
+    src: '/hero-images/hero-2.webp',
     alt: 'Polaroid prints gift idea India - personalized photo prints'
   },
   {
     id: 7,
-    src: '/hero-images/hero-5.jpg',
+    src: '/hero-images/hero-5.webp',
     alt: 'Workspace desk polaroid prints decor - home office RetroFrame'
   },
   {
     id: 8,
-    src: '/hero-images/hero-6.jpg',
+    src: '/hero-images/hero-6.webp',
     alt: 'Couple memories retro polaroid prints - anniversary gift India'
   }
 ];
