@@ -44,6 +44,7 @@ export default function Checkout() {
   const [searchParams] = useSearchParams();
   const { photos, cartId, clearPhotos, getUploadStats, allPhotosUploaded } = usePhotos();
   const [submitting, setSubmitting] = useState(false);
+  const [paymentPhase, setPaymentPhase] = useState(''); // 'creating', 'paying', 'verifying', 'done'
   const [canProceed, setCanProceed] = useState(false);
   const [couponCode, setCouponCode] = useState('');
   const [couponApplied, setCouponApplied] = useState(false);
@@ -133,12 +134,12 @@ export default function Checkout() {
     }
 
     setSubmitting(true);
+    setPaymentPhase('creating');
 
     // Track shipping info added
     trackAddShippingInfo(photos.length, 'Free Shipping');
 
     try {
-      toast.loading('Creating order...', { id: 'checkout' });
 
       // Generate unique transaction ID (UUID-based, no special characters for PayU)
       const txnId = `RF${Date.now()}${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
@@ -207,6 +208,7 @@ export default function Checkout() {
       ]);
 
       toast.loading('Opening payment gateway...', { id: 'checkout' });
+      setPaymentPhase('paying');
 
       // Track payment info event before opening payment gateway
       trackAddPaymentInfo(photos.length, 'PayU');
@@ -271,6 +273,7 @@ export default function Checkout() {
 
             // Payment attempt completed - verify with PayU server (more reliable than client callback)
             console.log('Verifying payment with PayU server...');
+            setPaymentPhase('verifying');
             toast.loading('Verifying payment...', { id: 'verify' });
 
             try {
@@ -288,6 +291,7 @@ export default function Checkout() {
               console.log('Server verification result:', { isSuccess, paymentStatus });
 
               if (isSuccess) {
+                setPaymentPhase('done');
                 toast.success('Payment successful!');
                 // Navigate first, then clear cart
                 navigate(createPageUrl('Confirmation') + `?order_number=${orderNumber}&payment=success`);
@@ -337,12 +341,20 @@ export default function Checkout() {
 
   // Show processing overlay when payment is being processed
   if (submitting) {
+    const phaseMessages = {
+      creating: { title: 'Creating Order...', subtitle: 'Setting up your order' },
+      paying: { title: 'Payment in Progress...', subtitle: 'Complete payment in the popup' },
+      verifying: { title: 'Verifying Payment...', subtitle: 'Confirming with payment gateway' },
+      done: { title: 'Payment Complete!', subtitle: 'Redirecting to confirmation...' }
+    };
+    const message = phaseMessages[paymentPhase] || { title: 'Processing...', subtitle: 'Please wait, do not close this page' };
+
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#FFF8F5] to-white">
         <div className="text-center">
           <Loader2 className="w-16 h-16 animate-spin text-brand-coral mx-auto mb-4" />
-          <p className="text-xl text-gray-700 font-medium mb-2">Processing Payment...</p>
-          <p className="text-gray-500">Please wait, do not close this page</p>
+          <p className="text-xl text-gray-700 font-medium mb-2">{message.title}</p>
+          <p className="text-gray-500">{message.subtitle}</p>
         </div>
       </div>
     );

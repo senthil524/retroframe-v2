@@ -16,6 +16,20 @@ const PageLoader = () => (
 // Lazy load all pages for code splitting
 const Home = React.lazy(() => import('./Home'));
 const Studio = React.lazy(() => import('./Studio'));
+
+// Preload Home and Studio in background for faster navigation
+if (typeof window !== 'undefined') {
+  // Use requestIdleCallback to preload when browser is idle
+  const preloadPages = () => {
+    import('./Home');
+    import('./Studio');
+  };
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(preloadPages, { timeout: 2000 });
+  } else {
+    setTimeout(preloadPages, 1000);
+  }
+}
 const PhotoEditor = React.lazy(() => import('./PhotoEditor'));
 const Cart = React.lazy(() => import('./Cart'));
 const Checkout = React.lazy(() => import('./Checkout'));

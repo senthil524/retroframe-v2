@@ -14,138 +14,139 @@ export const usePhotos = () => {
 
 export const PhotoProvider = ({ children }) => {
   const [photos, setPhotos] = useState([]);
-  const [cartId, setCartId] = useState(null);
+  const [cartId, setCartId] = useState(() => {
+    // Initialize cart ID synchronously from localStorage
+    const savedCartId = localStorage.getItem('retroframe_cart_id');
+    if (savedCartId) return savedCartId;
+    const newCartId = `cart_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    localStorage.setItem('retroframe_cart_id', newCartId);
+    return newCartId;
+  });
   const [uploadProgress, setUploadProgress] = useState({ total: 0, uploaded: 0, failed: 0 });
   const blobUrlsToRevoke = useRef(new Set());
+  const [isInitialized, setIsInitialized] = useState(false);
 
   const [viewMode, setViewMode] = useState(null); // null = normal, 'order' = viewing order
   const [viewOrderNumber, setViewOrderNumber] = useState(null);
 
   // Track current URL to detect changes
   const [currentUrl, setCurrentUrl] = useState(window.location.search);
-  
+
   // Listen for URL changes (popstate for back/forward, custom event for programmatic navigation)
   useEffect(() => {
     const handleUrlChange = () => {
       setCurrentUrl(window.location.search);
     };
-    
+
     window.addEventListener('popstate', handleUrlChange);
-    
-    // Also check URL periodically for SPA navigation
-    const intervalId = setInterval(() => {
+
+    // Listen for SPA navigation events instead of polling
+    const handleNavigation = () => {
       if (window.location.search !== currentUrl) {
         setCurrentUrl(window.location.search);
       }
-    }, 100);
-    
+    };
+
+    // Custom event for react-router navigation
+    window.addEventListener('locationchange', handleNavigation);
+
     return () => {
       window.removeEventListener('popstate', handleUrlChange);
-      clearInterval(intervalId);
+      window.removeEventListener('locationchange', handleNavigation);
     };
   }, [currentUrl]);
 
-  // Initialize from localStorage or URL params (order viewing)
+  // Initialize photos from localStorage synchronously on first render
   useEffect(() => {
-    const initializeCart = async () => {
-      // Check if viewing an order via URL param
-      const urlParams = new URLSearchParams(window.location.search);
-      const orderNumber = urlParams.get('order');
-      
-      if (orderNumber) {
-        const cleanOrderNumber = orderNumber.replace(/^#/, '');
-        
-        // Skip if already viewing this order
-        if (viewMode === 'order' && viewOrderNumber === cleanOrderNumber) {
-          return;
-        }
-        
-        // Admin viewing an order - load photos from database
+    if (isInitialized) return;
+
+    // Check if viewing an order via URL param
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderNumber = urlParams.get('order');
+
+    if (!orderNumber) {
+      // Normal mode - load from localStorage synchronously
+      const savedPhotos = localStorage.getItem('retroframe_photos');
+      if (savedPhotos) {
         try {
-          const orderPhotos = await base44.entities.Photo.filter({ order_id: cleanOrderNumber });
-          
-          if (orderPhotos.length > 0) {
-            const loadedPhotos = orderPhotos.map(photo => ({
-              ...photo,
-              cloud_url: photo.image_url,
-              uploadStatus: 'uploaded'
-            }));
-            setPhotos(loadedPhotos);
-            setViewMode('order');
-            setViewOrderNumber(cleanOrderNumber);
-            setCartId(`order_${cleanOrderNumber}`);
-            return;
-          } else {
-            // No photos found for order
-            setPhotos([]);
-            setViewMode('order');
-            setViewOrderNumber(cleanOrderNumber);
-            setCartId(`order_${cleanOrderNumber}`);
-            return;
+          const parsed = JSON.parse(savedPhotos);
+          const validPhotos = parsed.filter(photo =>
+            photo.uploadStatus === 'uploaded' && photo.cloud_url
+          );
+          if (validPhotos.length > 0) {
+            setPhotos(validPhotos);
           }
         } catch (error) {
+          console.error('Failed to parse saved photos:', error);
+          localStorage.removeItem('retroframe_photos');
+        }
+      }
+    }
+
+    setIsInitialized(true);
+  }, [isInitialized]);
+
+  // Handle order viewing mode (async - only when URL has order param)
+  useEffect(() => {
+    const urlParams = new URLSearchParams(currentUrl);
+    const orderNumber = urlParams.get('order');
+
+    if (orderNumber) {
+      const cleanOrderNumber = orderNumber.replace(/^#/, '');
+
+      // Skip if already viewing this order
+      if (viewMode === 'order' && viewOrderNumber === cleanOrderNumber) {
+        return;
+      }
+
+      // Admin viewing an order - load photos from database (async)
+      const loadOrderPhotos = async () => {
+        try {
+          const orderPhotos = await base44.entities.Photo.filter({ order_id: cleanOrderNumber });
+
+          const loadedPhotos = orderPhotos.map(photo => ({
+            ...photo,
+            cloud_url: photo.image_url,
+            uploadStatus: 'uploaded'
+          }));
+          setPhotos(loadedPhotos);
+          setViewMode('order');
+          setViewOrderNumber(cleanOrderNumber);
+          setCartId(`order_${cleanOrderNumber}`);
+        } catch (error) {
           console.error('Failed to load order photos:', error);
+          setPhotos([]);
+          setViewMode('order');
+          setViewOrderNumber(cleanOrderNumber);
+          setCartId(`order_${cleanOrderNumber}`);
+        }
+      };
+
+      loadOrderPhotos();
+    } else if (viewMode === 'order') {
+      // Exiting order view mode - restore normal cart
+      setViewMode(null);
+      setViewOrderNumber(null);
+      const savedCartId = localStorage.getItem('retroframe_cart_id');
+      if (savedCartId) setCartId(savedCartId);
+
+      // Restore photos from localStorage
+      const savedPhotos = localStorage.getItem('retroframe_photos');
+      if (savedPhotos) {
+        try {
+          const parsed = JSON.parse(savedPhotos);
+          const validPhotos = parsed.filter(photo =>
+            photo.uploadStatus === 'uploaded' && photo.cloud_url
+          );
+          setPhotos(validPhotos);
+        } catch (error) {
+          setPhotos([]);
         }
       } else {
-        // Not viewing an order - reset to normal mode if we were in order mode
-        if (viewMode === 'order') {
-          setViewMode(null);
-          setViewOrderNumber(null);
-        }
+        setPhotos([]);
       }
-
-      // Normal cart initialization (only if not in order mode)
-      if (!orderNumber) {
-        const savedCartId = localStorage.getItem('retroframe_cart_id');
-        const savedPhotos = localStorage.getItem('retroframe_photos');
-
-        let currentCartId;
-        if (savedCartId) {
-          currentCartId = savedCartId;
-          setCartId(savedCartId);
-        } else {
-          const newCartId = `cart_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-          currentCartId = newCartId;
-          setCartId(newCartId);
-          localStorage.setItem('retroframe_cart_id', newCartId);
-        }
-
-        if (savedPhotos) {
-          try {
-            const parsed = JSON.parse(savedPhotos);
-            
-            // Clean up any photos with invalid blob URLs or no cloud URL
-            const validPhotos = parsed.filter(photo => {
-              // Only keep photos that have been successfully uploaded with cloud URLs
-              if (photo.uploadStatus === 'uploaded' && photo.cloud_url) {
-                return true;
-              }
-              
-              // Remove photos with blob URLs (they're invalid after page reload)
-              if (photo.image_url?.startsWith('blob:')) {
-                return false;
-              }
-              
-              return false;
-            });
-            
-            setPhotos(validPhotos);
-            
-            // Show message if photos were cleaned up
-            if (validPhotos.length < parsed.length) {
-              const removed = parsed.length - validPhotos.length;
-              console.log(`Cleaned up ${removed} stale photo(s)`);
-            }
-          } catch (error) {
-            console.error('Failed to parse saved photos:', error);
-            localStorage.removeItem('retroframe_photos');
-          }
-        }
-      }
-    };
-
-    initializeCart();
-  }, [currentUrl]);
+    }
+  }, [currentUrl, viewMode, viewOrderNumber]);
 
   // Save to localStorage whenever photos change - only save uploaded photos (skip in order view mode)
   useEffect(() => {

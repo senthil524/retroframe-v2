@@ -46,7 +46,7 @@ export default function Home() {
         url="/"
         structuredData={homeStructuredData}
       />
-      {/* Header */}
+      {/* Header - no animations for instant interactivity */}
       <header className="bg-white/80 backdrop-blur-md border-b border-brand sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">
           <div className="flex items-center justify-between">
@@ -56,7 +56,6 @@ export default function Home() {
                 size="sm"
                 className="text-xs md:text-sm text-white rounded-full px-4 md:px-6"
                 style={{ backgroundColor: 'var(--color-coral)' }}>
-
                 <Sparkles className="w-3.5 h-3.5 mr-1.5" />
                 Create Prints
               </Button>
@@ -70,12 +69,8 @@ export default function Home() {
       <section className="py-8 md:py-12 lg:py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-            {/* Left: Content */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-6 md:space-y-8 order-2 lg:order-1">
+            {/* Left: Content - no blocking animation */}
+            <div className="space-y-6 md:space-y-8 order-2 lg:order-1">
 
               {/* Rating Badge */}
               <div className="inline-flex items-center gap-2 bg-white border border-brand-border px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium text-brand-dark shadow-sm">
@@ -154,17 +149,12 @@ export default function Home() {
                   <span className="font-medium text-xs md:text-sm">Secure Payment</span>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
-            {/* Right: Animated Photo Stack */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
-              className="flex items-center justify-center order-1 lg:order-2 mb-8 lg:mb-0">
-
+            {/* Right: Photo Carousel */}
+            <div className="flex items-center justify-center order-1 lg:order-2 mb-8 lg:mb-0">
               <HeroCarousel />
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>

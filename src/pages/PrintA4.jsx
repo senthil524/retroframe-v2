@@ -3,8 +3,6 @@ import { useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Loader2, Download } from 'lucide-react';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 
 const borderColors = {
@@ -113,6 +111,12 @@ function PrintA4Content() {
     setGenerating(true);
 
     try {
+      // Dynamic imports - only load when needed (saves ~200KB from main bundle)
+      const [{ default: jsPDF }, { default: html2canvas }] = await Promise.all([
+        import('jspdf'),
+        import('html2canvas')
+      ]);
+
       // First page: Order details (A4 size)
       const pdf = new jsPDF({
         orientation: 'portrait',

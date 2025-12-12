@@ -4,8 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Download, FileText } from 'lucide-react';
 import { format } from 'date-fns';
 import { toast } from 'sonner';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 
 const borderColors = {
@@ -95,6 +93,12 @@ function PrintFileContent() {
     toast.loading('Generating PDF...', { id: 'pdf-gen' });
 
     try {
+      // Dynamic imports - only load when needed (saves ~200KB from main bundle)
+      const [{ default: jsPDF }, { default: html2canvas }] = await Promise.all([
+        import('jspdf'),
+        import('html2canvas')
+      ]);
+
       // Create PDF - Letter size (8.5" x 11")
       const pdf = new jsPDF({
         orientation: 'portrait',
