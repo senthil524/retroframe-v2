@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Mail, Phone, MapPin, Send, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
-import SEO from '@/components/seo/SEO';
+import SEO, { structuredData } from '@/components/seo/SEO';
 import Logo from '@/components/ui/Logo';
 
 export default function ContactUs() {
@@ -28,7 +28,9 @@ export default function ContactUs() {
       <SEO
         title="Contact Us"
         description="Get in touch with RetroFrame. Have questions about your polaroid prints order? We're here to help. Contact us via email or phone."
+        keywords="contact retroframe, customer support, polaroid prints help, retroframe india contact, customer service"
         url="/contact"
+        structuredData={structuredData.contactPage}
       />
 
       {/* Site Header */}
@@ -49,7 +51,7 @@ export default function ContactUs() {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 py-12">
+      <main className="max-w-4xl mx-auto px-4 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -148,7 +150,7 @@ export default function ContactUs() {
             </form>
           </div>
         </motion.div>
-      </div>
+      </main>
     </div>
   );
 }

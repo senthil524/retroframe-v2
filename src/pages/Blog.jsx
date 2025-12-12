@@ -72,6 +72,7 @@ export default function Blog() {
         </div>
       </header>
 
+      <main>
       {/* Hero Section */}
       <section className="bg-white border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-4 py-8 md:py-12">
@@ -160,6 +161,9 @@ export default function Blog() {
                         alt={post.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         loading="lazy"
+                        width="400"
+                        height="225"
+                        decoding="async"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
@@ -228,6 +232,7 @@ export default function Blog() {
           </Link>
         </div>
       </section>
+      </main>
     </div>
   );
 }

@@ -8,7 +8,7 @@ import { Package, Truck, CheckCircle, Clock, Search, Sparkles } from 'lucide-rea
 import { motion, AnimatePresence } from 'framer-motion';
 import { format } from 'date-fns';
 import { toast } from 'sonner';
-import SEO from '@/components/seo/SEO';
+import SEO, { structuredData } from '@/components/seo/SEO';
 import { createPageUrl } from '@/utils';
 import Logo from '@/components/ui/Logo';
 
@@ -72,7 +72,13 @@ export default function OrderTracking() {
       <SEO
         title="Track Your Order"
         description="Track your RetroFrame polaroid prints order. Enter your order number and phone number to see real-time delivery status."
+        keywords="track order, order tracking, polaroid prints delivery status, retroframe order status, check order india"
         url="/order-tracking"
+        structuredData={structuredData.webPage({
+          title: 'Track Your Order',
+          description: 'Track your RetroFrame polaroid prints order. Enter your order number and phone number to see real-time delivery status.',
+          url: '/order-tracking'
+        })}
       />
 
       {/* Site Header */}
@@ -93,7 +99,7 @@ export default function OrderTracking() {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 py-8 md:py-12">
+      <main className="max-w-4xl mx-auto px-4 py-8 md:py-12">
         {/* Page Title */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -281,7 +287,7 @@ export default function OrderTracking() {
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
+      </main>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { createPageUrl } from '@/utils';
 import { Button } from '@/components/ui/button';
 import { Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
-import SEO from '@/components/seo/SEO';
+import SEO, { structuredData } from '@/components/seo/SEO';
 import Logo from '@/components/ui/Logo';
 
 export default function Privacy() {
@@ -13,7 +13,13 @@ export default function Privacy() {
       <SEO
         title="Privacy Policy"
         description="RetroFrame's privacy policy explains how we collect, use, and protect your personal information when you use our polaroid printing service."
+        keywords="privacy policy, data protection, retroframe privacy, photo privacy, personal information security india"
         url="/privacy"
+        structuredData={structuredData.webPage({
+          title: 'Privacy Policy',
+          description: 'RetroFrame privacy policy explains how we collect, use, and protect your personal information.',
+          url: '/privacy'
+        })}
       />
 
       {/* Site Header */}
@@ -34,7 +40,7 @@ export default function Privacy() {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 py-12">
+      <main className="max-w-4xl mx-auto px-4 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -193,7 +199,7 @@ export default function Privacy() {
             </section>
           </div>
         </motion.div>
-      </div>
+      </main>
     </div>
   );
 }

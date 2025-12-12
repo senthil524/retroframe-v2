@@ -4,7 +4,7 @@ import { createPageUrl } from '@/utils';
 import { Button } from '@/components/ui/button';
 import { Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
-import SEO from '@/components/seo/SEO';
+import SEO, { structuredData } from '@/components/seo/SEO';
 import Logo from '@/components/ui/Logo';
 
 export default function Refund() {
@@ -13,7 +13,13 @@ export default function Refund() {
       <SEO
         title="Refund & Cancellation Policy"
         description="Learn about RetroFrame's refund and cancellation policy for polaroid print orders. Understand our return process and eligibility criteria."
+        keywords="refund policy, cancellation policy, return policy, retroframe refund, polaroid prints return india"
         url="/refund"
+        structuredData={structuredData.webPage({
+          title: 'Refund & Cancellation Policy',
+          description: 'Learn about RetroFrame refund and cancellation policy for polaroid print orders.',
+          url: '/refund'
+        })}
       />
 
       {/* Site Header */}
@@ -34,7 +40,7 @@ export default function Refund() {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 py-12">
+      <main className="max-w-4xl mx-auto px-4 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -202,7 +208,7 @@ export default function Refund() {
             </section>
           </div>
         </motion.div>
-      </div>
+      </main>
     </div>
   );
 }

@@ -210,6 +210,7 @@ export default function BlogPost() {
         </div>
       </header>
 
+      <main>
       {/* Article Header */}
       <div className="bg-white border-b border-gray-100">
         <div className="max-w-4xl mx-auto px-4 py-8">
@@ -263,6 +264,9 @@ export default function BlogPost() {
               alt={post.title}
               className="w-full h-full object-cover"
               loading="eager"
+              width="960"
+              height="540"
+              decoding="async"
             />
           </motion.div>
         </div>
@@ -436,6 +440,9 @@ export default function BlogPost() {
                       alt={relatedPost.title}
                       className="w-full h-full object-cover"
                       loading="lazy"
+                      width="320"
+                      height="180"
+                      decoding="async"
                     />
                   )}
                 </div>
@@ -472,6 +479,7 @@ export default function BlogPost() {
           </Link>
         </div>
       </section>
+      </main>
     </div>
   );
 }

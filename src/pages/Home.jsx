@@ -65,6 +65,7 @@ export default function Home() {
         </div>
       </header>
 
+      <main>
       {/* Hero Section */}
       <section className="py-8 md:py-12 lg:py-20 px-4">
         <div className="max-w-7xl mx-auto">
@@ -289,6 +290,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      </main>
     </div>);
 
 }

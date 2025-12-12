@@ -196,6 +196,8 @@ export default function Checkout() {
         lastname: formData.name.split(' ').slice(1).join(' ') || '',
         email: formData.email,
         phone: formData.phone, // 10 digit phone without country code
+        // surl/furl are used when PayU redirects instead of using popup callback
+        // PaymentCallback handles both success and failure redirects
         surl: window.location.origin + createPageUrl('PaymentCallback'),
         furl: window.location.origin + createPageUrl('PaymentCallback'),
         // UDF fields for reference - store both order number and txnId
@@ -270,7 +272,9 @@ export default function Checkout() {
 
             // Verify Response Hash for completed transactions
             // PayU response includes: status (lowercase: success/failure/pending)
+            // Pass ALL response params so the edge function can update the database
             const responseParams = {
+              // Required for hash verification
               status: r.status, // Use lowercase status for hash verification
               udf1: r.udf1 || orderNumber,
               udf2: r.udf2 || '',
@@ -283,13 +287,31 @@ export default function Checkout() {
               amount: r.amount,
               txnid: r.txnid,
               key: r.key,
-              hash: r.hash
+              hash: r.hash,
+              // Additional fields for database update
+              mihpayid: r.mihpayid || '',
+              mode: r.mode || '',
+              unmappedstatus: r.unmappedstatus || '',
+              cardCategory: r.cardCategory || '',
+              bank_ref_num: r.bank_ref_num || '',
+              bankcode: r.bankcode || '',
+              PG_TYPE: r.PG_TYPE || '',
+              error: r.error || '',
+              error_Message: r.error_Message || '',
+              cardnum: r.cardnum || '',
+              name_on_card: r.name_on_card || '',
+              net_amount_debit: r.net_amount_debit || '',
+              discount: r.discount || ''
             };
 
             let isHashValid = false;
+            let dbUpdatedByServer = false;
             try {
+              // The edge function now verifies hash AND updates the database
               const verifyResponse = await base44.functions.invoke('payuVerifyHash', { params: responseParams });
               isHashValid = verifyResponse?.data?.isValid === true;
+              dbUpdatedByServer = verifyResponse?.data?.databaseUpdated === true;
+              console.log('Hash verification result:', { isHashValid, dbUpdatedByServer });
             } catch (verifyError) {
               console.error('Hash verification error:', verifyError);
               // For failed payments, don't block on hash verification
@@ -309,49 +331,57 @@ export default function Checkout() {
             }
 
             try {
-              // Update Payment Record with all PayU response details - find by txnid (unique)
-              const payments = await base44.entities.Payment.filter({ txnid: txnId });
-              if (payments.length > 0) {
-                await base44.entities.Payment.update(payments[0].id, {
-                  mihpayid: r.mihpayid || '',
-                  txnid: r.txnid || txnId,
-                  txn_status: r.status || txnStatus || '',
-                  unmapped_status: r.unmappedstatus || '',
-                  payment_status: isSuccess ? 'success' : (statusLower === 'failure' || statusLower === 'failed' ? 'failed' : 'cancelled'),
-                  payment_mode: r.mode || '',
-                  card_category: r.cardCategory || '',
-                  bank_ref_num: r.bank_ref_num || '',
-                  bankcode: r.bankcode || '',
-                  pg_type: r.PG_TYPE || '',
-                  error_code: r.error || '',
-                  error_message: r.error_Message || '',
-                  card_num: r.cardnum || '',
-                  name_on_card: r.name_on_card || '',
-                  net_amount_debit: parseFloat(r.net_amount_debit) || total,
-                  discount: parseFloat(r.discount) || 0,
-                  payu_response_hash: r.hash || '',
-                  hash_verified: isHashValid,
-                  payment_date: new Date().toISOString()
-                });
-              }
+              // If the server already updated the database, skip client-side updates
+              // This prevents race conditions and ensures consistency
+              if (!dbUpdatedByServer) {
+                console.log('Server did not update DB, updating from client...');
 
-              // Update Order Status with payment method
-              const orders = await base44.entities.Order.filter({ order_number: orderNumber });
-              if (orders.length > 0) {
-                await base44.entities.Order.update(orders[0].id, {
-                  payment_status: isSuccess ? 'success' : 'failed',
-                  order_status: isSuccess ? 'processing' : 'payment_failed',
-                  payment_method: r.mode || '',
-                  payment_id: payments[0]?.id || ''
-                });
-              }
+                // Update Payment Record with all PayU response details - find by txnid (unique)
+                const payments = await base44.entities.Payment.filter({ txnid: txnId });
+                if (payments.length > 0) {
+                  await base44.entities.Payment.update(payments[0].id, {
+                    mihpayid: r.mihpayid || '',
+                    txnid: r.txnid || txnId,
+                    txn_status: r.status || txnStatus || '',
+                    unmapped_status: r.unmappedstatus || '',
+                    payment_status: isSuccess ? 'success' : (statusLower === 'failure' || statusLower === 'failed' ? 'failed' : 'cancelled'),
+                    payment_mode: r.mode || '',
+                    card_category: r.cardCategory || '',
+                    bank_ref_num: r.bank_ref_num || '',
+                    bankcode: r.bankcode || '',
+                    pg_type: r.PG_TYPE || '',
+                    error_code: r.error || '',
+                    error_message: r.error_Message || '',
+                    card_num: r.cardnum || '',
+                    name_on_card: r.name_on_card || '',
+                    net_amount_debit: parseFloat(r.net_amount_debit) || total,
+                    discount: parseFloat(r.discount) || 0,
+                    payu_response_hash: r.hash || '',
+                    hash_verified: isHashValid,
+                    payment_date: new Date().toISOString()
+                  });
+                }
 
-              // Update cart status
-              const carts = await base44.entities.Cart.filter({ cart_id: cartId });
-              if (carts.length > 0) {
-                await base44.entities.Cart.update(carts[0].id, {
-                  status: isSuccess ? 'completed' : 'checkout'
-                });
+                // Update Order Status with payment method
+                const orders = await base44.entities.Order.filter({ order_number: orderNumber });
+                if (orders.length > 0) {
+                  await base44.entities.Order.update(orders[0].id, {
+                    payment_status: isSuccess ? 'success' : 'failed',
+                    order_status: isSuccess ? 'processing' : 'payment_failed',
+                    payment_method: r.mode || '',
+                    payment_id: payments[0]?.id || ''
+                  });
+                }
+
+                // Update cart status
+                const carts = await base44.entities.Cart.filter({ cart_id: cartId });
+                if (carts.length > 0) {
+                  await base44.entities.Cart.update(carts[0].id, {
+                    status: isSuccess ? 'completed' : 'checkout'
+                  });
+                }
+              } else {
+                console.log('Database already updated by server');
               }
 
               // Clear local cart on successful payment

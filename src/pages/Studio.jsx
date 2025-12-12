@@ -206,6 +206,7 @@ export default function Studio() {
         structuredData={structuredData.product}
       />
 
+      <main>
       {/* Breadcrumbs for SEO */}
       {!isOrderView && (
         <div className="max-w-7xl mx-auto px-4 pt-4">
@@ -496,6 +497,7 @@ export default function Studio() {
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
+      </main>
     </div>);
 
 }

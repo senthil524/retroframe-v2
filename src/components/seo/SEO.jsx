@@ -688,5 +688,45 @@ export const structuredData = {
       "name": "RetroFrame",
       "url": "https://retroframe.co"
     }
-  })
+  }),
+
+  // WebPage schema for general pages (contact, tracking, etc.)
+  webPage: ({ title, description, url }) => ({
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": title,
+    "description": description,
+    "url": `https://retroframe.co${url}`,
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "RetroFrame",
+      "url": "https://retroframe.co"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "RetroFrame",
+      "url": "https://retroframe.co"
+    }
+  }),
+
+  // ContactPage schema
+  contactPage: {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact Us - RetroFrame",
+    "description": "Get in touch with RetroFrame. Have questions about your polaroid prints order? We're here to help.",
+    "url": "https://retroframe.co/contact",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "RetroFrame",
+      "email": "support@retroframe.in",
+      "telephone": "+91 98765 43210",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Chennai",
+        "addressRegion": "Tamil Nadu",
+        "addressCountry": "IN"
+      }
+    }
+  }
 };

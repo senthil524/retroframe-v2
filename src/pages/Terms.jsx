@@ -4,7 +4,7 @@ import { createPageUrl } from '@/utils';
 import { Button } from '@/components/ui/button';
 import { Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
-import SEO from '@/components/seo/SEO';
+import SEO, { structuredData } from '@/components/seo/SEO';
 import Logo from '@/components/ui/Logo';
 
 export default function Terms() {
@@ -13,7 +13,13 @@ export default function Terms() {
       <SEO
         title="Terms & Conditions"
         description="Read RetroFrame's terms and conditions for using our polaroid printing service. Learn about our policies, user responsibilities, and service terms."
+        keywords="terms and conditions, retroframe terms, polaroid prints service terms, user agreement, photo printing terms india"
         url="/terms"
+        structuredData={structuredData.webPage({
+          title: 'Terms & Conditions',
+          description: 'Read RetroFrame terms and conditions for using our polaroid printing service.',
+          url: '/terms'
+        })}
       />
 
       {/* Site Header */}
@@ -34,7 +40,7 @@ export default function Terms() {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 py-12">
+      <main className="max-w-4xl mx-auto px-4 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -170,7 +176,7 @@ export default function Terms() {
             </section>
           </div>
         </motion.div>
-      </div>
+      </main>
     </div>
   );
 }
