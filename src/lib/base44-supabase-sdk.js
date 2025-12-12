@@ -334,8 +334,7 @@ export function createClient(config = {}) {
     },
 
     /**
-     * PayU Hash Verification
-     * WARNING: This should be moved to a backend function for security
+     * PayU Hash Verification (legacy - for client callback data)
      */
     async payuVerifyHash(params) {
       try {
@@ -350,6 +349,27 @@ export function createClient(config = {}) {
         return {
           data: null,
           error: err.message || 'Failed to verify PayU hash'
+        };
+      }
+    },
+
+    /**
+     * PayU Payment Status Check (server-to-server verification)
+     * This calls PayU's verify_payment API directly - more reliable than client callback
+     */
+    async payuCheckStatus(txnid, orderNumber) {
+      try {
+        const { data, error } = await supabase.functions.invoke('payu-check-status', {
+          body: { txnid, orderNumber }
+        });
+
+        if (error) throw error;
+        return { data, error: null };
+      } catch (err) {
+        console.error('payuCheckStatus failed:', err);
+        return {
+          data: null,
+          error: err.message || 'Failed to check payment status'
         };
       }
     },
@@ -408,7 +428,12 @@ Sitemap: ${typeof window !== 'undefined' ? window.location.origin : ''}/sitemap.
       if (functionName === 'payuVerifyHash' && params) {
         return functions.payuVerifyHash(params);
       }
-      
+
+      if (functionName === 'payuCheckStatus') {
+        const { txnid, orderNumber } = options;
+        return functions.payuCheckStatus(txnid, orderNumber);
+      }
+
       // Handle robots.txt and sitemap.xml (can be static or dynamic)
       if (functionName === 'robotsTxt') {
         return functions.robotsTxt();
