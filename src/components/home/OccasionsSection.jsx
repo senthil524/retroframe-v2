@@ -26,40 +26,46 @@ export default function OccasionsSection() {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {occasions.map((occasion) => (
-            <Link
-              key={occasion.id}
-              to={`/${occasion.slug}`}
-              className="group block bg-brand-warm rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
-            >
-              {occasion.featured_image ? (
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src={occasion.featured_image}
-                    alt={occasion.h1_heading?.split(' - ')[0] || occasion.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    loading="lazy"
-                    width="400"
-                    height="300"
-                    decoding="async"
-                  />
+          {occasions.map((occasion) => {
+            // Derive simple name from slug (e.g., "occasions/anniversary-photo-gifts" -> "Anniversary Photo Gifts")
+            const slugPart = occasion.slug.split('/')[1] || occasion.slug;
+            const cardTitle = slugPart.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+
+            return (
+              <Link
+                key={occasion.id}
+                to={`/${occasion.slug}`}
+                className="group block bg-brand-warm rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
+              >
+                {occasion.featured_image ? (
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img
+                      src={occasion.featured_image}
+                      alt={cardTitle}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                      width="400"
+                      height="300"
+                      decoding="async"
+                    />
+                  </div>
+                ) : (
+                  <div className="aspect-[4/3] bg-brand-coral/10 flex items-center justify-center">
+                    <Gift className="w-12 h-12 text-brand-coral/40" />
+                  </div>
+                )}
+                <div className="p-5 md:p-6">
+                  <h3 className="text-lg md:text-xl font-semibold text-brand-dark group-hover:text-brand-coral transition-colors mb-2">
+                    {cardTitle}
+                  </h3>
+                  <p className="text-sm text-brand-secondary flex items-center gap-1">
+                    Explore gift ideas
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </p>
                 </div>
-              ) : (
-                <div className="aspect-[4/3] bg-brand-coral/10 flex items-center justify-center">
-                  <Gift className="w-12 h-12 text-brand-coral/40" />
-                </div>
-              )}
-              <div className="p-5 md:p-6">
-                <h3 className="text-lg md:text-xl font-semibold text-brand-dark group-hover:text-brand-coral transition-colors mb-2">
-                  {occasion.h1_heading?.split(' - ')[0] || occasion.title.split('|')[0].trim()}
-                </h3>
-                <p className="text-sm text-brand-secondary flex items-center gap-1">
-                  Explore gift ideas
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </p>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
         </div>
 
         {/* View All Link */}

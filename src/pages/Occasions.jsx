@@ -144,6 +144,8 @@ export default function Occasions() {
                 {occasions.map((occasion) => {
                   const slugPart = occasion.slug.split('/')[1] || occasion.slug;
                   const IconComponent = categoryIcons[slugPart] || Gift;
+                  // Derive simple name from slug (e.g., "anniversary-photo-gifts" -> "Anniversary Photo Gifts")
+                  const cardTitle = slugPart.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
                   return (
                     <Link
@@ -177,7 +179,7 @@ export default function Occasions() {
                       {/* Content */}
                       <div className="p-5 md:p-6">
                         <h2 className="text-lg md:text-xl font-semibold text-brand-dark mb-2 group-hover:text-brand-coral transition-colors">
-                          {occasion.h1_heading || occasion.title.split('|')[0].trim()}
+                          {cardTitle}
                         </h2>
                         <p className="text-sm text-brand-secondary line-clamp-2 mb-4">
                           {occasion.meta_description?.slice(0, 100)}...

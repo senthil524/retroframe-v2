@@ -104,11 +104,13 @@ export default function LandingPage() {
   const faq = content.faq || [];
   const cta = content.cta || {};
 
-  // Breadcrumbs
+  // Breadcrumbs - derive simple name from slug (e.g., "anniversary-photo-gifts" -> "Anniversary Photo Gifts")
+  const slugPart = page.slug.split('/').pop() || '';
+  const simplePageName = slugPart.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   const breadcrumbItems = [
     { name: 'Home', url: '/' },
     { name: page.category.charAt(0).toUpperCase() + page.category.slice(1), url: `/${page.category}` },
-    { name: page.h1_heading || page.title, url: `/${page.slug}` }
+    { name: simplePageName, url: `/${page.slug}` }
   ];
 
   // Get absolute image URL
