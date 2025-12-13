@@ -598,6 +598,41 @@ export default function LandingPage() {
                           </ul>
                         </div>
                       )}
+                      {block.stat && (
+                        <div className="mt-6 bg-gradient-to-r from-brand-coral/5 to-brand-coral/10 rounded-xl p-5 border-l-4 border-brand-coral">
+                          <p className="text-2xl font-bold text-brand-dark mb-1">{block.stat.value}</p>
+                          <p className="text-sm text-brand-secondary">{block.stat.label}</p>
+                          {block.stat.source && (
+                            <a
+                              href={block.stat.source_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs text-brand-coral hover:underline mt-2 inline-block"
+                            >
+                              Source: {block.stat.source}
+                            </a>
+                          )}
+                        </div>
+                      )}
+                      {block.links && block.links.length > 0 && (
+                        <div className="mt-6 pt-4 border-t border-gray-100">
+                          <p className="text-xs text-brand-secondary uppercase tracking-wide mb-3">Learn More</p>
+                          <div className="flex flex-wrap gap-2">
+                            {block.links.map((link, lIdx) => (
+                              <a
+                                key={lIdx}
+                                href={link.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1 text-sm text-brand-coral hover:text-brand-coral/80 bg-brand-coral/5 hover:bg-brand-coral/10 px-3 py-1.5 rounded-full transition-colors"
+                              >
+                                {link.title}
+                                <ArrowRight className="w-3 h-3" />
+                              </a>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </article>
                 ))}
