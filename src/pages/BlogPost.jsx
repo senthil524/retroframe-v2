@@ -117,34 +117,50 @@ export default function BlogPost() {
     return headings;
   }, [post?.content]);
 
-  // Render markdown content (basic)
+  // Render markdown content (enhanced)
   const renderContent = (content) => {
     if (!content) return null;
 
     // Helper to generate slug from heading text
     const generateId = (text) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
-    // Convert markdown to HTML (basic conversion)
+    // Convert markdown to HTML (enhanced conversion)
     let html = content
+      // Images - must be before other replacements
+      .replace(/!\[(.*?)\]\((.*?)\)/gim, '<img src="$2" alt="$1" class="w-full rounded-xl my-6 shadow-md" loading="lazy" />')
+      // Links
+      .replace(/\[(.*?)\]\((.*?)\)/gim, '<a href="$2" class="text-brand-coral hover:underline">$1</a>')
+      // Horizontal rules
+      .replace(/^---$/gim, '<hr class="my-8 border-gray-200" />')
       // Headers with IDs for TOC linking
-      .replace(/^### (.*$)/gim, (match, p1) => `<h3 id="${generateId(p1)}" class="text-xl font-semibold text-brand-dark mt-8 mb-4 scroll-mt-24">${p1}</h3>`)
+      .replace(/^### (.*$)/gim, (match, p1) => `<h3 id="${generateId(p1)}" class="text-xl font-semibold text-brand-dark mt-8 mb-3 scroll-mt-24">${p1}</h3>`)
       .replace(/^## (.*$)/gim, (match, p1) => `<h2 id="${generateId(p1)}" class="text-2xl font-semibold text-brand-dark mt-10 mb-4 scroll-mt-24" style="font-family: var(--font-serif)">${p1}</h2>`)
       .replace(/^# (.*$)/gim, (match, p1) => `<h1 id="${generateId(p1)}" class="text-3xl font-bold text-brand-dark mt-6 mb-6 scroll-mt-24" style="font-family: var(--font-serif)">${p1}</h1>`)
       // Bold and italic
-      .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-brand-dark">$1</strong>')
       .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      // Lists
-      .replace(/^\- (.*$)/gim, '<li class="ml-4 mb-2">$1</li>')
-      .replace(/^\d+\. (.*$)/gim, '<li class="ml-4 mb-2 list-decimal">$1</li>')
-      // Paragraphs
-      .replace(/\n\n/g, '</p><p class="mb-4 text-gray-700 leading-relaxed">')
-      // Line breaks
-      .replace(/\n/g, '<br/>');
+      // Lists - improved handling
+      .replace(/^- (.*$)/gim, '<li class="ml-4 mb-1 text-gray-700">$1</li>')
+      .replace(/^\d+\. (.*$)/gim, '<li class="ml-4 mb-1 list-decimal text-gray-700">$1</li>');
 
-    // Wrap list items
-    html = html.replace(/(<li.*<\/li>)+/g, '<ul class="mb-6 list-disc">$&</ul>');
+    // Wrap consecutive list items in ul tags
+    html = html.replace(/(<li class="ml-4 mb-1 text-gray-700">.*?<\/li>\n?)+/g, (match) => {
+      return `<ul class="mb-4 list-disc pl-4 space-y-1">${match}</ul>`;
+    });
+    html = html.replace(/(<li class="ml-4 mb-1 list-decimal text-gray-700">.*?<\/li>\n?)+/g, (match) => {
+      return `<ol class="mb-4 list-decimal pl-4 space-y-1">${match}</ol>`;
+    });
 
-    return <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: `<p class="mb-4 text-gray-700 leading-relaxed">${html}</p>` }} />;
+    // Handle paragraphs - split by double newlines
+    const blocks = html.split(/\n\n+/);
+    html = blocks.map(block => {
+      // Don't wrap if already has HTML tags
+      if (block.trim().startsWith('<')) return block;
+      if (block.trim() === '') return '';
+      return `<p class="mb-4 text-gray-700 leading-relaxed">${block.replace(/\n/g, '<br/>')}</p>`;
+    }).join('\n');
+
+    return <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: html }} />;
   };
 
   if (loading) {
