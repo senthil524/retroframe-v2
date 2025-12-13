@@ -49,6 +49,7 @@ const AdminLogin = React.lazy(() => import('./AdminLogin'));
 const Blog = React.lazy(() => import('./Blog'));
 const BlogPost = React.lazy(() => import('./BlogPost'));
 const LandingPage = React.lazy(() => import('./LandingPage'));
+const Occasions = React.lazy(() => import('./Occasions'));
 const NotFound = React.lazy(() => import('./NotFound'));
 
 const PAGES = {
@@ -120,7 +121,10 @@ function PagesContent() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
 
-          {/* SEO Landing Pages */}
+          {/* SEO Landing Pages - Hub Pages */}
+          <Route path="/occasions" element={<Occasions />} />
+
+          {/* SEO Landing Pages - Dynamic */}
           <Route path="/occasions/:slug" element={<LandingPage />} />
           <Route path="/locations/:slug" element={<LandingPage />} />
           <Route path="/use-cases/:slug" element={<LandingPage />} />

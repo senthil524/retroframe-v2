@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { getLandingPageByFullSlug } from '@/lib/landing-cache';
+import { getLandingPageByFullSlug, getLandingPagesByCategory } from '@/lib/landing-cache';
 import SEO, { structuredData } from '@/components/seo/SEO';
 import SEOBreadcrumb from '@/components/SEOBreadcrumb';
 import { Button } from '@/components/ui/button';
@@ -58,6 +58,7 @@ export default function LandingPage() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const [page, setPage] = useState(null);
+  const [relatedOccasions, setRelatedOccasions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
@@ -82,6 +83,17 @@ export default function LandingPage() {
     }
 
     setPage(data);
+
+    // Load related occasions
+    if (data.category === 'occasions') {
+      const { data: related } = await getLandingPagesByCategory('occasions');
+      if (related) {
+        // Filter out current page and limit to 6
+        const filtered = related.filter(p => p.slug !== fullSlug).slice(0, 6);
+        setRelatedOccasions(filtered);
+      }
+    }
+
     setLoading(false);
   };
 
@@ -820,6 +832,68 @@ export default function LandingPage() {
                     )}
                   </div>
                 ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* ==================== RELATED OCCASIONS ==================== */}
+        {relatedOccasions.length > 0 && (
+          <section className="py-12 md:py-16 px-4 bg-white">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-10">
+                <h2
+                  className="text-2xl md:text-3xl font-normal text-brand-dark mb-3"
+                  style={{ fontFamily: 'var(--font-serif)' }}
+                >
+                  Explore More Occasions
+                </h2>
+                <p className="text-brand-secondary">
+                  Find the perfect photo gift for every celebration
+                </p>
+              </div>
+
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {relatedOccasions.map((occasion) => (
+                  <Link
+                    key={occasion.id}
+                    to={`/${occasion.slug}`}
+                    className="group flex items-center gap-4 bg-brand-warm rounded-xl p-4 hover:bg-brand-coral/10 transition-colors"
+                  >
+                    {occasion.featured_image ? (
+                      <img
+                        src={occasion.featured_image}
+                        alt={occasion.h1_heading || occasion.title}
+                        className="w-16 h-16 rounded-lg object-cover flex-shrink-0"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="w-16 h-16 rounded-lg bg-brand-coral/10 flex items-center justify-center flex-shrink-0">
+                        <Gift className="w-6 h-6 text-brand-coral" />
+                      </div>
+                    )}
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-medium text-brand-dark group-hover:text-brand-coral transition-colors truncate">
+                        {occasion.h1_heading?.split(' - ')[0] || occasion.title.split('|')[0].trim()}
+                      </h3>
+                      <p className="text-sm text-brand-secondary flex items-center gap-1 mt-1">
+                        View ideas
+                        <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+
+              {/* View All Link */}
+              <div className="text-center mt-8">
+                <Link
+                  to="/occasions"
+                  className="inline-flex items-center gap-2 text-brand-coral font-medium hover:gap-3 transition-all"
+                >
+                  View All Occasions
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
               </div>
             </div>
           </section>

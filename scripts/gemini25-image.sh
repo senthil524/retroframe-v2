@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-GEMINI_API_KEY="AIzaSyDGN-Z3EONuR3u1Jbvo9Xzgx9b1DGGsO80"
-MODEL_ID="gemini-2.5-flash-image-preview"
+GEMINI_API_KEY="AIzaSyDFgtAX1ySl2A34R7XZaIRzb0HhooTAmZA"
+MODEL_ID="gemini-3-pro-image-preview"
 API_ENDPOINT="https://generativelanguage.googleapis.com/v1beta/models/${MODEL_ID}:generateContent"
 
 PROMPT="$1"

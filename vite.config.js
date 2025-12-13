@@ -22,8 +22,10 @@ export default defineConfig({
         '/terms',
         '/privacy',
         '/refund',
-        // SEO Landing Pages
-        '/occasions/anniversary-photo-gifts'
+        // SEO Landing Pages - Occasions (Published)
+        '/occasions/anniversary-photo-gifts',
+        '/occasions/birthday-photo-gifts',
+        '/occasions/valentines-day-photo-gifts'
       ],
       exclude: [
         '/admin',
