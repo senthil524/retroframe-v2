@@ -22,6 +22,7 @@ import CustomerReviews from '@/components/home/CustomerReviews';
 import UserPhotosGallery from '@/components/home/UserPhotosGallery';
 import FAQSection from '@/components/home/FAQSection';
 import LatestBlogPosts from '@/components/home/LatestBlogPosts';
+import OccasionsSection from '@/components/home/OccasionsSection';
 import SEO, { structuredData } from '@/components/seo/SEO';
 import Logo from '@/components/ui/Logo';
 
@@ -245,6 +246,9 @@ export default function Home() {
 
       {/* User Photos Gallery */}
       <UserPhotosGallery />
+
+      {/* Occasions Section */}
+      <OccasionsSection />
 
       {/* FAQ Section */}
       <FAQSection />

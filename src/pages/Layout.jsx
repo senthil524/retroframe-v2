@@ -112,7 +112,7 @@ export default function Layout({ children, currentPageName }) {
         {showFooter && (
           <footer className="bg-[#1F1D1B] text-white py-12 px-4">
             <div className="max-w-7xl mx-auto">
-              <div className="grid md:grid-cols-4 gap-8 mb-8">
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-8">
                 {/* Brand */}
                 <div>
                   <Link to="/" className="flex items-center gap-1 mb-4 hover:opacity-80 transition-opacity">
@@ -141,6 +141,33 @@ export default function Layout({ children, currentPageName }) {
                     <li>
                       <Link to="/blog" className="text-gray-400 hover:text-white transition-colors">
                         Blog
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Occasions */}
+                <div>
+                  <h3 className="font-semibold mb-4 text-white">Gift Ideas</h3>
+                  <ul className="space-y-2 text-sm">
+                    <li>
+                      <Link to="/occasions/anniversary-photo-gifts" className="text-gray-400 hover:text-white transition-colors">
+                        Anniversary Gifts
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/occasions/birthday-photo-gifts" className="text-gray-400 hover:text-white transition-colors">
+                        Birthday Gifts
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/occasions/valentines-day-photo-gifts" className="text-gray-400 hover:text-white transition-colors">
+                        Valentine's Day Gifts
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/occasions" className="text-gray-400 hover:text-white transition-colors">
+                        All Occasions
                       </Link>
                     </li>
                   </ul>

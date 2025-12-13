@@ -132,6 +132,13 @@ export default function LandingPage() {
     { name: page.h1_heading || page.title, url: `/${page.slug}` }
   ];
 
+  // Get absolute image URL
+  const getAbsoluteImageUrl = (img) => {
+    if (!img) return "https://retroframe.co/hero-images/hero-8.jpg";
+    if (img.startsWith('http')) return img;
+    return `https://retroframe.co${img}`;
+  };
+
   // Structured data
   const pageSchema = {
     "@context": "https://schema.org",
@@ -144,13 +151,13 @@ export default function LandingPage() {
         "url": `https://retroframe.co/${page.slug}`,
         "isPartOf": { "@type": "WebSite", "name": "RetroFrame", "url": "https://retroframe.co" },
         "publisher": { "@type": "Organization", "name": "RetroFrame", "url": "https://retroframe.co" },
-        ...(page.featured_image && { "primaryImageOfPage": { "@type": "ImageObject", "url": page.featured_image } })
+        ...(page.featured_image && { "primaryImageOfPage": { "@type": "ImageObject", "url": getAbsoluteImageUrl(page.featured_image) } })
       },
       {
         "@type": "Product",
         "name": page.h1_heading || page.title,
         "description": page.meta_description,
-        "image": page.featured_image || "https://retroframe.co/hero-images/hero-8.jpg",
+        "image": getAbsoluteImageUrl(page.featured_image),
         "brand": { "@type": "Brand", "name": "RetroFrame" },
         "offers": {
           "@type": "Offer",
@@ -185,7 +192,7 @@ export default function LandingPage() {
         title={page.title}
         description={page.meta_description}
         url={`/${page.slug}`}
-        image={page.featured_image}
+        image={getAbsoluteImageUrl(page.featured_image)}
         type="website"
         keywords={page.keywords?.join(', ')}
         structuredData={pageSchema}
