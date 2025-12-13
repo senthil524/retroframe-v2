@@ -536,122 +536,176 @@ export default function LandingPage() {
 
         {/* ==================== BLOG CONTENT SECTION ==================== */}
         {blogContent.length > 0 && (
-          <section className="py-12 md:py-20 px-4 bg-white">
-            <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-12">
+          <section className="py-16 md:py-24 px-4 bg-white">
+            <div className="max-w-3xl mx-auto">
+              {/* Section Header */}
+              <div className="text-center mb-14">
                 <span className="inline-block bg-brand-coral/10 text-brand-coral px-4 py-1.5 rounded-full text-sm font-medium mb-4">
                   {content.blog_badge || 'Gift Guide'}
                 </span>
                 <h2
-                  className="text-2xl md:text-4xl font-normal text-brand-dark mb-4"
+                  className="text-3xl md:text-4xl font-normal text-brand-dark mb-4"
                   style={{ fontFamily: 'var(--font-serif)' }}
                 >
                   {content.blog_title || 'Tips & Ideas'}
                 </h2>
                 {content.blog_intro && (
-                  <p className="text-brand-secondary text-lg max-w-2xl mx-auto leading-relaxed">
+                  <p className="text-brand-secondary text-lg leading-relaxed">
                     {content.blog_intro}
                   </p>
                 )}
               </div>
 
-              <div className="space-y-12 md:space-y-16">
+              {/* Blog Articles */}
+              <div className="space-y-16">
                 {blogContent.map((block, idx) => (
-                  <article key={idx} className={`${idx % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
+                  <article key={idx} className="prose-article">
+                    {/* Article Image */}
                     {block.image && (
-                      <div className="mb-6">
+                      <figure className="mb-8">
                         <img
                           src={block.image}
                           alt={block.heading}
-                          className="w-full rounded-2xl shadow-lg object-cover aspect-[16/9]"
+                          className="w-full rounded-2xl object-cover aspect-[16/9]"
                           loading="lazy"
                         />
-                      </div>
+                        {block.image_caption && (
+                          <figcaption className="text-center text-sm text-brand-secondary mt-3 italic">
+                            {block.image_caption}
+                          </figcaption>
+                        )}
+                      </figure>
                     )}
-                    <div>
-                      <h3
-                        className="text-xl md:text-2xl font-normal text-brand-dark mb-4"
-                        style={{ fontFamily: 'var(--font-serif)' }}
+
+                    {/* Article Content */}
+                    <h3
+                      className="text-2xl md:text-3xl font-normal text-brand-dark mb-6"
+                      style={{ fontFamily: 'var(--font-serif)' }}
+                    >
+                      {block.heading}
+                    </h3>
+
+                    <div className="text-brand-secondary text-[17px] leading-[1.8] space-y-5">
+                      {block.paragraphs?.map((p, pIdx) => (
+                        <p key={pIdx}>{p}</p>
+                      ))}
+                    </div>
+
+                    {/* Resource Card - Nice visual callout */}
+                    {block.resource && (
+                      <a
+                        href={block.resource.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block mt-8 group"
                       >
-                        {block.heading}
-                      </h3>
-                      <div className="prose prose-brand max-w-none">
-                        {block.paragraphs?.map((p, pIdx) => (
-                          <p key={pIdx} className="text-brand-secondary leading-relaxed mb-4">
-                            {p}
-                          </p>
-                        ))}
-                      </div>
-                      {block.tips && block.tips.length > 0 && (
-                        <div className="mt-6 bg-brand-warm rounded-xl p-5">
-                          <h4 className="font-semibold text-brand-dark mb-3 flex items-center gap-2">
-                            <Lightbulb className="w-5 h-5 text-brand-coral" />
-                            {block.tips_title || 'Pro Tips'}
-                          </h4>
-                          <ul className="space-y-2">
-                            {block.tips.map((tip, tIdx) => (
-                              <li key={tIdx} className="flex items-start gap-2 text-sm text-brand-secondary">
-                                <Check className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-                                {tip}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                      {block.stat && (
-                        <div className="mt-6 bg-gradient-to-r from-brand-coral/5 to-brand-coral/10 rounded-xl p-5 border-l-4 border-brand-coral">
-                          <p className="text-2xl font-bold text-brand-dark mb-1">{block.stat.value}</p>
-                          <p className="text-sm text-brand-secondary">{block.stat.label}</p>
-                          {block.stat.source && (
-                            <a
-                              href={block.stat.source_url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-xs text-brand-coral hover:underline mt-2 inline-block"
-                            >
-                              Source: {block.stat.source}
-                            </a>
-                          )}
-                        </div>
-                      )}
-                      {block.links && block.links.length > 0 && (
-                        <div className="mt-6 pt-4 border-t border-gray-100">
-                          <p className="text-xs text-brand-secondary uppercase tracking-wide mb-3">Learn More</p>
-                          <div className="flex flex-wrap gap-2">
-                            {block.links.map((link, lIdx) => (
-                              <a
-                                key={lIdx}
-                                href={link.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 text-sm text-brand-coral hover:text-brand-coral/80 bg-brand-coral/5 hover:bg-brand-coral/10 px-3 py-1.5 rounded-full transition-colors"
-                              >
-                                {link.title}
-                                <ArrowRight className="w-3 h-3" />
-                              </a>
-                            ))}
+                        <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-6 border border-gray-200 hover:border-brand-coral/30 hover:shadow-lg transition-all duration-300">
+                          <div className="flex items-start gap-4">
+                            {block.resource.icon === 'book' && (
+                              <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm flex-shrink-0">
+                                <svg className="w-6 h-6 text-brand-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                              </div>
+                            )}
+                            {block.resource.icon === 'compass' && (
+                              <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm flex-shrink-0">
+                                <svg className="w-6 h-6 text-brand-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                                </svg>
+                              </div>
+                            )}
+                            {block.resource.icon === 'heart' && (
+                              <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm flex-shrink-0">
+                                <Heart className="w-6 h-6 text-brand-coral" />
+                              </div>
+                            )}
+                            {block.resource.icon === 'gift' && (
+                              <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm flex-shrink-0">
+                                <Gift className="w-6 h-6 text-brand-coral" />
+                              </div>
+                            )}
+                            {!block.resource.icon && (
+                              <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm flex-shrink-0">
+                                <ArrowRight className="w-6 h-6 text-brand-coral" />
+                              </div>
+                            )}
+                            <div className="flex-1 min-w-0">
+                              <p className="text-xs text-brand-coral font-medium uppercase tracking-wide mb-1">
+                                {block.resource.label || 'Recommended Resource'}
+                              </p>
+                              <h4 className="font-semibold text-brand-dark text-lg group-hover:text-brand-coral transition-colors">
+                                {block.resource.title}
+                              </h4>
+                              <p className="text-sm text-brand-secondary mt-1 line-clamp-2">
+                                {block.resource.description}
+                              </p>
+                              <p className="text-xs text-gray-400 mt-2 flex items-center gap-1">
+                                {block.resource.source}
+                                <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                              </p>
+                            </div>
                           </div>
                         </div>
-                      )}
-                    </div>
+                      </a>
+                    )}
+
+                    {/* Quick Tips - Cleaner design */}
+                    {block.tips && block.tips.length > 0 && (
+                      <div className="mt-8 bg-brand-warm rounded-2xl p-6">
+                        <h4 className="font-semibold text-brand-dark mb-4 flex items-center gap-2">
+                          <Lightbulb className="w-5 h-5 text-amber-500" />
+                          {block.tips_title || 'Quick Ideas'}
+                        </h4>
+                        <ul className="grid gap-3">
+                          {block.tips.map((tip, tIdx) => (
+                            <li key={tIdx} className="flex items-start gap-3 text-[15px] text-brand-secondary">
+                              <span className="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 text-xs font-semibold text-brand-coral shadow-sm">
+                                {tIdx + 1}
+                              </span>
+                              {tip}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Divider between articles */}
+                    {idx < blogContent.length - 1 && (
+                      <div className="mt-16 flex items-center justify-center">
+                        <div className="w-1 h-1 bg-gray-300 rounded-full" />
+                        <div className="w-1 h-1 bg-gray-300 rounded-full mx-2" />
+                        <div className="w-1 h-1 bg-gray-300 rounded-full" />
+                      </div>
+                    )}
                   </article>
                 ))}
               </div>
 
-              {/* CTA after blog content */}
-              <div className="text-center mt-12 pt-8 border-t border-gray-100">
-                <p className="text-brand-secondary mb-4">{content.blog_cta_text || 'Ready to create your own?'}</p>
-                <Link to="/studio">
-                  <Button
-                    size="lg"
-                    className="rounded-full px-8 py-6 text-white font-semibold"
-                    style={{ background: 'linear-gradient(135deg, var(--color-coral) 0%, var(--color-coral-dark) 100%)' }}
+              {/* Bottom CTA */}
+              <div className="mt-16 text-center">
+                <div className="bg-gradient-to-br from-brand-coral/5 to-brand-coral/10 rounded-3xl p-8 md:p-10">
+                  <h3
+                    className="text-xl md:text-2xl font-normal text-brand-dark mb-3"
+                    style={{ fontFamily: 'var(--font-serif)' }}
                   >
-                    <Sparkles className="w-5 h-5 mr-2" />
-                    Start Creating Now
-                    <ArrowRight className="w-5 h-5 ml-2" />
-                  </Button>
-                </Link>
+                    {content.blog_cta_heading || 'Ready to Create Something Special?'}
+                  </h3>
+                  <p className="text-brand-secondary mb-6 max-w-md mx-auto">
+                    {content.blog_cta_text || 'Turn your favorite memories into beautiful retro polaroid prints your partner will treasure.'}
+                  </p>
+                  <Link to="/studio">
+                    <Button
+                      size="lg"
+                      className="rounded-full px-8 py-6 text-white font-semibold shadow-lg hover:shadow-xl transition-shadow"
+                      style={{ background: 'linear-gradient(135deg, var(--color-coral) 0%, var(--color-coral-dark) 100%)' }}
+                    >
+                      <Sparkles className="w-5 h-5 mr-2" />
+                      Start Creating
+                      <ArrowRight className="w-5 h-5 ml-2" />
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </div>
           </section>
