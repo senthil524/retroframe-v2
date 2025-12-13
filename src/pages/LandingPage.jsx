@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useLandingPage, useLandingPagesByCategory } from '@/lib/hooks/useLandingPage';
+import { useLandingPage, usePublishedLandingPages } from '@/lib/hooks/useLandingPage';
 import SEO, { structuredData } from '@/components/seo/SEO';
 import SEOBreadcrumb from '@/components/SEOBreadcrumb';
 import { Button } from '@/components/ui/button';
@@ -65,7 +65,7 @@ export default function LandingPage() {
 
   // SWR hooks for data fetching with automatic caching
   const { data: page, error, isLoading } = useLandingPage(fullSlug);
-  const { data: allOccasions } = useLandingPagesByCategory(category === 'occasions' ? 'occasions' : null);
+  const { data: allOccasions } = usePublishedLandingPages(category === 'occasions' ? 'occasions' : null);
 
   // Filter related occasions (exclude current page, limit to 6)
   const relatedOccasions = allOccasions?.filter(p => p.slug !== fullSlug).slice(0, 6) || [];
