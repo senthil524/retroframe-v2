@@ -1,27 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { getLandingPagesByCategory } from '@/lib/landing-cache';
+import { usePublishedLandingPages } from '@/lib/hooks/useLandingPage';
 import { ArrowRight, Gift } from 'lucide-react';
 
 export default function OccasionsSection() {
-  const [occasions, setOccasions] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { data: occasions, isLoading } = usePublishedLandingPages('occasions');
 
-  useEffect(() => {
-    loadOccasions();
-  }, []);
-
-  const loadOccasions = async () => {
-    const { data } = await getLandingPagesByCategory('occasions');
-    if (data) {
-      // Only show published occasions
-      const published = data.filter(p => p.status === 'published');
-      setOccasions(published);
-    }
-    setLoading(false);
-  };
-
-  if (loading || occasions.length === 0) {
+  if (isLoading || !occasions || occasions.length === 0) {
     return null;
   }
 

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { getLandingPageByFullSlug, getLandingPagesByCategory } from '@/lib/landing-cache';
+import { useLandingPage, useLandingPagesByCategory } from '@/lib/hooks/useLandingPage';
 import SEO, { structuredData } from '@/components/seo/SEO';
 import SEOBreadcrumb from '@/components/SEOBreadcrumb';
 import { Button } from '@/components/ui/button';
@@ -57,47 +57,26 @@ const iconMap = {
 export default function LandingPage() {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const [page, setPage] = useState(null);
-  const [relatedOccasions, setRelatedOccasions] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
   const pathParts = typeof window !== 'undefined' ? window.location.pathname.split('/').filter(Boolean) : [];
   const category = pathParts[0] || '';
+  const fullSlug = `${category}/${slug}`;
 
-  useEffect(() => {
-    if (category && slug) {
-      loadPage();
-    }
-  }, [category, slug]);
+  // SWR hooks for data fetching with automatic caching
+  const { data: page, error, isLoading } = useLandingPage(fullSlug);
+  const { data: allOccasions } = useLandingPagesByCategory(category === 'occasions' ? 'occasions' : null);
 
-  const loadPage = async () => {
-    const fullSlug = `${category}/${slug}`;
-    const { data, error } = await getLandingPageByFullSlug(fullSlug);
+  // Filter related occasions (exclude current page, limit to 6)
+  const relatedOccasions = allOccasions?.filter(p => p.slug !== fullSlug).slice(0, 6) || [];
 
-    if (error || !data) {
-      console.error('Error loading landing page:', error);
-      navigate('/');
-      setLoading(false);
-      return;
-    }
+  // Redirect to home if page not found
+  if (error && !isLoading) {
+    navigate('/');
+    return null;
+  }
 
-    setPage(data);
-
-    // Load related occasions
-    if (data.category === 'occasions') {
-      const { data: related } = await getLandingPagesByCategory('occasions');
-      if (related) {
-        // Filter out current page and limit to 6
-        const filtered = related.filter(p => p.slug !== fullSlug).slice(0, 6);
-        setRelatedOccasions(filtered);
-      }
-    }
-
-    setLoading(false);
-  };
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-brand-warm">
         <div className="w-8 h-8 border-4 border-brand-coral border-t-transparent rounded-full animate-spin" />

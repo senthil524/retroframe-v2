@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { supabase } from '@/lib/supabase-client';
+import { usePublishedLandingPages } from '@/lib/hooks/useLandingPage';
 import SEO, { structuredData } from '@/components/seo/SEO';
 import SEOBreadcrumb from '@/components/SEOBreadcrumb';
 import { Button } from '@/components/ui/button';
@@ -45,30 +45,8 @@ const categoryIcons = {
 };
 
 export default function Occasions() {
-  const [occasions, setOccasions] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    loadOccasions();
-  }, []);
-
-  const loadOccasions = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('landing_pages')
-        .select('id, slug, category, title, h1_heading, meta_description, featured_image')
-        .eq('category', 'occasions')
-        .eq('status', 'published')
-        .order('created_at', { ascending: true });
-
-      if (error) throw error;
-      setOccasions(data || []);
-    } catch (error) {
-      console.error('Error loading occasions:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // SWR hook for automatic caching
+  const { data: occasions = [], isLoading } = usePublishedLandingPages('occasions');
 
   // Breadcrumbs
   const breadcrumbItems = [
@@ -157,7 +135,7 @@ export default function Occasions() {
             </div>
 
             {/* Occasions Grid */}
-            {loading ? (
+            {isLoading ? (
               <div className="flex justify-center py-12">
                 <div className="w-8 h-8 border-4 border-brand-coral border-t-transparent rounded-full animate-spin" />
               </div>
