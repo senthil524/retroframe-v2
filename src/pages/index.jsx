@@ -48,6 +48,7 @@ const OrderDetails = React.lazy(() => import('./OrderDetails'));
 const AdminLogin = React.lazy(() => import('./AdminLogin'));
 const Blog = React.lazy(() => import('./Blog'));
 const BlogPost = React.lazy(() => import('./BlogPost'));
+const LandingPage = React.lazy(() => import('./LandingPage'));
 const NotFound = React.lazy(() => import('./NotFound'));
 
 const PAGES = {
@@ -118,6 +119,12 @@ function PagesContent() {
           <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
+
+          {/* SEO Landing Pages */}
+          <Route path="/occasions/:slug" element={<LandingPage />} />
+          <Route path="/locations/:slug" element={<LandingPage />} />
+          <Route path="/use-cases/:slug" element={<LandingPage />} />
+          <Route path="/home-decor/:slug" element={<LandingPage />} />
 
           {/* Legacy URL redirects (old uppercase to new lowercase) */}
           <Route path="/Home" element={<Navigate to="/" replace />} />

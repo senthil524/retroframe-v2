@@ -21,7 +21,9 @@ export default defineConfig({
         '/contact',
         '/terms',
         '/privacy',
-        '/refund'
+        '/refund',
+        // SEO Landing Pages
+        '/occasions/anniversary-photo-gifts'
       ],
       exclude: [
         '/admin',
