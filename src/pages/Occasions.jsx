@@ -177,7 +177,7 @@ export default function Occasions() {
                       {/* Content */}
                       <div className="p-5 md:p-6">
                         <h2 className="text-lg md:text-xl font-semibold text-brand-dark mb-2 group-hover:text-brand-coral transition-colors">
-                          {occasion.h1_heading?.replace(' - Romantic Retro Polaroid Prints', '').replace(' - Retro Polaroid Prints', '').replace(' - Custom Retro Polaroid Prints', '').replace(' - Photo Prints That Connect Hearts', '') || occasion.title.split('|')[0].trim()}
+                          {occasion.h1_heading || occasion.title.split('|')[0].trim()}
                         </h2>
                         <p className="text-sm text-brand-secondary line-clamp-2 mb-4">
                           {occasion.meta_description?.slice(0, 100)}...

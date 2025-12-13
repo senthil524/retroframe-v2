@@ -62,7 +62,7 @@ export function usePublishedLandingPages(category) {
     async () => {
       const { data, error } = await supabase
         .from('landing_pages')
-        .select('id, slug, category, title, h1_heading, featured_image, city')
+        .select('id, slug, category, title, h1_heading, meta_description, featured_image, city')
         .eq('category', category)
         .eq('status', 'published')
         .order('created_at', { ascending: false });
