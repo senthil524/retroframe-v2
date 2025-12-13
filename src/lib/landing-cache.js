@@ -6,7 +6,9 @@ const CACHE_TTL = 10 * 60 * 1000; // 10 minutes in milliseconds
 // In-memory cache
 let landingCache = {
   pagesBySlug: new Map(),
-  pagesBySlugTimestamp: new Map()
+  pagesBySlugTimestamp: new Map(),
+  pagesByCategory: new Map(),
+  pagesByCategoryTimestamp: new Map()
 };
 
 /**
@@ -83,22 +85,33 @@ export const getLandingPageByFullSlug = async (fullSlug) => {
 };
 
 /**
- * Get all published landing pages by category
+ * Get all published landing pages by category (cached)
  */
 export const getLandingPagesByCategory = async (category) => {
+  // Check cache first
+  const cachedTimestamp = landingCache.pagesByCategoryTimestamp.get(category);
+  if (isCacheValid(cachedTimestamp) && landingCache.pagesByCategory.has(category)) {
+    return { data: landingCache.pagesByCategory.get(category), error: null, fromCache: true };
+  }
+
   try {
     const { data, error } = await supabase
       .from('landing_pages')
-      .select('id, slug, category, title, h1_heading, featured_image, city')
+      .select('id, slug, category, title, h1_heading, featured_image, city, status')
       .eq('category', category)
-      .eq('status', 'published')
+      .in('status', ['published', 'unlisted'])
       .order('created_at', { ascending: false });
 
     if (error) throw error;
-    return { data: data || [], error: null };
+
+    // Update cache
+    landingCache.pagesByCategory.set(category, data || []);
+    landingCache.pagesByCategoryTimestamp.set(category, Date.now());
+
+    return { data: data || [], error: null, fromCache: false };
   } catch (error) {
     console.error('Error loading landing pages by category:', error);
-    return { data: [], error };
+    return { data: [], error, fromCache: false };
   }
 };
 
@@ -108,7 +121,9 @@ export const getLandingPagesByCategory = async (category) => {
 export const clearLandingCache = () => {
   landingCache = {
     pagesBySlug: new Map(),
-    pagesBySlugTimestamp: new Map()
+    pagesBySlugTimestamp: new Map(),
+    pagesByCategory: new Map(),
+    pagesByCategoryTimestamp: new Map()
   };
 };
 

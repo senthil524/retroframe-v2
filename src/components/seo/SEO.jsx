@@ -18,7 +18,8 @@ export default function SEO({
   type = 'website',
   noindex = false,
   structuredData,
-  keywords
+  keywords,
+  preloadImage = null // Optional: preload hero image for LCP
 }) {
   // Get canonical URL - use provided url or fallback to current path
   const getCanonicalUrl = () => {
@@ -52,6 +53,11 @@ export default function SEO({
 
   return (
     <Helmet>
+      {/* Preload hero image for better LCP */}
+      {preloadImage && (
+        <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />
+      )}
+
       {/* Primary Meta Tags */}
       <title>{seo.title}</title>
       <meta name="title" content={seo.title} />

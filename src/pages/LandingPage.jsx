@@ -197,6 +197,7 @@ export default function LandingPage() {
         keywords={page.keywords?.join(', ')}
         structuredData={pageSchema}
         noindex={page.status === 'unlisted'}
+        preloadImage={page.featured_image}
       />
 
       {/* Header */}
@@ -296,6 +297,10 @@ export default function LandingPage() {
                       alt={page.h1_heading || page.title}
                       className="rounded-2xl shadow-2xl w-full aspect-[4/3] object-cover"
                       loading="eager"
+                      fetchPriority="high"
+                      width="600"
+                      height="450"
+                      decoding="async"
                     />
                   ) : (
                     <div className="rounded-2xl shadow-2xl w-full aspect-[4/3] bg-gradient-to-br from-brand-coral/20 to-brand-warm flex items-center justify-center">
@@ -377,6 +382,9 @@ export default function LandingPage() {
                           alt={idea.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           loading="lazy"
+                          width="400"
+                          height="300"
+                          decoding="async"
                         />
                       </div>
                     )}
@@ -587,6 +595,9 @@ export default function LandingPage() {
                           alt={block.heading}
                           className="w-full rounded-2xl object-cover aspect-[16/9]"
                           loading="lazy"
+                          width="800"
+                          height="450"
+                          decoding="async"
                         />
                         {block.image_caption && (
                           <figcaption className="text-center text-sm text-brand-secondary mt-3 italic">
