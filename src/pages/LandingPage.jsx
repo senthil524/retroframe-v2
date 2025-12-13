@@ -108,6 +108,7 @@ export default function LandingPage() {
   const hero = content.hero || {};
   const whyPolaroids = content.why_polaroids || [];
   const ideas = content.ideas || [];
+  const blogContent = content.blog_content || [];
   const testimonials = content.testimonials || [];
   const faq = content.faq || [];
   const cta = content.cta || {};
@@ -533,9 +534,97 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* ==================== BLOG CONTENT SECTION ==================== */}
+        {blogContent.length > 0 && (
+          <section className="py-12 md:py-20 px-4 bg-white">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-12">
+                <span className="inline-block bg-brand-coral/10 text-brand-coral px-4 py-1.5 rounded-full text-sm font-medium mb-4">
+                  {content.blog_badge || 'Gift Guide'}
+                </span>
+                <h2
+                  className="text-2xl md:text-4xl font-normal text-brand-dark mb-4"
+                  style={{ fontFamily: 'var(--font-serif)' }}
+                >
+                  {content.blog_title || 'Tips & Ideas'}
+                </h2>
+                {content.blog_intro && (
+                  <p className="text-brand-secondary text-lg max-w-2xl mx-auto leading-relaxed">
+                    {content.blog_intro}
+                  </p>
+                )}
+              </div>
+
+              <div className="space-y-12 md:space-y-16">
+                {blogContent.map((block, idx) => (
+                  <article key={idx} className={`${idx % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
+                    {block.image && (
+                      <div className="mb-6">
+                        <img
+                          src={block.image}
+                          alt={block.heading}
+                          className="w-full rounded-2xl shadow-lg object-cover aspect-[16/9]"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+                    <div>
+                      <h3
+                        className="text-xl md:text-2xl font-normal text-brand-dark mb-4"
+                        style={{ fontFamily: 'var(--font-serif)' }}
+                      >
+                        {block.heading}
+                      </h3>
+                      <div className="prose prose-brand max-w-none">
+                        {block.paragraphs?.map((p, pIdx) => (
+                          <p key={pIdx} className="text-brand-secondary leading-relaxed mb-4">
+                            {p}
+                          </p>
+                        ))}
+                      </div>
+                      {block.tips && block.tips.length > 0 && (
+                        <div className="mt-6 bg-brand-warm rounded-xl p-5">
+                          <h4 className="font-semibold text-brand-dark mb-3 flex items-center gap-2">
+                            <Lightbulb className="w-5 h-5 text-brand-coral" />
+                            {block.tips_title || 'Pro Tips'}
+                          </h4>
+                          <ul className="space-y-2">
+                            {block.tips.map((tip, tIdx) => (
+                              <li key={tIdx} className="flex items-start gap-2 text-sm text-brand-secondary">
+                                <Check className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                                {tip}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </article>
+                ))}
+              </div>
+
+              {/* CTA after blog content */}
+              <div className="text-center mt-12 pt-8 border-t border-gray-100">
+                <p className="text-brand-secondary mb-4">{content.blog_cta_text || 'Ready to create your own?'}</p>
+                <Link to="/studio">
+                  <Button
+                    size="lg"
+                    className="rounded-full px-8 py-6 text-white font-semibold"
+                    style={{ background: 'linear-gradient(135deg, var(--color-coral) 0%, var(--color-coral-dark) 100%)' }}
+                  >
+                    <Sparkles className="w-5 h-5 mr-2" />
+                    Start Creating Now
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* ==================== TESTIMONIALS SECTION ==================== */}
         {testimonials.length > 0 && (
-          <section className="py-12 md:py-16 px-4 bg-white">
+          <section className="py-12 md:py-16 px-4 bg-brand-warm">
             <div className="max-w-5xl mx-auto">
               <div className="text-center mb-10">
                 <h2
@@ -550,7 +639,7 @@ export default function LandingPage() {
                 {testimonials.map((t, idx) => (
                   <div
                     key={idx}
-                    className="bg-brand-warm rounded-2xl p-6 relative"
+                    className="bg-white rounded-2xl p-6 relative shadow-sm"
                   >
                     <Quote className="w-10 h-10 text-brand-coral/10 absolute top-4 right-4" />
                     <div className="flex gap-1 mb-4">
